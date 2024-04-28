@@ -1,0 +1,132 @@
+version: '3'
+services:
+  zabbix-server-db:
+    container_name: zabbix-server-db
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    #user: root
+    volumes:
+      - zabbix-server-db:/var/lib/postgresql/data
+    environment:
+      - TIMEZONE=${TIMEZONE}
+      - CONTAINER_NAME=zabbix-server-db
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - SUPERUSER_PASS=${SUPERUSER_PASS}
+      
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  zabbix-server:
+    container_name: zabbix-server
+    image: ${ZABBIX_IMAGE}:${ZABBIX_TAG}
+    ports:
+      - 127.0.0.1:10051:10051
+    volumes:
+      - zabbix-server-externalscripts:/assets/externalscripts
+      - zabbix-server-alertscripts:/assets/alertscripts
+      - zabbix-server-modules:/var/lib/zabbix/modules
+      - zabbix-server-enc:/var/lib/zabbix/enc
+      - zabbix-server-ssh_keys:/var/lib/zabbix/ssh_keys
+      - zabbix-server-mibs:/var/lib/zabbix/mibs
+      - zabbix-server-logs:/var/log/zabbix/server
+    links:
+      - zabbix-server-db
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+      #mem_limit: 512m
+    environment:
+      - CONTAINER_NAME=zabbix-server
+      - TIMEZONE=${TIMEZONE}
+      - ZABBIX_MODE=SERVER
+      - DB_HOST=zabbix-server-db
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - DB_SCHEMA=public
+    restart: always
+    healthcheck:
+      test: grep -qr "zabbix_server" /proc/*/status || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+
+  zabbix-server-frontend:
+    container_name: zabbix-server-frontend
+    image: ${ZABBIX_IMAGE}:${ZABBIX_TAG}
+    #mem_limit: 512m
+    ports:
+      - 8081:80
+    depends_on:
+      - zabbix-server-db
+      - zabbix-server
+    volumes:
+      - zabbix-server-frontend-logs:/www/logs/nginx
+    environment:
+      - TIMEZONE=${TIMEZONE}
+      - ZABBIX_MODE=WEB
+      - CONTAINER_NAME=zabbix-server-frontend
+      - ZABBIX_SERVER_HOST=zabbix-server
+      - ZABBIX_SERVER_PORT=10051
+      - ZABBIX_SERVER_NAME=${DOMAIN}
+      - PHP_TIMEOUT=600
+      - PHP_MEMORY_LIMIT=512M
+      - DB_HOST=zabbix-server-db
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - DB_SCHEMA=public
+      - VIRTUAL_HOST=${DOMAIN},www.${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN},www.${DOMAIN}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    # volumes:
+    #   - zabbix-web-data:/usr/share/zabbix
+
+  zabbix-agent:   # Zabbix agent service that tracks usage and send to zabbix server
+    container_name: zabbix-server-agent
+    image: zabbix/zabbix-agent:${ZABBIX_TAG}-alpine
+    restart: always
+    privileged: true   #access mode for allowing resource access
+    command: -H unix:///var/run/docker.sock
+    depends_on:
+      - zabbix-server-db
+      - zabbix-server
+    environment:
+      ZBX_HOSTNAME: zabbix-server
+      ZBX_SERVER_HOST: zabbix-server #the IP/Dns of Zabbix server
+    volumes:
+      - zabbix-agent:/etc/zabbix/
+      - /var/run/docker.sock:/var/run/docker.sock
+      
+volumes:
+  zabbix-server-db:
+  zabbix-server-externalscripts:
+  zabbix-server-alertscripts:
+  zabbix-server-modules:
+  zabbix-server-enc:
+  zabbix-server-ssh_keys:
+  zabbix-server-mibs:
+  zabbix-server-logs:
+  zabbix-server-frontend-logs:
+  zabbix-agent:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
