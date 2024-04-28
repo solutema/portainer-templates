@@ -13,6 +13,14 @@
         "url": "https://code.gruposolutema.com/portainer/portainer-templates",
         "stackfile": "stacks/wordpress-alpine/docker-stack.yml"
       },
+      "volumes": [
+        {
+          "container": "/www/wordpress"
+        },
+        {
+          "container": "/www/logs"
+        }
+      ],
       "env": [
         {
           "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
