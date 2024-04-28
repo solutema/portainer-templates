@@ -13,17 +13,6 @@
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/redis/docker-compose.yml"
       },
-      "volumes": [
-        {
-          "container": "/data/db"
-        },
-        {
-          "container": "/data/logs"
-        },
-        {
-          "container": "/data/insight"
-        }
-      ],
       "env": [
         {
           "default": "registry.gruposolutema.com/docker-base-images/docker-redis",
@@ -108,14 +97,6 @@
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/wordpress/docker-compose.yml"
       },
-      "volumes": [
-        {
-          "container": "/www/wordpress"
-        },
-        {
-          "container": "/www/logs"
-        }
-      ],
       "env": [
         {
           "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
