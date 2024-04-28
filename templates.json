@@ -3,7 +3,7 @@
   "templates": [
     {
       "type": 3,
-      "title": "WordPress on Alpine",
+      "title": "WordPress",
       "description": "WordPress setup in Alpine OS + a Mariadb database",
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
       "categories": ["CMS"],
