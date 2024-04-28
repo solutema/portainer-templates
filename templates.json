@@ -9,7 +9,6 @@
       "categories": ["database"],
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redis.png",
-      "ports": ["6379/tcp"],
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/redis/docker-compose.yml"
@@ -105,7 +104,6 @@
       "categories": ["CMS"],
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
-      "ports": ["80/tcp"],
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/wordpress/docker-compose.yml"
