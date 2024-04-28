@@ -1,0 +1,159 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 3,
+      "title": "WordPress on Alpine",
+      "description": "WordPress setup in Alpine OS + a Mariadb database",
+      "note": "Deploys a WordPress instance connected to a Mariadb database.",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://d1q6f0aelx0por.cloudfront.net/product-logos/library-wordpress-logo.png",
+      "repository": {
+        "url": "https://code.gruposolutema.com/portainer/portainer-templates",
+        "stackfile": "stacks/wordpress-alpine/docker-stack.yml"
+      },
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
+          "label": "Database image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "11.5",
+          "label": "Database tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "label": "Root password",
+          "name": "ROOT_PASS"
+        },
+        {
+          "default": "wordpress",
+          "label": "Database name",
+          "name": "DB_NAME"
+        },
+        {
+          "default": "user",
+          "label": "Database username",
+          "name": "DB_USER"
+        },
+        {
+          "default": "password",
+          "label": "Database password",
+          "name": "DB_PASS"
+        },
+        {
+          "default": "wp_",
+          "label": "Database prefix",
+          "name": "DB_PREFIX"
+        }, 
+        {
+          "default": "phpmyadmin",
+          "label": "Phpmyadmin image",
+          "name": "PHPMYADMIN_IMAGE"
+        },
+        {
+          "default": "5.2.1-apache",
+          "label": "Phpmyadmin tag",
+          "name": "PHPMYADMIN_TAG"
+        },
+        {
+          "default": "phpmyadmin.example.com",
+          "label": "Phpmyadmin domain",
+          "name": "PHPMYADMIN_DOMAIN"
+        },
+        {
+          "default": "true",
+          "label": "Enable HTTPS reverse proxy",
+          "name": "ENABLE_HTTPS_REVERSE_PROXY"
+        },                
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-wordpress",
+          "label": "Wordpress image",
+          "name": "WORDPRESS_IMAGE"
+        },
+        {
+          "default": "latest",
+          "label": "Wordpress tag",
+          "name": "WORDPRESS_TAG"
+        },
+        {
+          "default": "email@example.com",
+          "label": "Admin email",
+          "name": "ADMIN_EMAIL"
+        },
+        {
+          "default": "admin",
+          "label": "Admin user",
+          "name": "ADMIN_USER"
+        },
+        {
+          "default": "password",
+          "label": "Admin password",
+          "name": "ADMIN_PASS"
+        },
+        {
+          "default": "false",
+          "label": "Debug mode",
+          "name": "DEBUG_MODE"
+        },
+        {
+          "default": "example.com",
+          "label": "Site url",
+          "name": "SITE_URL"
+        },     
+        {
+          "default": "Docker Wordpress",
+          "label": "Site title",
+          "name": "SITE_TITLE"
+        },
+        {
+          "default": "es_ES",
+          "label": "Site locale",
+          "name": "SITE_LOCALE"
+        },
+        {
+          "default": "true",
+          "label": "Wp Cache",
+          "name": "WP_CACHE"
+        },
+        {
+          "default": "KqBkavctnL6AFNUL3oo5w9ap2tMe1m4n",
+          "label": "Wp cache key salt",
+          "name": "WP_CACHE_KEY_SALT"
+        },
+        {
+          "default": "",
+          "label": "Wp redis host",
+          "name": "WP_REDIS_HOST"
+        },
+        {
+          "default": "6379",
+          "label": "Wp redis port",
+          "name": "WP_REDIS_PORT"
+        },      
+        {
+          "default": "false",
+          "label": "Rotate keys",
+          "name": "ROTATE_KEYS"
+        },      
+        {
+          "default": "all",
+          "label": "Update mode",
+          "name": "UPDATE_MODE"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+  ]
+}
