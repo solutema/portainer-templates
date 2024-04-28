@@ -25,11 +25,6 @@
           "name": "REDIS_TAG"
         },
         {
-          "default": "6379",
-          "label": "Redis port",
-          "name": "REDIS_PORT"
-        },
-        {
           "default": "America/Santo_Domingo",
           "label": "Timezone",
           "name": "TIMEZONE"
