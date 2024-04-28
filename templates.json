@@ -5,13 +5,24 @@
       "type": 3,
       "title": "Redis",
       "description": "Open-source in-memory data structure store",
+      "note": "Deploys a Redis server instance as an application cache or quick-response database.",
       "categories": ["database"],
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redis.png",
       "ports": ["6379/tcp"],
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/redis/docker-compose.yml"
+      },
       "volumes": [
         {
-          "container": "/data"
+          "container": "/data/db"
+        },
+        {
+          "container": "/data/logs"
+        },
+        {
+          "container": "/data/insight"
         }
       ],
       "env": [
@@ -26,6 +37,11 @@
           "name": "REDIS_TAG"
         },
         {
+          "default": "6379",
+          "label": "Redis port",
+          "name": "REDIS_PORT"
+        },
+        {
           "default": "America/Santo_Domingo",
           "label": "Timezone",
           "name": "TIMEZONE"
@@ -36,13 +52,17 @@
           "name": "ENABLE_LOGS"
         },
         {
-          "default": "P@sswo0rd",
+          "default": "notice",
+          "label": "Log level",
+          "name": "LOG_LEVEL"
+        },
+        {
           "label": "Redis Password",
           "name": "REDIS_PASS"
         },
         {
           "default": "v2",
-          "label": "iNSIGHT tag",
+          "label": "Insight tag",
           "name": "INSIGHT_TAG"
         },
         {
@@ -77,15 +97,6 @@
         }
       ]
     },
-
-
-
-
-
-
-
-
-    
     {
       "type": 3,
       "title": "WordPress",
@@ -94,6 +105,7 @@
       "categories": ["CMS"],
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+      "ports": ["80/tcp"],
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/wordpress/docker-compose.yml"
