@@ -4,14 +4,14 @@
     {
       "type": 3,
       "title": "WordPress",
-      "description": "WordPress setup in Alpine OS + a Mariadb database",
+      "description": "WordPress setup with a Mariadb database",
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://d1q6f0aelx0por.cloudfront.net/product-logos/library-wordpress-logo.png",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
       "repository": {
-        "url": "https://code.gruposolutema.com/portainer/portainer-templates",
-        "stackfile": "stacks/wordpress-alpine/docker-stack.yml"
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/wordpress/docker-compose.yml"
       },
       "volumes": [
         {
