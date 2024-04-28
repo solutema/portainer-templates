@@ -233,6 +233,81 @@
           "name": "NETWORK"
         }
       ]
+    },
+    {
+      "type": 3,
+      "title": "Zabbix Server",
+      "description": "Zabbix Server setup with postgres database.",
+      "note": "Deploys a Zabbix Server to monitor IT infrastructure such as networks, servers, virtual machines, and cloud services.",
+      "categories": ["Monitor Tool"],
+      "platform": "linux",
+      "logo": "https://www.gravatar.com/avatar/80546ec7b550e478c2333bef451ae888.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/zabbix/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
+          "label": "Postgres image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16",
+          "label": "Postgres tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "default": "zabbix",
+          "label": "Postgres user",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "default": "PasswOrd",
+          "label": "Postgres password",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "RootPassword",
+          "label": "Superuser Pass",
+          "name": "SUPERUSER_PASS"
+        },
+        {
+          "default": "zabbix",
+          "label": "Postgres database",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-zabbix",
+          "label": "Zabbix server image",
+          "name": "ZABBIX_IMAGE"
+        },
+        {
+          "default": "6.4.13",
+          "label": "Zabbix server tag",
+          "name": "ZABBIX_TAG"
+        },
+        {
+          "default": "zabbix-server",
+          "label": "Zabbix server",
+          "name": "ZABBIX_SERVER"
+        },
+        {
+          "default": "zabbix.example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
     }
   ]
 }
