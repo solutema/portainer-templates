@@ -9,9 +9,11 @@ services:
       - logs:/data/logs
     restart: always
     environment:
-      - CONTAINER_NAME=${COMPOSE_PROJECT_NAME}-server
-      - TIMEZONE=${TIMEZONE}
-      - ENABLE_LOGS=${ENABLE_LOGS}
+      - CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-server
+      - TIMEZONE: ${TIMEZONE}
+      - ENABLE_LOGS: ${ENABLE_LOGS}
+      - LOG_LEVEL: ${LOG_LEVEL}
+      - REDIS_PASS: ${REDIS_PASS}
 
   insight:
     image: redislabs/redisinsight:${INSIGHT_TAG}
