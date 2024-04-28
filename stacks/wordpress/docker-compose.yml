@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  mariadb:
+    container_name: ${COMPOSE_PROJECT_NAME}-mariadb
+    image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      TIMEZONE: ${TIMEZONE}
+      ROOT_PASS: ${ROOT_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+
+  phpmyadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}-phpmyadmin
+    image: ${PHPMYADMIN_IMAGE}:${PHPMYADMIN_TAG}
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1 # To allow fill db credentials
+      VIRTUAL_HOST: ${PHPMYADMIN_DOMAIN}
+      LETSENCRYPT_HOST: ${PHPMYADMIN_DOMAIN}
+
+  wordpress:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${WORDPRESS_IMAGE}:${WORDPRESS_TAG}
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    links:
+      - mariadb:mariadb
+    volumes:
+      - data:/www/wordpress
+      - logs:/www/logs
+    environment:
+      ENABLE_HTTPS_REVERSE_PROXY: ${ENABLE_HTTPS_REVERSE_PROXY}
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-app
+      DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_PREFIX: ${DB_PREFIX}
+      TIMEZONE: ${TIMEZONE}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      DEBUG_MODE: ${DEBUG_MODE}
+      SITE_URL: www.${SITE_URL}
+      SITE_TITLE: ${SITE_TITLE}
+      SITE_LOCALE: ${SITE_LOCALE}
+      WP_CACHE: ${WP_CACHE}
+      WP_CACHE_KEY_SALT: ${WP_CACHE_KEY_SALT}
+      WP_REDIS_HOST: ${WP_REDIS_HOST}
+      WP_REDIS_PORT: ${WP_REDIS_PORT}
+      ROTATE_KEYS: ${ROTATE_KEYS}
+      UPDATE_MODE: ${UPDATE_MODE}
+      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
+      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+
+volumes:
+  mariadb:
+  data:
+  logs:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
