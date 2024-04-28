@@ -3,6 +3,91 @@
   "templates": [
     {
       "type": 3,
+      "title": "Redis",
+      "description": "Open-source in-memory data structure store",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redis.png",
+      "ports": ["6379/tcp"],
+      "volumes": [
+        {
+          "container": "/data"
+        }
+      ],
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-redis",
+          "label": "Redis image",
+          "name": "REDIS_IMAGE"
+        },
+        {
+          "default": "7.2.4",
+          "label": "Redis tag",
+          "name": "REDIS_TAG"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "default": "true",
+          "label": "Enable Logfiles",
+          "name": "ENABLE_LOGS"
+        },
+        {
+          "default": "P@sswo0rd",
+          "label": "Redis Password",
+          "name": "REDIS_PASS"
+        },
+        {
+          "default": "v2",
+          "label": "iNSIGHT tag",
+          "name": "INSIGHT_TAG"
+        },
+        {
+          "default": "5540",
+          "label": "Insight port",
+          "name": "INSIGHT_PORT"
+        },
+        {
+          "default": "info",
+          "label": "RI log level",
+          "name": "RI_LOG_LEVEL"
+        },
+        {
+          "default": "true",
+          "label": "RI files logger",
+          "name": "RI_FILES_LOGGER"
+        },
+        {
+          "default": "true",
+          "label": "RI stdout logger",
+          "name": "RI_STDOUT_LOGGER"
+        },
+        {
+          "default": "insight.example.com",
+          "label": "Insight domain",
+          "name": "INSIGHT_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+
+
+
+
+
+
+
+
+    
+    {
+      "type": 3,
       "title": "WordPress",
       "description": "WordPress setup with a Mariadb database",
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
