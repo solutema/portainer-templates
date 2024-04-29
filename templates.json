@@ -10,8 +10,8 @@
       "platform": "linux",
       "logo": "https://somebooks.es/wp-content/uploads/2022/02/OpenLDAP.png",
       "repository": {
-        "url": "https://code.gruposolutema.com/portainer/portainer-templates",
-        "stackfile": "stacks/openldap/docker-stack.yml"
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/openldap/docker-compose.yml"
       },
       "env": [   
         {
