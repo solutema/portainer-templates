@@ -15,7 +15,7 @@
       },
       "env": [
         {
-          "default": "3001",
+          "default": "3000",
           "label": "Grafana port",
           "name": "GRAFANA_PORT"
         },
