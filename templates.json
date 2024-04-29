@@ -69,6 +69,44 @@
       },
       {
       "type": 3,
+      "title": "Gitea act runner",
+      "description": "Gitea runner setup",
+      "note": "Deploys a Gitea act runner.",
+      "categories": ["CI/CD"],
+      "platform": "linux",
+      "logo": "https://www.gravatar.com/avatar/5603d5a79452bc237ac44f663d39f9aa.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gitea-act-runner/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "gitea/act_runner",
+          "label": "Gitea act runner image",
+          "name": "GITEA_ACT_RUNNER_IMAGE"
+        },
+        {
+          "default": "0.2.10",
+          "label": "Gitea act runner tag",
+          "name": "GITEA_ACT_RUNNER_TAG"
+        },
+        {
+          "label": "Gitea instance url",
+          "name": "GITEA_INSTANCE_URL"
+        },
+        {
+          "label": "Gitea instance registration token",
+          "name": "GITEA_RUNNER_REGISTRATION_TOKEN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+       ]
+      },    
+      {
+      "type": 3,
       "title": "OpenLDAP",
       "description": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol",
       "note": "Deploys an OpenLDAP Server.",
