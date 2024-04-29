@@ -41,11 +41,6 @@
           "name": "MYSQL_DATABASE"
         },
         {
-          "default": "3306",
-          "label": "MySQL port",
-          "name": "MYSQL_PORT"
-        },
-        {
           "default": "gitea/gitea",
           "label": "Gitea image",
           "name": "GITEA_IMAGE"
