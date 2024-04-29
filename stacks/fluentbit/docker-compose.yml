@@ -8,8 +8,8 @@ services:
     ports:
       - 2021:2021
     volumes:
-      - fluentbit-proc:/host/proc
-      - fluentbit-sys:/host/sys
+      - proc:/host/proc
+      - sys:/host/sys
 
   grafana:
     container_name: ${COMPOSE_PROJECT_NAME}-grafana
@@ -38,8 +38,8 @@ services:
       - 9090:9090
 
 volumes:
-  fluentbit-proc:
-  fluentbit-sys:
+  proc:
+  sys:
   
 networks:
   default:
