@@ -6,32 +6,16 @@ services:
     image: ${LDAP_IMAGE}:${LDAP_TAG}
     restart: always
     environment:
-      TIMEZONE: ${TIMEZONE}
-      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-app
-      CONTAINER_ENABLE_MONITORING: ${CONTAINER_ENABLE_MONITORING}
-      HOSTNAME: ${SERVER_HOSTNAME}
-      ORGANIZATION: ${ORGANIZATION}
-      DOMAIN: ${DOMAIN}
-      BASE_DN: ${BASE_DN}
-      LOG_LEVEL: ${LOG_LEVEL}
-      ADMIN_PASS: ${ADMIN_PASS}
-      CONFIG_PASS: ${CONFIG_PASS}
-      DEBUG_MODE: ${DEBUG_MODE}
-      ENABLE_READONLY_USER: ${ENABLE_READONLY_USER}
-      READONLY_USER_USER: ${READONLY_USER_USER}
-      READONLY_USER_PASS: ${READONLY_USER_PASS}
-      SCHEMA_TYPE: ${SCHEMA_TYPE}
-      SLAPD_HOSTS: ${SLAPD_HOSTS}
-      VIRTUAL_HOST: ${HOST_DOMAIN}
-      LETSENCRYPT_HOST: ${HOST_DOMAIN}
+      LDAP_FORCE_STARTTLS: "true"
+      LDAP_DOMAIN: "customdomain.com"
+      LDAP_BASEDN: "dc=customdomain,dc=com"
+      LDAP_ORGANISATION: "Custom Domain, Inc."
+      LDAP_BINDDN: "cn=admin,dc=customdomain,dc=com"
     ports:
       - ${LDAP_PORT}:389
       - ${LDAPS_PORT}:636
     volumes:
-      - backup:/data/backup
       - data:/var/lib/openldap
-      - config:/etc/openldap/slapd.d
-      - certs:/certs
 
   phpldapadmin:
     container_name: ${COMPOSE_PROJECT_NAME}-phpldapadmin
@@ -46,10 +30,7 @@ services:
       LETSENCRYPT_HOST: ${PHPLDAPADMIN_HOSTNAME}
 
 volumes:
-  backup:
   data:
-  config:
-  certs:
 
 networks:
   default:
