@@ -1,6 +1,141 @@
 {
   "version": "2",
   "templates": [
+    {
+      "type": 3,
+      "title": "OpenLDAP",
+      "description": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol",
+      "note": "Deploys an OpenLDAP Server.",
+      "categories": ["Directory Access Protocol"],
+      "platform": "linux",
+      "logo": "https://somebooks.es/wp-content/uploads/2022/02/OpenLDAP.png",
+      "repository": {
+        "url": "https://code.gruposolutema.com/portainer/portainer-templates",
+        "stackfile": "stacks/openldap/docker-stack.yml"
+      },
+      "env": [   
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-openldap",
+          "label": "LDAP Image",
+          "name": "LDAP_IMAGE"
+        },
+        {
+          "default": "2.6",
+          "label": "LDAP Tag",
+          "name": "LDAP_TAG"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "default": "TRUE",
+          "label": "Container enable monitoring",
+          "name": "CONTAINER_ENABLE_MONITORING"
+        },
+        {
+          "default": "openldap",
+          "label": "Hostname",
+          "name": "SERVER_HOSTNAME"
+        },
+        {
+          "default": "Example Organization",
+          "label": "Organisation",
+          "name": "ORGANIZATION"
+        },
+        {
+          "default": "example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "dc=example,dc=com",
+          "label": "Base DN",
+          "name": "BASE_DN"
+        },
+        {
+          "default": "256",
+          "label": "Log level",
+          "name": "LOG_LEVEL"
+        },
+        {
+          "default": "admin",
+          "label": "Admin password",
+          "name": "ADMIN_PASS"
+        },
+        {
+          "default": "config",
+          "label": "Configuration password",
+          "name": "CONFIG_PASS"
+        },
+        {
+          "default": "FALSE",
+          "label": "Debug mode",
+          "name": "DEBUG_MODE"
+        },
+        {
+          "default": "FALSE",
+          "label": "Enable readonly user",
+          "name": "ENABLE_READONLY_USER"
+        },
+        {
+          "default": "reader",
+          "label": "Readonly user",
+          "name": "READONLY_USER_USER"
+        },
+        {
+          "default": "reader",
+          "label": "Readonly password",
+          "name": "READONLY_USER_PASS"
+        },
+        {
+          "default": "nis",
+          "label": "Schema type",
+          "name": "SCHEMA_TYPE"
+        },
+        {
+          "default": "389",
+          "label": "LDAP Port",
+          "name": "LDAP_PORT"
+        },
+        {
+          "default": "636",
+          "label": "LDAPS Port",
+          "name": "LDAPS_PORT"
+        },
+        {
+          "default": "ldapi:/// ldap://${SERVER_HOSTNAME}.${DOMAIN} ldaps://${SERVER_HOSTNAME}.${DOMAIN}",
+          "label": "Slapd hots",
+          "name": "SLAPD_HOSTS"
+        },
+        {
+          "default": "openldap.example.com",
+          "label": "Host domain",
+          "name": "HOST_DOMAIN"
+        },
+        {
+          "default": "osixia/phpldapadmin",
+          "label": "phpLDAPadmin Image",
+          "name": "PHPLDAPADMIN_IMAGE"
+        },
+        {
+          "default": "0.9.0",
+          "label": "phpLDAPadmin Tag",
+          "name": "PHPLDAPADMIN_TAG"
+        },
+        {
+          "default": "phpldapadmin.example.com",
+          "label": "PHPLDAPAdmin hostname",
+          "name": "PHPLDAPADMIN_HOSTNAME"
+        },        
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
       {
       "type": 3,
       "title": "Redis",
