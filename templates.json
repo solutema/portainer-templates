@@ -1,7 +1,47 @@
 {
   "version": "2",
   "templates": [
-    {
+      {
+      "type": 3,
+      "title": "Fluent Bit",
+      "description": "Fluent Bit is a Fast and Lightweight Logs and Metrics processor for Linux, BSD, OSX and Windows",
+      "note": "Deploys a Fluent Bit instance with Grafana",
+      "categories": ["Logging"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/fluent/fluent-bit/master/fluentbit_logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/fluentbit/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "3001",
+          "label": "Grafana port",
+          "name": "GRAFANA_PORT"
+        },
+        {
+          "default": "admin",
+          "label": "Grafana admin user",
+          "name": "GF_SECURITY_ADMIN_USER"
+        },
+        {
+          "default": "admin",
+          "label": "Grafana admin password",
+          "name": "GF_SECURITY_ADMIN_PASSWORD"
+        },
+        {
+          "default": "grafana.example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
       "type": 3,
       "title": "Redis",
       "description": "Open-source in-memory data structure store",
