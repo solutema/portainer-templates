@@ -15,54 +15,49 @@
       },
       "env": [   
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-openldap",
+          "default": "registry.gruposolutema.com/openldap/docker-openldap",
           "label": "LDAP Image",
           "name": "LDAP_IMAGE"
         },
         {
-          "default": "2.6.7",
+          "default": "test",
           "label": "LDAP Tag",
           "name": "LDAP_TAG"
         },
         {
-          "default": "America/Santo_Domingo",
-          "label": "Timezone",
-          "name": "TIMEZONE"
-        },
-        {
           "default": "openldap.example.com",
           "label": "Hostname",
-          "name": "SERVER_HOSTNAME"
+          "name": "OPENLDAP_HOSTNAME"
         },
         {
-          "default": "Example Organization",
-          "label": "Organisation",
-          "name": "ORGANIZATION"
+          "default": "true",
+          "label": "LDAP Force StartTLS",
+          "name": "LDAP_FORCE_STARTTLS"
         },
         {
           "default": "example.com",
-          "label": "Domain",
-          "name": "DOMAIN"
+          "label": "LDAP Domain",
+          "name": "LDAP_DOMAIN"
         },
         {
           "default": "dc=example,dc=com",
-          "label": "Base DN",
-          "name": "BASE_DN"
+          "label": "LDAP Base DN",
+          "name": "LDAP_BASEDN"
         },
         {
-          "default": "admin",
-          "label": "Admin password",
-          "name": "ADMIN_PASS"
+          "default": "Example, Inc.",
+          "label": "LDAP Organisation",
+          "name": "LDAP_ORGANISATION"
         },
         {
-          "default": "config",
-          "label": "Configuration password",
-          "name": "CONFIG_PASS"
+          "default": "cn=admin,dc=example,dc=com",
+          "label": "LDAP Bind DN",
+          "name": "LDAP_BINDDN"
         },
         {
-          "default": "nis",
-          "label": "Schema type",
-          "name": "SCHEMA_TYPE"
+          "default": "adminAdmin",
+          "label": "LDAP Secret",
+          "name": "LDAP_SECRET"
         },
         {
           "default": "389",
@@ -73,11 +68,6 @@
           "default": "636",
           "label": "LDAPS Port",
           "name": "LDAPS_PORT"
-        },
-        {
-          "default": "openldap.example.com",
-          "label": "Host domain",
-          "name": "HOST_DOMAIN"
         },
         {
           "default": "osixia/phpldapadmin",
