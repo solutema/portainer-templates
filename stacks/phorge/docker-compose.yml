@@ -1,0 +1,50 @@
+version: '3'
+services:
+  mariadb:
+    container_name: ${COMPOSE_PROJECT_NAME}-mariadb
+    image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    restart: always
+    volumes:
+       - phorge_db:/var/lib/mysql
+    environment:
+      ROOT_PASS: ${ROOT_PASS}
+
+  phorge:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${PHORGE_IMAGE}:${PHORGE_TAG}
+    restart: always
+    volumes:
+      - phorge_web:/var/www/html
+      - phorge_ssh:/etc/ssh
+      - phorge_repo:/var/repo
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    environment:
+      UPGRADE_ON_RESTART: true
+      MARIADB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_PROTOCOL: ${SMTP_PROTOCOL}
+      MARIADB_ROOT_PASSWORD: ${ROOT_PASS}
+      PHABRICATOR_TITLE: ${PHABRICATOR_TITLE}
+      PHABRICATOR_DOMAIN: https://${URL_DOMAIN}
+      PHABRICATOR_URL: https://${URL_DOMAIN}
+      PH_BASE_URI: https://${URL_DOMAIN}
+      PHABRICATOR_ALT_FILE_DOMAIN: https://cdn.${URL_DOMAIN}
+      VIRTUAL_HOST: ${URL_DOMAIN},www.${URL_DOMAIN},cdn.${URL_DOMAIN},www.cdn.${URL_DOMAIN}
+      LETSENCRYPT_HOST: ${URL_DOMAIN},www.${URL_DOMAIN},cdn.${URL_DOMAIN},www.cdn.${URL_DOMAIN}
+
+volumes:
+  phorge_web:
+  phorge_ssh:
+  phorge_repo:
+  phorge_db:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
