@@ -8,7 +8,7 @@
 </p>
 
 > **TL;DR** Under Settings → App Templates in your Portainer GUI, paste this URL:<br>
-> `https://code.gruposolutema.com/portainer/portainer-templates/-/raw/main/templates.json`<br>
+> `https://raw.githubusercontent.com/solutema/templates/main/templates.json`<br>
 
 
 <details>
@@ -43,7 +43,7 @@ You can browse all supported apps and stacks and see stats, config options and s
 
 1. Log into your Portainer web UI
 2. Under <ins>Settings</ins> --> <ins>App Templates</ins>, update the URL to
-    - `https://code.gruposolutema.com/portainer/portainer-templates/-/raw/main/templates.json`
+    - `https://raw.githubusercontent.com/solutema/templates/main/templates.json`
 3. Now under <ins>Home</ins> --> <ins>App Templates</ins>, you should see all apps. Click one to deploy.
 
 <details>
