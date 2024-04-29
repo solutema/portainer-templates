@@ -4,7 +4,7 @@ services:
   fluentbit:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: fluent/fluent-bit:latest
-    command: /fluent-bit/bin/fluent-bit -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys -o prometheus_exporter -p "add_label=host fluentbit" -f 1
+#    command: /fluent-bit/bin/fluent-bit -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys -o prometheus_exporter -p "add_label=host fluentbit" -f 1
     ports:
       - 2021:2021
     volumes:
@@ -18,8 +18,8 @@ services:
       - prometheus
     ports:
       - "${GRAFANA_PORT}:3000"
-    volumes:
-      - ./config/grafana/provisioning:/etc/grafana/provisioning
+#    volumes:
+#      - ./config/grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
@@ -30,10 +30,10 @@ services:
   prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     image: prom/prometheus:latest
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
+#    volumes:
+#      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+#    command:
+#      - --config.file=/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
   
