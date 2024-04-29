@@ -20,7 +20,7 @@
           "name": "LDAP_IMAGE"
         },
         {
-          "default": "2.6",
+          "default": "2.6.7",
           "label": "LDAP Tag",
           "name": "LDAP_TAG"
         },
@@ -30,12 +30,7 @@
           "name": "TIMEZONE"
         },
         {
-          "default": "TRUE",
-          "label": "Container enable monitoring",
-          "name": "CONTAINER_ENABLE_MONITORING"
-        },
-        {
-          "default": "openldap",
+          "default": "openldap.example.com",
           "label": "Hostname",
           "name": "SERVER_HOSTNAME"
         },
@@ -55,11 +50,6 @@
           "name": "BASE_DN"
         },
         {
-          "default": "256",
-          "label": "Log level",
-          "name": "LOG_LEVEL"
-        },
-        {
           "default": "admin",
           "label": "Admin password",
           "name": "ADMIN_PASS"
@@ -68,26 +58,6 @@
           "default": "config",
           "label": "Configuration password",
           "name": "CONFIG_PASS"
-        },
-        {
-          "default": "FALSE",
-          "label": "Debug mode",
-          "name": "DEBUG_MODE"
-        },
-        {
-          "default": "FALSE",
-          "label": "Enable readonly user",
-          "name": "ENABLE_READONLY_USER"
-        },
-        {
-          "default": "reader",
-          "label": "Readonly user",
-          "name": "READONLY_USER_USER"
-        },
-        {
-          "default": "reader",
-          "label": "Readonly password",
-          "name": "READONLY_USER_PASS"
         },
         {
           "default": "nis",
@@ -103,11 +73,6 @@
           "default": "636",
           "label": "LDAPS Port",
           "name": "LDAPS_PORT"
-        },
-        {
-          "default": "ldapi:/// ldap://${SERVER_HOSTNAME}.${DOMAIN} ldaps://${SERVER_HOSTNAME}.${DOMAIN}",
-          "label": "Slapd hots",
-          "name": "SLAPD_HOSTS"
         },
         {
           "default": "openldap.example.com",
