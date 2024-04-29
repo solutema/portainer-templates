@@ -2,42 +2,45 @@ version: '3'
 
 services:
   fluentbit:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
     image: fluent/fluent-bit:latest
-    container_name: fluentbit
     command: /fluent-bit/bin/fluent-bit -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys -o prometheus_exporter -p "add_label=host fluentbit" -f 1
     ports:
       - 2021:2021
-    networks:
-      - exporter-network
     volumes:
-      - /proc:/host/proc
-      - /sys:/host/sys
+      - fluentbit-proc:/host/proc
+      - fluentbit-sys:/host/sys
 
   grafana:
+    container_name: ${COMPOSE_PROJECT_NAME}-grafana
     image: grafana/grafana:latest
     depends_on:
       - prometheus
     ports:
-      - 3000:3000
+      - "${GRAFANA_PORT}:3000"
     volumes:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
-    networks:
-      - exporter-network
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+      - VIRTUAL_PORT: ${GRAFANA_PORT}
+      - VIRTUAL_HOST: ${DOMAIN}
+      - LETSENCRYPT_HOST: ${DOMAIN}
 
   prometheus:
-    container_name: prometheus
+    container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     image: prom/prometheus:latest
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-    networks:
-      - exporter-network
     ports:
       - 9090:9090
 
+volumes:
+  fluentbit-proc:
+  fluentbit-sys:
+  
 networks:
   default:
     name: ${NETWORK}
