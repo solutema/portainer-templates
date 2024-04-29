@@ -93,6 +93,82 @@
       },
       {
       "type": 3,
+      "title": "Phorge",
+      "description": "Phorge is a collection of web applications which help software companies build better software.",
+      "note": "Phorge is a community-maintained fork of Phabricator.",
+      "categories": ["continuous-integration"],
+      "platform": "linux",
+      "logo": "https://phorge.it/img/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/phorge/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
+          "label": "MariaDB image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "11.5",
+          "label": "MariaDB tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "label": "Database root password",
+          "name": "ROOT_PASS"
+        },
+        {
+          "default": "registry.gruposolutema.com/phorge/docker-phorge",
+          "label": "Phorge image",
+          "name": "PHORGE_IMAGE"
+        },    
+        {
+          "default": "2023.49",
+          "label": "Phorge tag",
+          "name": "PHORGE_TAG"
+        },
+        {
+          "label": "Phorge title",
+          "name": "PHABRICATOR_TITLE"
+        },
+        {
+          "default": "mail.example.com",
+          "label": "SMTP host",
+          "name": "SMTP_HOST"
+        },
+        {
+          "default": "465",
+          "label": "SMTP port",
+          "name": "SMTP_PORT"
+        },
+        {
+          "label": "SMTP user",
+          "name": "SMTP_USER"
+        },
+        {
+          "label": "SMTP password",
+          "name": "SMTP_PASSWORD"
+        },
+        {
+          "default": "ssl",
+          "label": "SMTP protocol",
+          "name": "SMTP_PROTOCOL"
+        },
+        {
+          "default": "devops.example.com",
+          "label": "URL domain",
+          "name": "URL_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
+      "type": 3,
       "title": "Redis",
       "description": "Open-source in-memory data structure store",
       "note": "Deploys a Redis server instance as an application cache or quick-response database.",
