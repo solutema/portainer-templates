@@ -317,6 +317,10 @@
           "name": "REDIS_PORT"
         },
         {
+          "label": "Redis password",
+          "name": "REDIS_PASSWORD"
+        },        
+        {
           "label": "Weblate email host",
           "name": "WEBLATE_EMAIL_HOST"
         },
