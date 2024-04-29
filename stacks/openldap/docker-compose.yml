@@ -6,11 +6,12 @@ services:
     image: ${LDAP_IMAGE}:${LDAP_TAG}
     restart: always
     environment:
-      LDAP_FORCE_STARTTLS: "true"
-      LDAP_DOMAIN: "customdomain.com"
-      LDAP_BASEDN: "dc=customdomain,dc=com"
-      LDAP_ORGANISATION: "Custom Domain, Inc."
-      LDAP_BINDDN: "cn=admin,dc=customdomain,dc=com"
+      LDAP_FORCE_STARTTLS: ${LDAP_FORCE_STARTTLS}
+      LDAP_DOMAIN: ${LDAP_DOMAIN}
+      LDAP_BASEDN: ${LDAP_BASEDN}
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+      LDAP_BINDDN: ${LDAP_BINDDN}
+      LDAP_SECRET: ${LDAP_SECRET}
     ports:
       - ${LDAP_PORT}:389
       - ${LDAPS_PORT}:636
