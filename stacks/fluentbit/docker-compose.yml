@@ -5,7 +5,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: fluent/fluent-bit:latest
     restart: unless-stopped
-#    command: /fluent-bit/bin/fluent-bit -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys -o prometheus_exporter -p "add_label=host fluentbit" -f 1
+    command: /fluent-bit/bin/fluent-bit -i node_exporter_metrics -p path.procfs=/host/proc -p path.sysfs=/host/sys -o prometheus_exporter -p "add_label=host fluentbit" -f 1
     ports:
       - 2021:2021
     volumes:
@@ -35,8 +35,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-#    command:
-#      - --config.file=/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
   
