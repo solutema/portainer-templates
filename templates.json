@@ -1,7 +1,78 @@
 {
   "version": "2",
   "templates": [
-    {
+      {
+      "type": 3,
+      "title": "Gitea",
+      "description": "Gitea setup with a MySQL database",
+      "note": "Deploys a Gitea instance connected to a MySQL database.",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://www.gravatar.com/avatar/5603d5a79452bc237ac44f663d39f9aa.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gitea/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "mysql",
+          "label": "MySQL database image",
+          "name": "MYSQL_IMAGE"
+        },
+        {
+          "default": "8",
+          "label": "MySQL Database tag",
+          "name": "MYSQL_TAG"
+        },
+        {
+          "label": "MySQL database username",
+          "name": "MYSQL_USER"
+        },
+        {
+          "label": "MySQL Database password for user",
+          "name": "MYSQL_PASSWORD"
+        },
+        {
+          "label": "Database root password",
+          "name": "MYSQL_ROOT_PASSWORD"
+        },
+        {
+          "label": "MySQL database name",
+          "name": "MYSQL_DATABASE"
+        },
+        {
+          "default": "3306",
+          "label": "MySQL port",
+          "name": "MYSQL_PORT"
+        },
+        {
+          "default": "gitea/gitea",
+          "label": "Gitea image",
+          "name": "GITEA_IMAGE"
+        },
+        {
+          "default": "1.21.11",
+          "label": "Gitea tag",
+          "name": "GITEA_TAG"
+        },
+        {
+          "default": "3000",
+          "label": "Gitea port",
+          "name": "GITEA_PORT"
+        },
+        {
+          "default": "2222",
+          "label": "Gitea ssh port",
+          "name": "GITEA_SSH_PORT"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
       "type": 3,
       "title": "OpenLDAP",
       "description": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol",
