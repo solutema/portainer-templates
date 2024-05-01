@@ -25,20 +25,29 @@
           "name": "MYSQL_TAG"
         },
         {
+          "default": "apiopenstudio-db",
+          "label": "DB Hostname",
+          "name": "DB_HOSTNAME"
+        },
+        {
+          "default": "apiopenstudio",
+          "label": "MySQL database name",
+          "name": "MYSQL_DATABASE"
+        },
+        {
+          "default": "apiopenstudio",
           "label": "MySQL database username",
           "name": "MYSQL_USER"
         },
         {
+          "default": "my_s3cr3t",
           "label": "MySQL Database password for user",
           "name": "MYSQL_PASSWORD"
         },
         {
+          "default": "my_s3cr3t",
           "label": "Database root password",
           "name": "MYSQL_ROOT_PASSWORD"
-        },
-        {
-          "label": "MySQL database name",
-          "name": "MYSQL_DATABASE"
         },
         {
           "default": "proxy",
