@@ -477,7 +477,7 @@
       "title": "Weblate",
       "description": "Weblate is a Web based localization tool with tight version control integration",
       "note": "Deploys an Weblate instance.",
-      "categories": ["Translation"],
+      "categories": ["Computer-assisted translation"],
       "platform": "linux",
       "logo": "https://www.gravatar.com/avatar/e5f0d5efe7cd63ab2219d2bdd875cb0f.png",
       "repository": {
