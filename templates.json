@@ -174,26 +174,30 @@
       },
       "env": [
         {
-          "default": "postgres",
+          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
           "label": "Database image",
           "name": "POSTGRES_IMAGE"
         },
         {
-          "default": "16.2-alpine3.19",
+          "default": "16",
           "label": "Database tag",
           "name": "POSTGRES_TAG"
         },
         {
           "label": "Database name",
-          "name": "POSTGRES_DB"
+          "name": "DB_NAME"
         },
         {
           "label": "Database username",
-          "name": "POSTGRES_USER"
+          "name": "DB_USER"
         },
         {
           "label": "Database password for user",
-          "name": "POSTGRES_PASSWORD"
+          "name": "DB_PASS"
+        },
+        {
+          "label": "Database user root",
+          "name": "SUPERUSER_PASS"
         },
         {
           "default": "mailhog/mailhog",
