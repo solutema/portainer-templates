@@ -1,0 +1,66 @@
+version: '3'
+services:
+  postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    environment:
+      TIMEZONE: ${TIMEZONE}
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+    volumes:
+      - db:/var/lib/postgresql/data
+    restart: always
+      
+  gnuhealth:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${GNUHEALTH_IMAGE}:${GNUHEALTH_TAG}
+    environment:
+      TZ: ${TIMEZONE}
+      TRYTOND_EMAIL__FROM: ${EMAIL_FROM}
+      TRYTOND_EMAIL__URI: smtp://mailhog:1025
+      TRYTOND_DATABASE__URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${COMPOSE_PROJECT_NAME}-postgres/${POSTGRES_DB}
+      VIRTUAL_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
+      LETSENCRYPT_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
+    volumes:
+      - data:/var/lib/trytond/db
+    depends_on:
+      - postgres
+    restart: always
+
+  gnuhealth-cron:
+    container_name: ${COMPOSE_PROJECT_NAME}-cron
+    image: ${GNUHEALTH_IMAGE}:${GNUHEALTH_TAG}
+    command: trytond-cron -d ${POSTGRES_DB}
+    volumes:
+      - data:/var/lib/trytond/db
+    depends_on:
+      - postgres
+    restart: always
+
+  gnuhealth-update:
+    container_name: ${COMPOSE_PROJECT_NAME}-update
+    image: ${GNUHEALTH_IMAGE}:${GNUHEALTH_TAG}
+    command: sh -c "trytond-admin -d ${POSTGRES_DB} --all --emai ${GNUHEALTH_ADMIN_EMAIL} --password ${GNUHEALTH_ADMIN_PASSWORD} ---activate-dependencies -v && tail -f /dev/null"
+    volumes:
+      - data:/var/lib/trytond/db
+    depends_on:
+      - postgres
+    restart: "no"
+
+  mailhog:
+    container_name: ${COMPOSE_PROJECT_NAME}-mailhog
+    image: ${MAILHOG_IMAGE}:${MAILHOG_TAG}
+    restart: always
+    ports:
+      - ${MAILHOG_SMTP_PORT}:1025
+      - ${MAILHOG_HTTP_PORT}:8025
+
+volumes:
+  db:
+  data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
