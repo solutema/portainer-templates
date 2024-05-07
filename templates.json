@@ -160,6 +160,95 @@
         }
        ]
       },
+    {
+      "type": 3,
+      "title": "GNU Health",
+      "description": "GNU Health is a free/libre health and hospital information system.",
+      "note": "Deploys a GNU Health instance connected to a PostgreSQL database.",
+      "categories": ["health"],
+      "platform": "linux",
+      "logo": "https://files.mastodon.social/accounts/avatars/108/222/419/986/466/608/original/468031f81410a19d.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gnuhealth/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "postgres",
+          "label": "Database image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16.2-alpine3.19",
+          "label": "Database tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "label": "Database username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "label": "Database password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "mailhog/mailhog",
+          "label": "Mailhog image",
+          "name": "MAILHOG_IMAGE"
+        },
+        {
+          "default": "v1.0.1",
+          "label": "Mailhog tag",
+          "name": "MAILHOG_TAG"
+        },
+        {
+          "default": "1025",
+          "label": "Mailhog smtp port",
+          "name": "MAILHOG_SMTP_PORT"
+        },
+        {
+          "default": "8025",
+          "label": "Mailhog http port",
+          "name": "MAILHOG_HTTP_PORT"
+        },
+        {
+          "default": "registry.gruposolutema.com/gnuhealth/republica-dominicana/docker-gnuhealth",
+          "label": "GNU Health image",
+          "name": "GNUHEALTH_IMAGE"
+        },
+        {
+          "default": "4.2.3",
+          "label": "GNU Health tag",
+          "name": "GNUHEALTH_TAG"
+        },
+        {
+          "label": "Email from",
+          "name": "EMAIL_FROM"
+        },
+        {
+          "default": "es_419",
+          "label": "GNU Health language",
+          "name": "GNUHEALTH_LANGUAGE"
+        },
+        {
+          "label": "GNU Health admin e-mail",
+          "name": "GNUHEALTH_ADMIN_EMAIL"
+        },
+        {
+          "label": "GNU Health admin password",
+          "name": "GNUHEALTH_ADMIN_PASSWORD"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
       {
       "type": 3,
       "title": "Odoo",
