@@ -159,8 +159,75 @@
           "name": "NETWORK"
         }
        ]
-      },    
+      },
       {
+      "type": 3,
+      "title": "Odoo",
+      "description": "Open-source business apps.",
+      "categories": ["project-management"],
+      "platform": "linux",
+      "logo": "https://d1q6f0aelx0por.cloudfront.net/product-logos/library-odoo-logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/odoo/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "postgres",
+          "label": "PostgreSQL image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16.2-alpine3.19",
+          "label": "PostgreSQL tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "default": "odoo",
+          "label": "Database username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "default": "odoo",
+          "label": "Database password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "postgres",
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "odoo",
+          "label": "Odoo image",
+          "name": "ODOO_IMAGE"
+        },
+        {
+          "default": "16.0",
+          "label": "Odoo tag",
+          "name": "ODOO_TAG"
+        },
+          {
+          "default": "odoo.example.com",
+          "label": "URL",
+          "name": "URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/postgresql/data"
+        },
+        {
+          "container": "/mnt/extra-addons"
+        }
+      ]
+    },
+    {
       "type": 3,
       "title": "OpenLDAP",
       "description": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol",
