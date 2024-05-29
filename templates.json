@@ -253,6 +253,48 @@
         }
       ]
       },
+
+
+
+
+      {
+      "type": 3,
+      "title": "Gravitee",
+      "description": "Gravitee helps organizations manage and secure their entire API lifecycle with solutions for API design, management, security, productization, real-time observability, and more.",
+      "categories": ["project-management"],
+      "platform": "linux",
+      "logo": "https://d1q6f0aelx0por.cloudfront.net/product-logos/library-odoo-logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gravitee/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "postgres",
+          "label": "PostgreSQL image",
+          "name": "POSTGRES_IMAGE"
+        }
+     ],
+      "volumes": [
+        {
+          "container": "/var/lib/postgresql/data"
+        },
+        {
+          "container": "/mnt/extra-addons"
+        }
+      ]
+    },
+
+
+
+
+
+
+
+
+
+
+
       {
       "type": 3,
       "title": "Odoo",
