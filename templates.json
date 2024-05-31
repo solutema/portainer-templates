@@ -270,17 +270,77 @@
       },
       "env": [
         {
-          "default": "postgres",
-          "label": "PostgreSQL image",
-          "name": "POSTGRES_IMAGE"
+          "default": "mongo",
+          "label": "Mongo Image",
+          "name": "MONGO_IMAGE"
+        },
+        {
+          "default": "4.2",
+          "label": "Mongo Tag",
+          "name": "MONGO_TAG"
+        },
+        {
+          "default": "root",
+          "label": "Username",
+          "name": "MONGO_INITDB_ROOT_USERNAME"
+        },
+        {
+          "default": "password",
+          "label": "Password",
+          "name": "MONGO_INITDB_ROOT_PASSWORD"
+        },
+        {
+          "default": "8.13.4",
+          "label": "Elasticsearch Tag",
+          "name": "ELASTICSEARCH_TAG"
+        },
+        {
+          "default": "single-node",
+          "label": "Discovery Type",
+          "name": "DISCOVERY_TYPE"
+        },
+        {
+          "default": "1g",
+          "label": "Memory Limit",
+          "name": "MEMORY_LIMIT"
+        },
+        {
+          "default": "4.3.5",
+          "label": "API Gateway Tag",
+          "name": "API_GATEWAY_TAG"
+        },
+        {
+          "default": "api.example.com",
+          "label": "Virtual Domain",
+          "name": "VIRTUAL_DOMAIN"
+        },
+        {
+          "default": "4.3.5",
+          "label": "APIM TAG",
+          "name": "APIM_TAG"
         }
      ],
       "volumes": [
         {
-          "container": "/var/lib/postgresql/data"
+          "container": "/data/db"
         },
         {
-          "container": "/mnt/extra-addons"
+          "container": "/var/log/mongodb"
+        },
+        {
+          "container": "/usr/share/elasticsearch/data"
+        },
+        {
+          "container": "/opt/graviteeio-gateway/logs"
+        },
+        {
+          "container": "/opt/graviteeio-gateway/certificates"
+        },
+        {
+          "container": "/opt/graviteeio-management-api/logs"
+        },
+        {
+          "container": "/opt/graviteeio-management-api/license"
         }
       ]
     },
