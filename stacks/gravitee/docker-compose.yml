@@ -11,11 +11,11 @@ services:
     volumes:
       - mongo-data:/data/db
       - mongo-logs:/var/log/mongodb
-    healthcheck:
-      test: mongosh --eval 'db.runCommand({serverStatus:1}).ok' --quiet | grep 1
-      interval: 5s
-      timeout: 3s
-      retries: 10
+    # healthcheck:
+    #   test: mongosh --eval 'db.runCommand({serverStatus:1}).ok' --quiet | grep 1
+    #   interval: 5s
+    #   timeout: 3s
+    #   retries: 10
 
   elasticsearch:
     container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
@@ -38,11 +38,11 @@ services:
     mem_limit: ${MEMORY_LIMIT}
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" ]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+    # healthcheck:
+    #   test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" ]
+    #   interval: 5s
+    #   timeout: 3s
+    #   retries: 10
 
   gateway:
     container_name: ${COMPOSE_PROJECT_NAME}-gateway
@@ -51,10 +51,12 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - mongodb:
-          condition: service_healthy
-      - elasticsearch:
-          condition: service_healthy
+      - mongodb
+      - elasticsearch
+      # - mongodb:
+      #     condition: service_healthy
+      # - elasticsearch:
+      #     condition: service_healthy
     volumes:
       - gateway-logs:/opt/graviteeio-gateway/logs
     environment:
@@ -84,10 +86,12 @@ services:
       - mongodb
       - elasticsearch
     depends_on:
-      mongodb:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
+      - mongodb
+      - elasticsearch
+      # mongodb:
+      #   condition: service_healthy
+      # elasticsearch:
+      #   condition: service_healthy
     volumes:
       - api-logs:/opt/graviteeio-management-api/logs
       #- license:/opt/graviteeio-management-api/license
