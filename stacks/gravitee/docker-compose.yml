@@ -9,129 +9,135 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - mongo_data:/data/db
-      - mongo_logs:/var/log/mongodb
+      - mongo-data:/data/db
+      - mongo-logs:/var/log/mongodb
     healthcheck:
       test: mongosh --eval 'db.runCommand({serverStatus:1}).ok' --quiet | grep 1
       interval: 5s
       timeout: 3s
       retries: 10
 
-  # elasticsearch:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_TAG}
-  #   restart: always
-  #   environment:
-  #     - discovery.type=${DISCOVERY_TYPE}
-  #     - http.host=0.0.0.0
-  #     - transport.host=0.0.0.0
-  #     - xpack.security.enabled=false
-  #     - cluster.name=elasticsearch
-  #     - bootstrap.memory_lock=true
-  #     - discovery.type=single-node
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #     nofile: 65536
-  #   mem_limit: ${MEMORY_LIMIT}
-  #   volumes:
-  #     - elasticsearch_data:/usr/share/elasticsearch/data
-  #   healthcheck:
-  #     test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" ]
-  #     interval: 5s
-  #     timeout: 3s
-  #     retries: 10
+  elasticsearch:
+    container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
+    image: elasticsearch:${ELASTICSEARCH_TAG}
+    restart: always
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=0.0.0.0
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - cluster.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - discovery.type=${DISCOVERY_TYPE}
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile: 65536
+    mem_limit: ${MEMORY_LIMIT}
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
-  # gateway:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-gateway
-  #   image: graviteeio/apim-gateway:${API_GATEWAY_TAG}
-  #   restart: always
-  #   ports:
-  #     - "8082:8082"
-  #   depends_on:
-  #     - mongodb:
-  #         condition: service_healthy
-  #     - elasticsearch:
-  #         condition: service_healthy
-  #   volumes:
-  #     - apim-gateway-internal:/opt/graviteeio-gateway/logs
-  #     - certificates:/opt/graviteeio-gateway/certificates
-  #   environment:
-  #     - gravitee_management_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
-  #     - gravitee_ratelimit_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
-  #     - gravitee_management_type=mongodb
-  #     - gravitee_reporters_elasticsearch_endpoints_0=http://elasticsearch:9200
-  #     - gravitee_http_secured=true
-  #     - gravitee_http_ssl_clientAuth=request
-  #     - gravitee_http_ssl_keystore_type=pkcs12
-  #     - gravitee_http_ssl_keystore_path=/opt/graviteeio-gateway/certificates/server.p12
-  #     - gravitee_http_ssl_keystore_password=server-secret
-  #     - gravitee_http_ssl_truststore_type=pkcs12
-  #     - gravitee_http_ssl_truststore_path=/opt/graviteeio-gateway/certificates/ca.p12
-  #     - gravitee_http_ssl_truststore_password=ca-secret
-  #     - VIRTUAL_HOST: ${VIRTUAL_DOMAIN}
-  #     - LETSENCRYPT_HOST: ${VIRTUAL_DOMAIN}
-  #     - VIRTUAL_PORT: 8082
+  gateway:
+    container_name: ${COMPOSE_PROJECT_NAME}-gateway
+    image: graviteeio/apim-gateway:${VERSION_TAG}
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongodb:
+          condition: service_healthy
+      - elasticsearch:
+          condition: service_healthy
+    volumes:
+      - gateway-logs:/opt/graviteeio-gateway/logs
+    environment:
+      - gravitee_management_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
+      - gravitee_ratelimit_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
+      - gravitee_reporters_elasticsearch_endpoints_0=http://elasticsearch:9200
+      #- gravitee_management_type=mongodb
+      #- gravitee_http_secured=true
+      #- gravitee_http_ssl_clientAuth=request
+      #- gravitee_http_ssl_keystore_type=pkcs12
+      #- gravitee_http_ssl_keystore_path=/opt/graviteeio-gateway/certificates/server.p12
+      #- gravitee_http_ssl_keystore_password=server-secret
+      #- gravitee_http_ssl_truststore_type=pkcs12
+      #- gravitee_http_ssl_truststore_path=/opt/graviteeio-gateway/certificates/ca.p12
+      #- gravitee_http_ssl_truststore_password=ca-secret
+      - VIRTUAL_PORT: 8082
+      - VIRTUAL_HOST: ${GATEWAY_URL}
+      - LETSENCRYPT_HOST: ${GATEWAY_URL}
 
-  # management_api:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-api
-  #   image: graviteeio/apim-management-api:${APIM_TAG}
-  #   restart: always
-  #   ports:
-  #     - "8083:8083"
-  #   links:
-  #     - mongodb
-  #     - elasticsearch
-  #   depends_on:
-  #     mongodb:
-  #       condition: service_healthy
-  #     elasticsearch:
-  #       condition: service_healthy
-  #   volumes:
-  #     - apim-management-api:/opt/graviteeio-management-api/logs
-  #     - license:/opt/graviteeio-management-api/license
-  #   environment:
-  #     - gravitee_management_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
-  #     - gravitee_analytics_elasticsearch_endpoints_0=http://elasticsearch:9200
+  management_api:
+    container_name: ${COMPOSE_PROJECT_NAME}-api
+    image: graviteeio/apim-management-api:${VERSION_TAG}
+    restart: always
+    ports:
+      - "8083:8083"
+    links:
+      - mongodb
+      - elasticsearch
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - api-logs:/opt/graviteeio-management-api/logs
+      #- license:/opt/graviteeio-management-api/license
+    environment:
+      - gravitee_management_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
+      - gravitee_analytics_elasticsearch_endpoints_0=http://elasticsearch:9200
+      - VIRTUAL_PORT: 8083
+      - VIRTUAL_HOST: ${API_URL}
+      - LETSENCRYPT_HOST: ${API_URL}
 
-  # management_ui:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-ui
-  #   image: graviteeio/apim-management-ui:${APIM_VERSION:-3}
-  #   restart: always
-  #   ports:
-  #     - "8084:8080"
-  #   depends_on:
-  #     - management_api
-  #   environment:
-  #     - MGMT_API_URL=http://192.168.3.20:8083/management/organizations/DEFAULT/environments/DEFAULT/
-  #   volumes:
-  #     - ./.logs/apim-management-ui:/var/log/nginx
+  management_ui:
+    container_name: ${COMPOSE_PROJECT_NAME}-ui
+    image: graviteeio/apim-management-ui:${VERSION_TAG}
+    restart: always
+    ports:
+      - "8084:8080"
+    depends_on:
+      - management_api
+    environment:
+      - MGMT_API_URL=http://localhost:8083/management/organizations/DEFAULT/environments/DEFAULT/
+      - VIRTUAL_PORT: 8084
+      - VIRTUAL_HOST: ${UI_URL}
+      - LETSENCRYPT_HOST: ${UI_URL}      
+    volumes:
+      - ui-logs:/var/log/nginx
 
-  # portal_ui:
-  #   container_name: ${COMPOSE_PROJECT_NAME}-portal
-  #   image: graviteeio/apim-portal-ui:${APIM_VERSION:-3}
-  #   restart: always
-  #   ports:
-  #     - "8085:8080"
-  #   depends_on:
-  #     - management_api
-  #   environment:
-  #     - PORTAL_API_URL=http://192.168.3.20:8083/portal/environments/DEFAULT
-  #   volumes:
-  #     - ./.logs/apim-portal-ui:/var/log/nginx
+  portal_ui:
+    container_name: ${COMPOSE_PROJECT_NAME}-portal
+    image: graviteeio/apim-portal-ui:${VERSION_TAG}
+    restart: always
+    ports:
+      - "8085:8080"
+    depends_on:
+      - management_api
+    environment:
+      - PORTAL_API_URL=http://localhost:8083/portal/environments/DEFAULT
+      - VIRTUAL_PORT: 8085
+      - VIRTUAL_HOST: ${PORTAL_URL}
+      - LETSENCRYPT_HOST: ${PORTAL_URL}  
+    volumes:
+      - portal-logs:/var/log/nginx
 
 volumes:
-  mongo_data:
-  mongo_logs:
-  # elasticsearch_data:
-  # apim-gateway-internal:
-  # certificates:
-  # apim-management-api:
-  # license:
-
-
+  mongo-data:
+  mongo-logs:
+  elasticsearch-data:
+  gateway-logs:
+  api-logs:
+  ui-logs:
+  portal-logs:
 
 networks:
   default:

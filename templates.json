@@ -297,18 +297,33 @@
         },
         {
           "default": "4.3.5",
-          "label": "API Gateway Tag",
-          "name": "API_GATEWAY_TAG"
+          "label": "Version Tag",
+          "name": "VERSION_TAG"
         },
         {
-          "default": "api.example.com",
-          "label": "Virtual Domain",
-          "name": "VIRTUAL_DOMAIN"
+          "default": "gateway.domain.com",
+          "label": "Gateway URL",
+          "name": "GATEWAY_URL"
         },
         {
-          "default": "4.3.5",
-          "label": "APIM TAG",
-          "name": "APIM_TAG"
+          "default": "api.domain.com",
+          "label": "API URL",
+          "name": "API_URL"
+        },
+        {
+          "default": "ui.domain.com",
+          "label": "UI URL",
+          "name": "UI_URL"
+        },
+        {
+          "default": "portal.domain.com",
+          "label": "Portal URL",
+          "name": "PORTAL_URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
         }
      ],
       "volumes": [
@@ -333,19 +348,8 @@
         {
           "container": "/opt/graviteeio-management-api/license"
         }
-      ]
-    },
-
-
-
-
-
-
-
-
-
-
-
+        ]
+      },
       {
       "type": 3,
       "title": "Odoo",
