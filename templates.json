@@ -296,31 +296,6 @@
           "name": "MEMORY_LIMIT"
         },
         {
-          "default": "4.3.5",
-          "label": "Version Tag",
-          "name": "VERSION_TAG"
-        },
-        {
-          "default": "gateway.domain.com",
-          "label": "Gateway URL",
-          "name": "GATEWAY_URL"
-        },
-        {
-          "default": "api.domain.com",
-          "label": "API URL",
-          "name": "API_URL"
-        },
-        {
-          "default": "ui.domain.com",
-          "label": "UI URL",
-          "name": "UI_URL"
-        },
-        {
-          "default": "portal.domain.com",
-          "label": "Portal URL",
-          "name": "PORTAL_URL"
-        },
-        {
           "default": "proxy",
           "label": "Network name",
           "name": "NETWORK"
@@ -335,15 +310,6 @@
         },
         {
           "container": "/usr/share/elasticsearch/data"
-        },
-        {
-          "container": "/opt/graviteeio-gateway/logs"
-        },
-        {
-          "container": "/opt/graviteeio-management-api/logs"
-        },
-        {
-          "container": "/var/log/nginx"
         }
         ]
       },
