@@ -339,15 +339,18 @@
         {
           "container": "/opt/graviteeio-gateway/logs"
         },
-        {
-          "container": "/opt/graviteeio-gateway/certificates"
-        },
+        // {
+        //   "container": "/opt/graviteeio-gateway/certificates"
+        // },
         {
           "container": "/opt/graviteeio-management-api/logs"
         },
         {
-          "container": "/opt/graviteeio-management-api/license"
-        }
+          "container": "/var/log/nginx"
+        },
+        // {
+        //   "container": "/opt/graviteeio-management-api/license"
+        // }
         ]
       },
       {
