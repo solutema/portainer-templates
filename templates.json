@@ -344,7 +344,7 @@
         },
         {
           "container": "/var/log/nginx"
-        },
+        }
         ]
       },
       {
