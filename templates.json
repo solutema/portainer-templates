@@ -270,23 +270,18 @@
       },
       "env": [
         {
-          "default": "mongo",
-          "label": "Mongo Image",
-          "name": "MONGO_IMAGE"
-        },
-        {
-          "default": "4.2",
+          "default": "7.0.11",
           "label": "Mongo Tag",
           "name": "MONGO_TAG"
         },
         {
           "default": "root",
-          "label": "Username",
+          "label": "Root Username",
           "name": "MONGO_INITDB_ROOT_USERNAME"
         },
         {
           "default": "password",
-          "label": "Password",
+          "label": "Root Password",
           "name": "MONGO_INITDB_ROOT_PASSWORD"
         },
         {
