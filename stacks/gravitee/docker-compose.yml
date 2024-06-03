@@ -12,23 +12,21 @@ services:
       - mongo-data:/data/db
       - mongo-logs:/var/log/mongodb
     healthcheck:
-      test: mongosh --eval 'db.runCommand({serverStatus:1}).ok' --quiet | grep 1
+      test: ["CMD","mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 5s
-      timeout: 3s
+      timeout: 5s
       retries: 10
+      start_period: 5s
 
   elasticsearch:
     container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
     image: elasticsearch:${ELASTICSEARCH_TAG}
     restart: always
     environment:
-      - http.host=0.0.0.0
-      - transport.host=0.0.0.0
-      - xpack.security.enabled=false
-      - xpack.monitoring.enabled=false
       - cluster.name=elasticsearch
-      - bootstrap.memory_lock=true
       - discovery.type=${DISCOVERY_TYPE}
+      - xpack.security.enabled=false
+      - http.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
@@ -39,10 +37,14 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" ]
+      test: [
+        "CMD-SHELL",
+        "curl -fsSL http://localhost:9200/_cat/health?h=status | grep -q -E 'green|yellow'"
+      ]
       interval: 5s
-      timeout: 3s
+      timeout: 5s
       retries: 10
+      start_period: 1m
 
 volumes:
   mongo-data:
