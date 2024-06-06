@@ -46,10 +46,43 @@ services:
       retries: 10
       start_period: 1m
 
+  gateway:
+    container_name: ${COMPOSE_PROJECT_NAME}-gateway
+    image: graviteeio/apim-gateway:${VERSION_TAG}
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      # - mongodb
+      # - elasticsearch
+      - mongodb:
+          condition: service_healthy
+      - elasticsearch:
+          condition: service_healthy
+    volumes:
+      - gateway-logs:/opt/graviteeio-gateway/logs
+    environment:
+      - gravitee_management_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
+      - gravitee_ratelimit_mongodb_uri=mongodb://mongodb:27017/gravitee?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000
+      - gravitee_reporters_elasticsearch_endpoints_0=http://elasticsearch:9200
+      #- gravitee_management_type=mongodb
+      #- gravitee_http_secured=true
+      #- gravitee_http_ssl_clientAuth=request
+      #- gravitee_http_ssl_keystore_type=pkcs12
+      #- gravitee_http_ssl_keystore_path=/opt/graviteeio-gateway/certificates/server.p12
+      #- gravitee_http_ssl_keystore_password=server-secret
+      #- gravitee_http_ssl_truststore_type=pkcs12
+      #- gravitee_http_ssl_truststore_path=/opt/graviteeio-gateway/certificates/ca.p12
+      #- gravitee_http_ssl_truststore_password=ca-secret
+      - VIRTUAL_PORT: 8082
+      - VIRTUAL_HOST: ${GATEWAY_URL}
+      - LETSENCRYPT_HOST: ${GATEWAY_URL}
+
 volumes:
   mongo-data:
   mongo-logs:
   elasticsearch-data:
+  gateway-logs:
 
 networks:
   default:
