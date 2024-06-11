@@ -624,6 +624,147 @@
           "name": "NETWORK"
         }
       ]
+      },
+      {
+      "type": 3,
+      "title": "Speedtest Tracker",
+      "description": "A Docker image to check your internet speed using Ookla's Speedtest service. Build using Laravel and the Speedtest CLI.",
+      "note": "Deploys an image to check your internet speed using Ookla's Speedtest service.",
+      "categories": ["Tools"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/speedtest-tracker-logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/speedtest-tracker/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "mariadb",
+          "label": "MariaDB Image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "10",
+          "label": "MariaDB Tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "default": "speedtest_tracker",
+          "label": "MariaDB Database",
+          "name": "MARIADB_DATABASE"
+        },
+        {
+          "default": "speedy",
+          "label": "MariaDB User",
+          "name": "MARIADB_USER"
+        },
+        {
+          "default": "password",
+          "label": "MariaDB Password",
+          "name": "MARIADB_PASSWORD"
+        },
+        {
+          "default": "true",
+          "label": "MariaDB Random Root Password",
+          "name": "MARIADB_RANDOM_ROOT_PASSWORD"
+        },
+        {
+          "default": "lscr.io/linuxserver/speedtest-tracker",
+          "label": "Speedtest Tracker Image",
+          "name": "SPEEDTEST_IMAGE"
+        },
+        {
+          "default": "0.20.3",
+          "label": "Speedtest Tracker Tag",
+          "name": "SPEEDTEST_TAG"
+        },
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "1000",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "default": "Speed Test Tracker",
+          "label": "App Name",
+          "name": "APP_NAME"
+        },
+        {
+          "default": "",
+          "label": "App Key",
+          "name": "APP_KEY"
+        },
+        {
+          "default": "",
+          "label": "App URL",
+          "name": "APP_URL"
+        },
+        {
+          "default": "mysql",
+          "label": "DB Connection",
+          "name": "DB_CONNECTION"
+        },
+        {
+          "default": "db",
+          "label": "DB Host",
+          "name": "DB_HOST"
+        },
+        {
+          "default": "3306",
+          "label": "DB Port",
+          "name": "DB_PORT"
+        },
+        {
+          "default": "speedtest_tracker",
+          "label": "DB Database",
+          "name": "DB_DATABASE"
+        },
+        {
+          "default": "speedy",
+          "label": "DB Username",
+          "name": "DB_USERNAME"
+        },
+        {
+          "default": "password",
+          "label": "DB Password",
+          "name": "DB_PASSWORD"
+        },
+        {
+          "default": "",
+          "label": "Speedtest Schedule",
+          "name": "SPEEDTEST_SCHEDULE"
+        },
+        {
+          "default": "",
+          "label": "Speedtest Servers",
+          "name": "SPEEDTEST_SERVERS"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "App Timezone",
+          "name": "APP_TIMEZONE"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/mysql"
+        },
+        {
+          "container": "/config"
+        },
+        {
+          "container": "/config/keys"
+        }
+      ]
     },
     {
       "type": 3,

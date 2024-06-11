@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  redis:
+    container_name: ${COMPOSE_PROJECT_NAME}-server
+    image: ${REDIS_IMAGE}:${REDIS_TAG}
+    volumes:
+      - data:/data/db
+      - logs:/data/logs
+    restart: always
+    environment:
+      - CONTAINER_NAME=${COMPOSE_PROJECT_NAME}-server
+      - TIMEZONE=${TIMEZONE}
+      - ENABLE_LOGS=${ENABLE_LOGS}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - REDIS_PASS=${REDIS_PASS}
+
+  insight:
+    image: redislabs/redisinsight:${INSIGHT_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}-insight
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - ${INSIGHT_PORT}:5540
+    environment:
+      - RI_APP_HOST=${COMPOSE_PROJECT_NAME}-server
+      - RI_APP_PORT=${INSIGHT_PORT}
+      - RI_LOG_LEVEL=${RI_LOG_LEVEL}
+      - RI_FILES_LOGGER=${RI_FILES_LOGGER}
+      - RI_STDOUT_LOGGER=${RI_STDOUT_LOGGER}
+      - VIRTUAL_PORT=${INSIGHT_PORT}
+      - VIRTUAL_HOST=${INSIGHT_DOMAIN}
+      - LETSENCRYPT_HOST=${INSIGHT_DOMAIN}
+    volumes:
+      - insight:/data
+      
+volumes:
+  data:
+  logs:
+  insight:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
