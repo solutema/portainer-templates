@@ -699,7 +699,7 @@
           "name": "APP_URL"
         },
         {
-          "default": "365",
+          "default": "0",
           "label": "Prune Results Older Than",
           "name": "PRUNE_RESULTS_OLDER_THAN"
         },
@@ -707,6 +707,31 @@
           "default": "America/Santo_Domingo",
           "label": "App Timezone",
           "name": "APP_TIMEZONE"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Display Timezone",
+          "name": "DISPLAY_TIMEZONE"
+        },
+        {
+          "default": "0 * * * *",
+          "label": "Speedtest Schedule",
+          "name": "SPEEDTEST_SCHEDULE"
+        },
+        {
+          "default": "9992,13180,10221,9466,5894,8837,7211,9123,5249,9992,14972,17593",
+          "label": "Speedtest Servers",
+          "name": "SPEEDTEST_SERVERS"
+        },
+        {
+          "default": "%m/%d/%Y %I:%M %p",
+          "label": "Chart Datetime Format",
+          "name": "CHART_DATETIME_FORMAT"
+        },
+        {
+          "default": "%m/%d/%Y %I:%M %p",
+          "label": "Datetime Format",
+          "name": "DATETIME_FORMAT"
         },
         {
           "default": "",
