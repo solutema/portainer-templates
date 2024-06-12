@@ -666,12 +666,12 @@
         {
           "default": "lscr.io/linuxserver/speedtest-tracker",
           "label": "Speedtest Tracker Image",
-          "name": "SPEEDTEST_IMAGE"
+          "name": "SPEED_TEST_TRACKER_IMAGE"
         },
         {
           "default": "0.20.3",
           "label": "Speedtest Tracker Tag",
-          "name": "SPEEDTEST_TAG"
+          "name": "SPEED_TEST_TRACKER_TAG"
         },
         {
           "default": "1000",
