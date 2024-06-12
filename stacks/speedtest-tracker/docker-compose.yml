@@ -15,7 +15,7 @@ services:
 
   speedtest-tracker:
     container_name: ${COMPOSE_PROJECT_NAME}-app
-    image: ${SPEED_TEST_TRACKER_IMAGE}:${SPEED_TEST_TRACKER_IMAGE_TAG}
+    image: ${SPEED_TEST_TRACKER_IMAGE}:${SPEED_TEST_TRACKER_TAG}
     restart: unless-stopped
     depends_on:
       - db
