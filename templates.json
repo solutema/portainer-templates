@@ -664,11 +664,6 @@
           "name": "MARIADB_PASSWORD"
         },
         {
-          "default": "true",
-          "label": "MariaDB Random Root Password",
-          "name": "MARIADB_RANDOM_ROOT_PASSWORD"
-        },
-        {
           "default": "lscr.io/linuxserver/speedtest-tracker",
           "label": "Speedtest Tracker Image",
           "name": "SPEEDTEST_IMAGE"
@@ -704,36 +699,6 @@
           "name": "APP_URL"
         },
         {
-          "default": "mysql",
-          "label": "DB Connection",
-          "name": "DB_CONNECTION"
-        },
-        {
-          "default": "db",
-          "label": "DB Host",
-          "name": "DB_HOST"
-        },
-        {
-          "default": "3306",
-          "label": "DB Port",
-          "name": "DB_PORT"
-        },
-        {
-          "default": "speedtest_tracker",
-          "label": "DB Database",
-          "name": "DB_DATABASE"
-        },
-        {
-          "default": "speedy",
-          "label": "DB Username",
-          "name": "DB_USERNAME"
-        },
-        {
-          "default": "password",
-          "label": "DB Password",
-          "name": "DB_PASSWORD"
-        },
-        {
           "default": "",
           "label": "Speedtest Schedule",
           "name": "SPEEDTEST_SCHEDULE"
@@ -744,9 +709,34 @@
           "name": "SPEEDTEST_SERVERS"
         },
         {
+          "default": "365",
+          "label": "Prune Results Older Than",
+          "name": "PRUNE_RESULTS_OLDER_THAN"
+        },
+        {
+          "default": "Y-m-d H:i:s",
+          "label": "Chart Datetime Format",
+          "name": "CHART_DATETIME_FORMAT"
+        },
+        {
+          "default": "Y-m-d H:i:s",
+          "label": "Datetime Format",
+          "name": "DATETIME_FORMAT"
+        },
+        {
           "default": "America/Santo_Domingo",
           "label": "App Timezone",
           "name": "APP_TIMEZONE"
+        },
+        {
+          "default": "",
+          "label": "Telegram Bot Token",
+          "name": "TELEGRAM_BOT_TOKEN"
+        },
+        {
+          "default": "speedtracker.example.com",
+          "label": "URL Domain",
+          "name": "URL_DOMAIN"
         },
         {
           "default": "proxy",
