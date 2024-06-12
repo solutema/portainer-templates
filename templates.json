@@ -719,17 +719,17 @@
           "name": "SPEEDTEST_SCHEDULE"
         },
         {
-          "default": "9992,13180,10221,9466,5894,8837,7211,9123,5249,9992,14972,17593",
+          "default": "1779,46139,2113,62147,54312,37695,38784,57315,17702,50031,31181,63937,55674,29395,21816,20456,2634,16690,26452,62840,51384,57367,58315,5849,62902",
           "label": "Speedtest Servers",
           "name": "SPEEDTEST_SERVERS"
         },
         {
-          "default": "%m/%d/%Y %I:%M %p",
+          "default": "m/d/Y h:i:s A",
           "label": "Chart Datetime Format",
           "name": "CHART_DATETIME_FORMAT"
         },
         {
-          "default": "%m/%d/%Y %I:%M %p",
+          "default": "m/d/Y h:i:s A",
           "label": "Datetime Format",
           "name": "DATETIME_FORMAT"
         },
