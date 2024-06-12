@@ -669,7 +669,7 @@
           "name": "SPEED_TEST_TRACKER_IMAGE"
         },
         {
-          "default": "0.20.3",
+          "default": "0.20.5",
           "label": "Speedtest Tracker Tag",
           "name": "SPEED_TEST_TRACKER_TAG"
         },
