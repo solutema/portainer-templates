@@ -699,16 +699,6 @@
           "name": "APP_URL"
         },
         {
-          "default": "",
-          "label": "Speedtest Schedule",
-          "name": "SPEEDTEST_SCHEDULE"
-        },
-        {
-          "default": "",
-          "label": "Speedtest Servers",
-          "name": "SPEEDTEST_SERVERS"
-        },
-        {
           "default": "365",
           "label": "Prune Results Older Than",
           "name": "PRUNE_RESULTS_OLDER_THAN"
