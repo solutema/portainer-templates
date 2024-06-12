@@ -704,16 +704,6 @@
           "name": "PRUNE_RESULTS_OLDER_THAN"
         },
         {
-          "default": "Y-m-d H:i:s",
-          "label": "Chart Datetime Format",
-          "name": "CHART_DATETIME_FORMAT"
-        },
-        {
-          "default": "Y-m-d H:i:s",
-          "label": "Datetime Format",
-          "name": "DATETIME_FORMAT"
-        },
-        {
           "default": "America/Santo_Domingo",
           "label": "App Timezone",
           "name": "APP_TIMEZONE"
@@ -740,9 +730,6 @@
         },
         {
           "container": "/config"
-        },
-        {
-          "container": "/config/keys"
         }
       ]
     },
