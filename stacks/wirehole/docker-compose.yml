@@ -50,7 +50,7 @@ networks:
     name: ${NETWORK}
     external: true
   private_network:
-    name: private_network
+    name: ${PRIVATE_NETWORK}
     ipam:
       driver: default
       config:
