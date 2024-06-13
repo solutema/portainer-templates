@@ -30,6 +30,11 @@ services:
       - dnsmasq:/etc/dnsmasq.d/
     cap_add:
       - NET_ADMIN
+    environment:
+      TZ: ${TIMEZONE}
+      WEBPASSWORD: ${WEBPASSWORD}
+      VIRTUAL_HOST: ${URL_DOMAIN}
+      LETSENCRYPT_HOST: ${URL_DOMAIN}
     networks:
       private_network:
         ipv4_address: ${PIHOLE_IP}

@@ -981,7 +981,22 @@
           "default": "10.2.0.300",
           "label": "Pi-hole IP",
           "name": "PIHOLE_IP"
-        },        
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Time Zone",
+          "name": "TIMEZONE"
+        },  
+        {
+          "default": "",
+          "label": "Web Password",
+          "name": "WEBPASSWORD"
+        }, 
+        {
+          "default": "pihole.example.com",
+          "label": "URL Domain",
+          "name": "URL_DOMAIN"
+        }, 
         {
           "default": "proxy",
           "label": "Network name",
