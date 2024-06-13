@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  unbound:
+    container_name: ${COMPOSE_PROJECT_NAME}-unbound
+    image: mvance/unbound:${UNBOUND_TAG}
+    restart: unless-stopped
+    hostname: unbound
+    volumes:
+      - unbound-data:/opt/unbound/etc/unbound/
+    cap_add:
+      - NET_ADMIN
+    networks:
+      private_network:
+        ipv4_address: ${UNBOUND_IP}
+      default:
+
+volumes:
+  unbound-data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
+  private_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.2.0.0/24

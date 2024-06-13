@@ -946,6 +946,46 @@
     },
     {
       "type": 3,
+      "title": "WireHole",
+      "description": "WireHole is a combination of WireGuard, Pi-hole, and Unbound in a docker-compose project with the intent of enabling users to quickly and easily create a personally managed full or split-tunnel WireGuard VPN with ad blocking capabilities thanks to Pi-hole, and DNS caching, additional privacy options, and upstream providers via Unbound.",
+      "note": "Deploys a WireHole instance.",
+      "categories": ["Network"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/wirehole/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "1.20.0",
+          "label": "Unbound Tag",
+          "name": "UNBOUND_TAG"
+        },
+        {
+          "default": "10.2.0.0/24",
+          "label": "Private Network",
+          "name": "PRIVATE_NETWORK"
+        },
+        {
+          "default": "10.2.0.200",
+          "label": "Unbound IP",
+          "name": "UNBOUND_IP"
+        },        
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/opt/unbound/etc/unbound/"
+        }
+      ]
+    },
+    {
+      "type": 3,
       "title": "WordPress",
       "description": "WordPress setup with a Mariadb database",
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
