@@ -38,6 +38,7 @@ services:
     networks:
       private_network:
         ipv4_address: ${PIHOLE_IP}
+      default:
 
 volumes:
   unbound-data:
