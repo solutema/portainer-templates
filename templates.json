@@ -971,6 +971,16 @@
           "default": "10.2.0.200",
           "label": "Unbound IP",
           "name": "UNBOUND_IP"
+        },
+        {
+          "default": "2024.05.0",
+          "label": "Pi-hole Tag",
+          "name": "PIHOLE_TAG"
+        },
+        {
+          "default": "10.2.0.300",
+          "label": "Pi-hole IP",
+          "name": "PIHOLE_IP"
         },        
         {
           "default": "proxy",
@@ -978,7 +988,7 @@
           "name": "NETWORK"
         },
         {
-          "default": "proxy",
+          "default": "private_network",
           "label": "Private Network name",
           "name": "PRIVATE_NETWORK"
         }
@@ -986,6 +996,12 @@
       "volumes": [
         {
           "container": "/opt/unbound/etc/unbound/"
+        },
+        {
+          "container": "/etc/pihole/"
+        },
+        {
+          "container": "/etc/dnsmasq.d/"
         }
       ]
     },

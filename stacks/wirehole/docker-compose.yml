@@ -15,8 +15,29 @@ services:
         ipv4_address: ${UNBOUND_IP}
       default:
 
+  pihole:
+    container_name: ${COMPOSE_PROJECT_NAME}-pihole
+    image: pihole/pihole:${PIHOLE_TAG}
+    restart: unless-stopped
+    hostname: pihole
+    depends_on:
+      - unbound
+    dns:
+      - 127.0.0.1
+      - ${UNBOUND_IP}
+    volumes:
+      - pihole-data:/etc/pihole/
+      - dnsmasq:/etc/dnsmasq.d/
+    cap_add:
+      - NET_ADMIN
+    networks:
+      private_network:
+        ipv4_address: ${PIHOLE_IP}
+
 volumes:
   unbound-data:
+  pihole-data:
+  dnsmasq:
 
 networks:
   default:
