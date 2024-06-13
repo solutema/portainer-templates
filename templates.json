@@ -995,8 +995,33 @@
         {
           "default": "pihole.example.com",
           "label": "URL Domain",
-          "name": "URL_DOMAIN"
-        }, 
+          "name": "PIHOLE_URL"
+        },
+        {
+          "default": "latest",
+          "label": "WireGuard Tag",
+          "name": "WIREGUARD_TAG"
+        },
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "1000",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "default": "wireguard.example.com",
+          "label": "WireGuard URL",
+          "name": "WIREGUARD_URL"
+        },
+        {
+          "default": "latest",
+          "label": "WireGuard UI Tag",
+          "name": "WIREGUARD_UI_TAG"
+        },
         {
           "default": "proxy",
           "label": "Network name",
@@ -1017,6 +1042,12 @@
         },
         {
           "container": "/etc/dnsmasq.d/"
+        },
+        {
+          "container": "/config"
+        },
+        {
+          "container": "/app/db"
         }
       ]
     },
