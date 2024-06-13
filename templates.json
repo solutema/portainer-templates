@@ -968,7 +968,7 @@
           "name": "PRIVATE_NETWORK_SUBNET"
         },
         {
-          "default": "10.2.0.200",
+          "default": "10.2.0.100",
           "label": "Unbound IP",
           "name": "UNBOUND_IP"
         },
@@ -978,7 +978,7 @@
           "name": "PIHOLE_TAG"
         },
         {
-          "default": "10.2.0.300",
+          "default": "10.2.0.200",
           "label": "Pi-hole IP",
           "name": "PIHOLE_IP"
         },
