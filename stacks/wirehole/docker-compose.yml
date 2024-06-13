@@ -23,7 +23,8 @@ networks:
     name: ${NETWORK}
     external: true
   private_network:
+    name: ${PRIVATE_NETWORK}
     ipam:
       driver: default
       config:
-        - subnet: ${PRIVATE_NETWORK}
+        - subnet: ${PRIVATE_NETWORK_SUBNET}

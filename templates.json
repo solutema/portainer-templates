@@ -964,8 +964,8 @@
         },
         {
           "default": "10.2.0.0/24",
-          "label": "Private Network",
-          "name": "PRIVATE_NETWORK"
+          "label": "Private Network Subnet",
+          "name": "PRIVATE_NETWORK_SUBNET"
         },
         {
           "default": "10.2.0.200",
@@ -976,6 +976,11 @@
           "default": "proxy",
           "label": "Network name",
           "name": "NETWORK"
+        },
+        {
+          "default": "proxy",
+          "label": "Private Network name",
+          "name": "PRIVATE_NETWORK"
         }
       ],
       "volumes": [
