@@ -347,7 +347,7 @@
         },
         {
           "label": "MariaDB Password",
-          "name": "MYSQL_PASSWORD"
+          "name": "DB_PASS"
         },
         {
           "default": "registry.gruposolutema.com/docker-base-images/docker-nextcloud",
