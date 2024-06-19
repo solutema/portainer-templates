@@ -3,7 +3,7 @@ version: '3'
 services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
-    image: mariadb:${MARIADB_TAG}
+    image: ${MARIADB_IMAGE}:${MARIADB_TAG}
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
@@ -21,7 +21,7 @@ services:
       - mariadb
     links:
     - mariadb:mariadb
-    image: nextcloud:${NEXTCLOUD_TAG}
+    image: ${NEXTCLOUD_IMAGE}:${NEXTCLOUD_TAG}
     hostname: ${DOMAIN}
     restart: always
     volumes:

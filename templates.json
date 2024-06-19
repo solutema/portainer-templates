@@ -327,8 +327,13 @@
       },
       "env": [
         {
-          "default": "11.2.2",
-          "label": "MariaDB tag",
+          "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
+          "label": "MariaDB Image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "11.5",
+          "label": "MariaDB Tag",
           "name": "MARIADB_TAG"
         },
         {
@@ -340,8 +345,13 @@
           "name": "MYSQL_ROOT_PASSWORD"
         },
         {
-          "default": "28.0.1",
-          "label": "Nextcloud tag",
+          "default": "registry.gruposolutema.com/docker-base-images/docker-nextcloud",
+          "label": "Nextcloud Image",
+          "name": "NEXTCLOUD_IMAGE"
+        },
+        {
+          "default": "29",
+          "label": "Nextcloud Tag",
           "name": "NEXTCLOUD_TAG"
         },
         {
