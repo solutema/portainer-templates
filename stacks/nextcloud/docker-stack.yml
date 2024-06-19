@@ -46,7 +46,7 @@ services:
       NEXTCLOUD_UPDATE: 1
       DB_NAME: nextcloud
       DB_USER: nextcloud
-      DB_PASS: password
+      DB_PASS: ${MYSQL_PASSWORD}
       VIRTUAL_HOST: ${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN}
     cap_add:
