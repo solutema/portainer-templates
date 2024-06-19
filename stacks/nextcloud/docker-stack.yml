@@ -4,58 +4,66 @@ services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
     image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    stop_grace_period: 3m
     restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
+      - backup:/backup
       - mariadb:/var/lib/mysql
+      - mariadb-logs:/logs
     environment:
-      MYSQL_TCP_PORT: ${MARIADB_PORT}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TIMEZONE: ${TIMEZONE}
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-mariadb
+      ROOT_PASS: ${MYSQL_ROOT_PASSWORD}
+      DB_NAME: nextcloud
+      DB_USER: nextcloud
+      DB_PASS: ${MYSQL_PASSWORD}
+      DB_BACKUP: TRUE
+      DB_BACKUP_NAME: nextcloud
+      DB_BACKUP_USER: nextcloud
+      DB_BACKUP_PASS: ${MYSQL_PASSWORD}
 
   nextcloud:
     container_name: ${COMPOSE_PROJECT_NAME}-app
-    depends_on:
-      - mariadb
-    links:
-    - mariadb:mariadb
     image: ${NEXTCLOUD_IMAGE}:${NEXTCLOUD_TAG}
     hostname: ${DOMAIN}
     restart: always
+    depends_on:
+      - mariadb
     volumes:
-      - nextcloud:/var/www/html
-      - config:/var/www/html/config
-      - apps:/var/www/html/apps
-      - custom_apps:/var/www/html/custom_apps
-      - data:/var/www/html/data
-      - themes:/var/www/html/themes/custom_theme
+      - data:/data/userdata
+      - config:/www/nextcloud/config
+      - apps:/data/apps
+      - themes:/www/nextcloud/themes
+      - nextcloud-logs:/www/logs
+      - templates:/data/templates
     environment:
-      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
-      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
-      NEXTCLOUD_DATA_DIR: ${NEXTCLOUD_DATA_DIR}
-      NEXTCLOUD_TRUSTED_DOMAINS: ${DOMAIN}
+      CRON_PERIOD: 5
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      DOMAIN: ${DOMAIN}
+      DB_TYPE: mysql
+      DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
       NEXTCLOUD_UPDATE: 1
-      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      PHP_UPLOAD_LIMIT: ${PHP_UPLOAD_LIMIT}
+      DB_NAME: nextcloud
+      DB_USER: nextcloud
+      DB_PASS: password
       VIRTUAL_HOST: ${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN}
+    cap_add:
+      - NET_ADMIN
 
 volumes:
+  backup:
   mariadb:
-  nextcloud:
+  mariadb-logs:
+  data:
   config:
   apps:
-  custom_apps:
-  data:
   themes:
+  nextcloud-logs:
+  templates:
 
 networks:
   default:
     name: ${NETWORK}
     external: true
-
