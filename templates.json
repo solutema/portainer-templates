@@ -313,7 +313,97 @@
         }
         ]
       },
-      {
+    {
+      "type": 3,
+      "title": "Nextcloud",
+      "description": "Nextcloud is a suite of client-server software for creating and using file hosting services.",
+      "note": "Deploys an nextcloud instance.",
+      "categories": ["Cloud", "Productivity", "Tools", "Web"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/nextcloud-icon.png",
+      "repository": {
+        "url": "https://github.com/joseagrc/portainer-templates",
+        "stackfile": "stacks/nextcloud/docker-stack.yml"
+      },
+      "env": [
+        {
+          "default": "11.2.2",
+          "label": "MariaDB tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "default": "3306",
+          "label": "MariaDB port",
+          "name": "MARIADB_PORT"
+        },
+        {
+          "label": "MariaDB password",
+          "name": "MYSQL_PASSWORD"
+        },
+        {
+          "label": "MariaDB root password",
+          "name": "MYSQL_ROOT_PASSWORD"
+        },
+        {
+          "default": "28.0.1",
+          "label": "Nextcloud tag",
+          "name": "NEXTCLOUD_TAG"
+        },
+        {
+          "default": "nxt_",
+          "label": "Nextcloud table prefix",
+          "name": "NEXTCLOUD_TABLE_PREFIX"
+        },
+        {
+          "label": "Nextcloud admin user",
+          "name": "NEXTCLOUD_ADMIN_USER"
+        },
+        {
+          "label": "Nextcloud admin password",
+          "name": "NEXTCLOUD_ADMIN_PASSWORD"
+        },
+        {
+          "default": "/var/www/html",
+          "label": "Nextcloud dir",
+          "name": "NEXTCLOUD_DIR"
+        },
+        {
+          "default": "/var/www/html/data",
+          "label": "Nextcloud data dir",
+          "name": "NEXTCLOUD_DATA_DIR"
+        },
+        {
+          "default": "/var/www/html/custom_apps",
+          "label": "Nextcloud custom apps",
+          "name": "NEXTCLOUD_CUSTOM_APPS"
+        },
+        {
+          "default": "/var/www/html/config",
+          "label": "Nextcloud config",
+          "name": "NEXTCLOUD_CONFIG"
+        },
+        {
+          "default": "/var/www/html/themes/custom_theme",
+          "label": "Nextcloud custom theme",
+          "name": "NEXTCLOUD_CUSTOM_THEME"
+        },
+        {
+          "default": "10G",
+          "label": "PHP upload limit",
+          "name": "PHP_UPLOAD_LIMIT"
+        },
+        {
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
       "type": 3,
       "title": "Odoo",
       "description": "Open-source business apps.",
