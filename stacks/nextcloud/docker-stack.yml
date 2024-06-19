@@ -6,8 +6,6 @@ services:
     image: mariadb:${MARIADB_TAG}
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    #ports:
-    #  - '${MARIADB_PORT}:3306'
     volumes:
       - mariadb:/var/lib/mysql
     environment:
@@ -39,8 +37,7 @@ services:
       NEXTCLOUD_DATA_DIR: ${NEXTCLOUD_DATA_DIR}
       NEXTCLOUD_TRUSTED_DOMAINS: ${DOMAIN}
       NEXTCLOUD_UPDATE: 1
-      MYSQL_HOST: mariadb
-      MYSQL_PORT: ${MARIADB_PORT}
+      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: nextcloud
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
