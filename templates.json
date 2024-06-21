@@ -270,7 +270,7 @@
         {
           "default": "registry.gruposolutema.com/grav/docker-grav-nginx",
           "label": "Grav Image",
-          "name": "IMAGE_TAG"
+          "name": "GRAV_IMAGE"
         },
         {
           "default": "latest",
