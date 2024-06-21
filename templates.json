@@ -110,12 +110,11 @@
           "label": "Gitea SSH Port",
           "name": "GITEA_SSH_PORT"
         },
-,
         {
           "default": "code.example.com",
           "label": "Domain",
           "name": "DOMAIN"
-        }
+        },
         {
           "default": "proxy",
           "label": "Network name",
