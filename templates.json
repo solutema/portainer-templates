@@ -106,15 +106,16 @@
           "name": "GITEA_TAG"
         },
         {
-          "default": "3000",
-          "label": "Gitea port",
-          "name": "GITEA_PORT"
-        },
-        {
           "default": "2222",
-          "label": "Gitea ssh port",
+          "label": "Gitea SSH Port",
           "name": "GITEA_SSH_PORT"
         },
+,
+        {
+          "default": "code.example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        }
         {
           "default": "proxy",
           "label": "Network name",
