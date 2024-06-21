@@ -80,6 +80,7 @@
           "name": "MYSQL_TAG"
         },
         {
+          "default": "gitea_example",
           "label": "MySQL database username",
           "name": "MYSQL_USER"
         },
@@ -92,6 +93,7 @@
           "name": "MYSQL_ROOT_PASSWORD"
         },
         {
+          "default": "gitea_example",
           "label": "MySQL database name",
           "name": "MYSQL_DATABASE"
         },
@@ -101,7 +103,7 @@
           "name": "GITEA_IMAGE"
         },
         {
-          "default": "1.21.11",
+          "default": "1.22.0",
           "label": "Gitea tag",
           "name": "GITEA_TAG"
         },
