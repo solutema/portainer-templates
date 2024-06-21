@@ -276,6 +276,11 @@
           "default": "latest",
           "label": "Grav Tag",
           "name": "GRAV_TAG"
+        },
+        {
+          "default": "example.com",
+          "label": "Site URL",
+          "name": "SITE_URL"
         }
      ],
       "volumes": [
