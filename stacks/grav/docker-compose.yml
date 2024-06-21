@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  grav:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${GRAV_IMAGE}:${GRAV_TAG}
+    restart: unless-stopped
+    volumes:
+      - users:/var/www/grav/user
+      - logs:/var/www/grav/log
+      - backups:/var/www/grav/backup
+    environment:
+      DUID: 1000
+      DGID: 1000
+      TZ: America/Santo_Domingo
+      ROBOTS_DISALLOW: false
+      GRAV_PLUGINS: devtools,precache
+      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
+      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+
+volumes:
+  users:
+  backups:
+  logs:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

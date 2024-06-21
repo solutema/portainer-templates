@@ -257,6 +257,41 @@
       },
       {
       "type": 3,
+      "title": "Grav",
+      "description": "Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS powered by PHP, Markdown, Twig, and Symfony.",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "stacks/grav/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/grav/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/grav/docker-grav-nginx",
+          "label": "Grav Image",
+          "name": "IMAGE_TAG"
+        },
+        {
+          "default": "latest",
+          "label": "Grav Tag",
+          "name": "GRAV_TAG"
+        }
+     ],
+      "volumes": [
+        {
+          "container": "/var/www/grav/user"
+        },
+        {
+          "container": "/var/www/grav/log"
+        },
+        {
+          "container": "/var/www/grav/backup"
+        }
+        ]
+      },
+      {
+      "type": 3,
       "title": "Gravitee",
       "description": "Gravitee helps organizations manage and secure their entire API lifecycle with solutions for API design, management, security, productization, real-time observability, and more.",
       "categories": ["project-management"],
