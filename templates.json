@@ -261,7 +261,7 @@
       "description": "Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS powered by PHP, Markdown, Twig, and Symfony.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://github.com/solutema/templates/blob/main/stacks/grav/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/grav/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/grav/docker-compose.yml"
