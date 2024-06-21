@@ -281,6 +281,11 @@
           "default": "example.com",
           "label": "Site URL",
           "name": "SITE_URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network Name",
+          "name": "NETWORK"
         }
      ],
       "volumes": [
