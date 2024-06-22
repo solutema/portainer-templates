@@ -1192,20 +1192,6 @@
         }
       ]
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
       "type": 3,
       "title": "Windows",
@@ -1306,36 +1292,95 @@
         }
       ]
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    {
+      "type": 3,
+      "title": "WireGuard",
+      "description": "WireGuard is a communication protocol and free and open-source software that implements encrypted virtual private networks, and was designed with the goals of ease of use, high speed performance, and low attack surface.",
+      "note": "Deploys a iireguard instance.",
+      "categories": ["Network"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wireguard/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/wireguard/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "ghcr.io/wg-easy/wg-easy",
+          "label": "WireGuard Image",
+          "name": "WIREGUARD_IMAGE"
+        },
+        {
+          "default": "13",
+          "label": "WireGuard Tag",
+          "name": "WIREGUARD_TAG"
+        },
+        {
+          "default": "51820",
+          "label": "WireGuard Config Port",
+          "name": "WG_CONFIG_PORT"
+        },
+        {
+          "default": "51821",
+          "label": "WireGuard UI Port",
+          "name": "WIREGUARD_UI_PORT"
+        },
+        {
+          "default": "en",
+          "label": "Language",
+          "name": "LANG"
+        },
+        {
+          "default": "vpn.example.com",
+          "label": "WireGuard URL",
+          "name": "WIREGUARD_URL"
+        },
+        {
+          "label": "Password HASH",
+          "name": "PASSWORD_HASH"
+        },
+        {
+          "default": "10.8.0.x",
+          "label": "Address Range",
+          "name": "WG_DEFAULT_ADDRESS"
+        },
+        {
+          "default": "1.1.1.1",
+          "label": "DNS server(s)",
+          "name": "WG_DEFAULT_ADDRESS"
+        },
+        {
+          "default": "1500",
+          "label": "MTU",
+          "name": "WG_MTU"
+        },
+        {
+          "default": "25",
+          "label": "Persistent Keepalive",
+          "name": "WG_PERSISTENT_KEEPALIVE"
+        },
+        {
+          "default": "true",
+          "label": "UI Traffic Stats",
+          "name": "UI_TRAFFIC_STATS"
+        },
+        {
+          "default": "3",
+          "label": "UI Chart Type",
+          "name": "UI_CHART_TYPE"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/etc/wireguard"
+        }
+      ]
+    },
     {
       "type": 3,
       "title": "WireHole",
