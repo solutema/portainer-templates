@@ -303,6 +303,11 @@
           "name": "ADMIN_TITLE"
         },
         {
+          "default": "America/Santo_Domingo",
+          "label": "Time Zone",
+          "name": "TIMEZONE"
+        },
+        {
           "default": "example.com",
           "label": "Domain",
           "name": "DOMAIN"
