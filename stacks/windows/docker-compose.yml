@@ -25,8 +25,9 @@ services:
       LANGUAGE: ${LANGUAGE}
       REGION: ${REGION}
       KEYBOARD: ${KEYBOARD}
-      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
-      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+      VIRTUAL_PORT: ${NOVNC_PORT}
+      VIRTUAL_HOST: ${URL},www.${URL}
+      LETSENCRYPT_HOST: ${URL},www.${URL}
     volumes:
       - win_data:/storage
 

@@ -1295,6 +1295,11 @@
           "name": "KEYBOARD"
         },
         {
+          "default": "windows11.example.com",
+          "label": "URL",
+          "name": "URL"
+        },
+        {
           "default": "proxy",
           "label": "Network name",
           "name": "NETWORK"
