@@ -295,11 +295,6 @@
           "name": "ADMIN_LANG"
         },
         {
-          "default": "b",
-          "label": "Admin Permissions",
-          "name": "ADMIN_PERMISSIONS"
-        },
-        {
           "label": "Admin Full Name",
           "name": "ADMIN_FULLNAME"
         },
@@ -320,16 +315,7 @@
      ],
       "volumes": [
         {
-          "container": "/var/www/html/backup"
-        },
-        {
           "container": "/var/www/html"
-        },
-        {
-          "container": "/var/www/html/logs"
-        },
-        {
-          "container": "/var/www/html/user/accounts"
         }
         ]
       },

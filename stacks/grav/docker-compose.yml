@@ -6,26 +6,19 @@ services:
     image: ${GRAV_IMAGE}:${GRAV_TAG}
     restart: unless-stopped
     volumes:
-      - backups:/var/www/html/backup
-      - data:/var/www/html
-      - logs:/var/www/html/logs
-      - users:/var/www/html/user/accounts
+      - grav_data:/var/www/html
     environment:
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_LANG: ${ADMIN_LANG}
-      ADMIN_PERMISSIONS: ${ADMIN_PERMISSIONS}
       ADMIN_FULLNAME: ${ADMIN_FULLNAME}
       ADMIN_TITLE: ${ADMIN_TITLE}
       VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
 volumes:
-  backups:
-  data:
-  logs:
-  users:
+  grav_data:
 
 networks:
   default:
