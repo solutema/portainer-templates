@@ -1192,6 +1192,145 @@
         }
       ]
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      "type": 3,
+      "title": "Windows",
+      "description": "Windows inside a Docker container.",
+      "note": "Deploys an windows os instance.",
+      "categories": ["KVM"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/windows/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/windows/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "dockurr/windows",
+          "label": "Windows Image",
+          "name": "WINDOWS_IMAGE"
+        },
+        {
+          "default": "3.12",
+          "label": "Windows Tag",
+          "name": "WINDOWS_TAG"
+        },
+        {
+          "default": "8006",
+          "label": "NoVNC Port",
+          "name": "NOVNC_PORT"
+        },
+        {
+          "default": "3389",
+          "label": "RDP Port",
+          "name": "RDP_PORT"
+        },
+        {
+          "default": "3389",
+          "label": "MS Terminal Port",
+          "name": "MS_TERMINAL_PORT"
+        },
+        {
+          "default": "N",
+          "label": "Manual Installation",
+          "name": "MANUAL_INSTALLATION"
+        },
+        {
+          "default": "4",
+          "label": "CPU Cores",
+          "name": "CPU_CORES"
+        },
+        {
+          "default": "4G",
+          "label": "RAM Size",
+          "name": "RAM_SIZE"
+        },
+        {
+          "default": "64G",
+          "label": "Disk Size",
+          "name": "DISK_SIZE"
+        },
+        {
+          "default": "win11",
+          "label": "Version",
+          "name": "VERSION"
+        },
+        {
+          "default": "bill",
+          "label": "Username",
+          "name": "USERNAME"
+        },
+        {
+          "default": "gates",
+          "label": "Password",
+          "name": "PASSWORD"
+        },
+        {
+          "default": "English",
+          "label": "Language",
+          "name": "LANGUAGE"
+        },
+        {
+          "default": "en-US",
+          "label": "Region",
+          "name": "REGION"
+        },
+        {
+          "default": "en-US",
+          "label": "Keyboard",
+          "name": "KEYBOARD"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {
       "type": 3,
       "title": "WireHole",

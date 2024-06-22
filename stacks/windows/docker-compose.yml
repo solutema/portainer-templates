@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  windows:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${WINDOWS_IMAGE}:${WINDOWS_TAG}
+    restart: unless-stopped
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - ${NOVNC_PORT}:8006
+      - ${RDP_PORT}:3389/tcp
+      - ${MS_TERMINAL_PORT}:3389/udp
+    stop_grace_period: 2m
+    environment:
+      MANUAL: ${MANUAL_INSTALLATION}
+      CPU_CORES: ${CPU_CORES}
+      RAM_SIZE: ${RAM_SIZE}8G
+      DISK_SIZE: ${DISK_SIZE}
+      VERSION: ${VERSION}
+      USERNAME: ${USERNAME}
+      PASSWORD: ${PASSWORD}
+      LANGUAGE: ${LANGUAGE}
+      REGION: ${REGION}
+      KEYBOARD: ${KEYBOARD}
+      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
+      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+    volumes:
+      - win_data:/storage
+
+volumes:
+  win_data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

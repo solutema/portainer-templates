@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  windows:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${WINDOWS_IMAGE}:${WINDOWS_TAG}
+    restart: unless-stopped
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    stop_grace_period: 2m
+    environment:
+      MANUAL: N
+      CPU_CORES: 4
+      RAM_SIZE: 8G
+      DISK_SIZE: 256G
+      VERSION: win11
+      USERNAME: bill
+      PASSWORD: gates
+      LANGUAGE: French
+      REGION: en-US
+      KEYBOARD: en-US
+      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
+      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+    volumes:
+      - win_data:/storage
+
+volumes:
+  win_data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
