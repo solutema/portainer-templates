@@ -12,7 +12,6 @@ services:
     environment:
       DUID: 1000
       DGID: 1000
-      DOMAIN: ${DOMAIN}
       VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
