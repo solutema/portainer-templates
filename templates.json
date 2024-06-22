@@ -268,7 +268,7 @@
       },
       "env": [
         {
-          "default": "registry.gruposolutema.com/grav/docker-grav-nginx",
+          "default": "registry.gruposolutema.com/grav/docker-grav",
           "label": "Grav Image",
           "name": "GRAV_IMAGE"
         },
@@ -278,9 +278,34 @@
           "name": "GRAV_TAG"
         },
         {
+          "label": "Admin User",
+          "name": "ADMIN_USER"
+        },
+        {
+          "label": "Admin Password",
+          "name": "ADMIN_PASSWORD"
+        },
+        {
+          "label": "Admin E-mail",
+          "name": "ADMIN_EMAIL"
+        },
+        {
+          "default": "b",
+          "label": "Admin Permissions",
+          "name": "ADMIN_PERMISSIONS"
+        },
+        {
+          "label": "Admin Full Name",
+          "name": "ADMIN_FULLNAME"
+        },
+        {
+          "label": "Admin Title",
+          "name": "ADMIN_TITLE"
+        },
+        {
           "default": "example.com",
-          "label": "Site URL",
-          "name": "SITE_URL"
+          "label": "Domain",
+          "name": "DOMAIN"
         },
         {
           "default": "proxy",

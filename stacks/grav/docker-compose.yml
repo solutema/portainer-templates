@@ -12,11 +12,9 @@ services:
     environment:
       DUID: 1000
       DGID: 1000
-      TZ: America/Santo_Domingo
-      ROBOTS_DISALLOW: false
-      GRAV_PLUGINS: devtools,precache
-      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
-      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+      DOMAIN: ${DOMAIN}
+      VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
 volumes:
   users:
