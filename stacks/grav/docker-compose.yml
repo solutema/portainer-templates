@@ -5,8 +5,8 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${GRAV_IMAGE}:${GRAV_TAG}
     restart: unless-stopped
-    hostname: 
-    volumes: ${DOMAIN}
+    hostname: ${DOMAIN}
+    volumes: 
       - grav_data:/var/www/html
     environment:
       ADMIN_USER: ${ADMIN_USER}
