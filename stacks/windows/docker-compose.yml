@@ -17,7 +17,7 @@ services:
     environment:
       MANUAL: ${MANUAL_INSTALLATION}
       CPU_CORES: ${CPU_CORES}
-      RAM_SIZE: ${RAM_SIZE}8G
+      RAM_SIZE: ${RAM_SIZE}
       DISK_SIZE: ${DISK_SIZE}
       VERSION: ${VERSION}
       USERNAME: ${USERNAME}
