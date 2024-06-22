@@ -273,7 +273,7 @@
           "name": "GRAV_IMAGE"
         },
         {
-          "default": "latest",
+          "default": "1.7.46",
           "label": "Grav Tag",
           "name": "GRAV_TAG"
         },
