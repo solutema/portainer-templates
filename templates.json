@@ -1336,8 +1336,8 @@
           "name": "WIREGUARD_URL"
         },
         {
-          "label": "Password HASH",
-          "name": "PASSWORD_HASH"
+          "label": "Password",
+          "name": "PASSWORD"
         },
         {
           "default": "10.8.0.x",

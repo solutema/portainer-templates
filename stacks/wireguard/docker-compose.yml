@@ -18,7 +18,7 @@ services:
     environment:
       LANG: ${LANG}
       WG_HOST: ${WIREGUARD_URL}
-      PASSWORD_HASH: ${PASSWORD_HASH} # generate password hash on https://bcrypt.online/
+      PASSWORD: ${PASSWORD}
       WG_PORT: ${WG_CONFIG_PORT}
       PORT: ${WIREGUARD_UI_PORT}
       WG_DEFAULT_ADDRESS: ${WG_DEFAULT_ADDRESS}
