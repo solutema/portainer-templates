@@ -10,8 +10,12 @@ services:
       - logs:/var/www/grav/log
       - backups:/var/www/grav/backup
     environment:
-      DUID: 1000
-      DGID: 1000
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PERMISSIONS: ${ADMIN_PERMISSIONS}
+      ADMIN_FULLNAME: ${ADMIN_FULLNAME}
+      ADMIN_TITLE: ${ADMIN_TITLE}
       VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
