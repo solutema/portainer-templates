@@ -290,6 +290,11 @@
           "name": "ADMIN_EMAIL"
         },
         {
+          "default": "en",
+          "label": "Admin Language",
+          "name": "ADMIN_LANG"
+        },
+        {
           "default": "b",
           "label": "Admin Permissions",
           "name": "ADMIN_PERMISSIONS"
