@@ -6,9 +6,10 @@ services:
     image: ${GRAV_IMAGE}:${GRAV_TAG}
     restart: unless-stopped
     volumes:
-      - users:/var/www/grav/user
-      - logs:/var/www/grav/log
-      - backups:/var/www/grav/backup
+      - backups:/var/www/html/backup
+      - data:/var/www/html
+      - logs:/var/www/html/logs
+      - users:/var/www/html/user/accounts
     environment:
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
@@ -21,9 +22,10 @@ services:
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
 volumes:
-  users:
   backups:
+  data:
   logs:
+  users:
 
 networks:
   default:

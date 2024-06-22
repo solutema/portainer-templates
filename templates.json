@@ -320,13 +320,16 @@
      ],
       "volumes": [
         {
-          "container": "/var/www/grav/user"
+          "container": "/var/www/html/backup"
         },
         {
-          "container": "/var/www/grav/log"
+          "container": "/var/www/html"
         },
         {
-          "container": "/var/www/grav/backup"
+          "container": "/var/www/html/logs"
+        },
+        {
+          "container": "/var/www/html/user/accounts"
         }
         ]
       },
