@@ -1347,7 +1347,7 @@
         {
           "default": "1.1.1.1",
           "label": "DNS server(s)",
-          "name": "WG_DEFAULT_ADDRESS"
+          "name": "WG_DEFAULT_DNS"
         },
         {
           "default": "1500",
