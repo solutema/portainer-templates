@@ -1566,7 +1566,7 @@
           "name": "WORDPRESS_IMAGE"
         },
         {
-          "default": "latest",
+          "default": "6.5.4",
           "label": "Wordpress tag",
           "name": "WORDPRESS_TAG"
         },
