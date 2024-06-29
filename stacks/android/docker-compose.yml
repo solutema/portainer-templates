@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  android:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${ANDROID_IMAGE}:${ANDROID_TAG}
+    restart: always
+    devices:
+      - /dev/kvm
+    environment:
+      EMULATOR_DEVICE: ${EMULATOR_DEVICE}
+      WEB_VNC: true
+      VIRTUAL_PORT: 6080
+      VIRTUAL_HOST: ${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN}
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
