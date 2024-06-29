@@ -3,6 +3,46 @@
   "templates": [
       {
       "type": 3,
+      "title": "Android",
+      "description": "Android",
+      "note": "Deploys a android instance.",
+      "categories": ["OS"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/android/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/android/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "budtmo/docker-android",
+          "label": "Android Image",
+          "name": "ANDROID_IMAGE"
+        },
+        {
+          "default": "emulator_11.0",
+          "label": "Android Tag",
+          "name": "ANDROID_TAG"
+        },
+        {
+          "default": "Samsung Galaxy S10",
+          "label": "Emulator Device",
+          "name": "EMULATOR_DEVICE"
+        },
+        {
+          "default": "android.example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network Name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
+      "type": 3,
       "title": "ApiOpenStudio",
       "description": "ApiOpenStudio setup with a MySQL database",
       "note": "Deploys a ApiOpenStudio instance connected to a MySQL database.",
