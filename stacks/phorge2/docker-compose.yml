@@ -69,10 +69,10 @@ services:
       - 2530:2530
 
 volumes:
-  # phorge_db:
+  phorge_db:
   phorge_web:
-  # phorge_ssh:
-  # phorge_repo:
+  phorge_ssh:
+  phorge_repo:
 
 networks:
   default:
