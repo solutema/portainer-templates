@@ -11,6 +11,7 @@ services:
     command: --innodb-buffer-pool-size=268435456 --local-infile=0 --max-allowed-packet=33554432 --sql-mode=STRICT_ALL_TABLES
 
   nginx:
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
     image: nginx:alpine
     # https://hub.docker.com/_/nginx
     volumes:
