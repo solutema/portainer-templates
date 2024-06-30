@@ -844,7 +844,7 @@
       "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/phorge2/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
-        "stackfile": "stacks/phorge/docker-compose.yml"
+        "stackfile": "stacks/phorge2/docker-compose.yml"
       },
       "env": [
         {
