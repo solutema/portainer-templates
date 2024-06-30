@@ -836,6 +836,56 @@
       },
       {
       "type": 3,
+      "title": "Phorge 2",
+      "description": "Phorge is a collection of web applications which help software companies build better software.",
+      "note": "Phorge is a community-maintained fork of Phabricator.",
+      "categories": ["continuous-integration"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/phorge2/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/phorge/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "mariadb",
+          "label": "MariaDB image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "latest",
+          "label": "MariaDB tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "default": "ChangeMe",
+          "label": "Database Root Password",
+          "name": "MYSQL_ROOT_PASSWORD"
+        },
+        {
+          "default": "zeigren/phorge",
+          "label": "Phorge Image",
+          "name": "PHORGE_IMAGE"
+        },    
+        {
+          "default": "latest",
+          "label": "Phorge Tag",
+          "name": "PHORGE_TAG"
+        },
+        {
+          "default": "code.example.com",
+          "label": "Phorge Domain",
+          "name": "PH_BASE_URI"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
+      "type": 3,
       "title": "Redis",
       "description": "Open-source in-memory data structure store",
       "note": "Deploys a Redis server instance as an application cache or quick-response database.",

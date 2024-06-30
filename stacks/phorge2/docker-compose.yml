@@ -1,0 +1,41 @@
+version: '3'
+services:
+  mariadb:
+    container_name: ${COMPOSE_PROJECT_NAME}-mariadb
+    image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    restart: always
+    volumes:
+       - phorge_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: --innodb-buffer-pool-size=268435456 --local-infile=0 --max-allowed-packet=33554432 --sql-mode=STRICT_ALL_TABLES
+
+  phorge:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${PHORGE_IMAGE}:${PHORGE_TAG}
+    restart: always
+    volumes:
+      - phorge_web:/var/www/html
+      - phorge_ssh:/etc/ssh
+      - phorge_repo:/var/repo
+     # - ./config/phorge_mailers.json:/usr/src/docker_ph/mailers.json
+    depends_on:
+      - mariadb
+    environment:
+      UPGRADE_ON_RESTART: true
+      PH_MYSQL_PASS: ${MYSQL_ROOT_PASSWORD}
+     # PH_CLUSTER_MAILERS: true
+      PH_BASE_URI: https://${PH_BASE_URI}
+      VIRTUAL_HOST: ${PH_BASE_URI}, www.${PH_BASE_URI}
+      LETSENCRYPT_HOST: ${PH_BASE_URI}, www.${PH_BASE_URI}
+
+volumes:
+  phorge_db:
+  phorge_web:
+  phorge_ssh:
+  phorge_repo:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
