@@ -303,7 +303,7 @@
       "note": "Deploys a GitLab Runner instance.",
       "categories": ["Code Server"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce-runner/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/gitlab-ce-runner/docker-compose.yml"
