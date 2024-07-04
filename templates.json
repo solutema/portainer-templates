@@ -201,7 +201,101 @@
           "name": "NETWORK"
         }
        ]
+    },
+    {
+      "type": 3,
+      "title": "GitLab CE",
+      "description": "GitLab, is an Open-source end-to-end software development platform",
+      "note": "Deploys a GitLab instance.",
+      "categories": ["Code Server"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gitlab-ce/docker-compose.yml"
       },
+      "env": [
+        {
+          "label": "Hostname",
+          "name": "GITLAB_HOSTNAME"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Time Zone",
+          "name": "TZ"
+        },
+        {
+          "default": "gitlab/gitlab-ce",
+          "label": "GitLab Image",
+          "name": "GITLAB_CE_IMAGE"
+        },
+        {
+          "default": "16.7.0-ce.0",
+          "label": "GitLab Tag",
+          "name": "GITLAB_CE_TAG"
+        },
+        {
+          "default": "gitlab.example.com",
+          "label": "GitLab Host",
+          "name": "GITLAB_HOST"
+        },
+        {
+          "default": "registry.example.com",
+          "label": "GitLab Registry Host",
+          "name": "GITLAB_REGISTRY"
+        },
+        {
+          "default": "pages.example.com",
+          "label": "GitLab Pages",
+          "name": "GITLAB_PAGES"
+        },
+        {
+          "label": "GitLab Incoming Email Address",
+          "name": "GITLAB_CE_INCOMING_EMAIL_ADDRESS"
+        },
+        {
+          "label": "GitLab Incoming Email",
+          "name": "GITLAB_CE_INCOMING_EMAIL_EMAIL"
+        },
+        {
+          "label": "GitLab Incoming Password",
+          "name": "GITLAB_CE_INCOMING_EMAIL_PASSWORD"
+        },
+        {
+          "label": "GitLab Incoming Mail Host",
+          "name": "GITLAB_CE_INCOMING_EMAIL_HOST"
+        },
+        {
+          "label": "GitLab Incoming Mail Host Port",
+          "name": "GITLAB_CE_INCOMING_EMAIL_PORT"
+        },
+        {
+          "default": "true",
+          "label": "GitLab Incoming Mail Host SSL",
+          "name": "GITLAB_CE_INCOMING_EMAIL_SSL"
+        },
+        {
+          "default": "true",
+          "label": "GitLab Incoming Mail Host Start TLS",
+          "name": "GITLAB_CE_INCOMING_EMAIL_START_TLS"
+        },
+        {
+          "default": "2222",
+          "label": "GitLab SSH Port",
+          "name": "GITLAB_CE_SSH_PORT"
+        },
+        {
+          "default": "5000",
+          "label": "GitLab Registry Port",
+          "name": "GITLAB_CE_REGISTRY_PORT"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
     {
       "type": 3,
       "title": "GNU Health",

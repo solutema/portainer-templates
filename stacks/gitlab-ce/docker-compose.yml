@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  gitlab-ce:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    hostname: ${GITLAB_HOSTNAME}
+    image: ${GITLAB_CE_IMAGE}:${GITLAB_CE_TAG}
+    restart: always
+    environment:
+      TZ: ${TZ}
+      VIRTUAL_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
+      LETSENCRYPT_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://${GITLAB_HOST}'
+        registry_external_url 'https://${GITLAB_REGISTRY}'
+        pages_external_url 'https://${GITLAB_PAGES}'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        registry_nginx['listen_port'] = 80
+        registry_nginx['listen_https'] = false
+        nginx['proxy_set_headers'] = {  "X-Forwarded-Proto" => "https", "X-Forwarded-Ssl" => "on" }
+        gitlab_pages['enable'] = true
+        pages_nginx['listen_port'] = 80
+        pages_nginx['listen_https'] = false
+        gitlab_pages['log_directory'] = "/var/log/gitlab/gitlab-pages"
+        nginx['client_max_body_size'] = "0"
+        gitlab_rails['time_zone'] = '${TZ}'
+        gitlab_rails['incoming_email_enabled'] = true
+        gitlab_rails['incoming_email_address'] = "${GITLAB_CE_INCOMING_EMAIL_ADDRESS}"
+        gitlab_rails['incoming_email_email'] = "${GITLAB_CE_INCOMING_EMAIL_EMAIL}"
+        gitlab_rails['incoming_email_password'] = "${GITLAB_CE_INCOMING_EMAIL_PASSWORD}"
+        gitlab_rails['incoming_email_host'] = "${GITLAB_CE_INCOMING_EMAIL_HOST}"
+        gitlab_rails['incoming_email_port'] = ${GITLAB_CE_INCOMING_EMAIL_PORT}
+        gitlab_rails['incoming_email_ssl'] = ${GITLAB_CE_INCOMING_EMAIL_SSL}
+        gitlab_rails['incoming_email_start_tls'] = ${GITLAB_CE_INCOMING_EMAIL_START_TLS}
+        gitlab_rails['incoming_email_mailbox_name'] = "inbox"
+        gitlab_rails['incoming_email_idle_timeout'] = 60
+        gitlab_rails['incoming_email_expunge_deleted'] = true
+        # Add any other gitlab.rb configuration here, each on its own line
+        prometheus_monitoring['enable'] = false
+        sidekiq['concurrency'] = 2
+        postgresql['shared_buffers'] = "256MB"
+        manage_accounts['enable'] = true
+        user['username'] = 'git'
+        user['group'] = 'git'
+        user['uid'] = 1234
+        user['gid'] = 1234
+    ports:
+      - "${GITLAB_CE_SSH_PORT}:22"
+      - "${GITLAB_CE_REGISTRY_PORT}:5000"
+    volumes:
+      - config:/etc/gitlab
+      - logs:/var/log/gitlab
+      - data:/var/opt/gitlab
+    shm_size: '256m'
+
+volumes:
+  config:
+  logs:
+  data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
