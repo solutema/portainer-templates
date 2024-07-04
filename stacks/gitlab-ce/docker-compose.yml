@@ -10,6 +10,8 @@ services:
       TZ: ${TZ}
       VIRTUAL_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
       LETSENCRYPT_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
+      SSH_HOST: ${GITLAB_HOST}
+      SSH_PORT: ${GITLAB_CE_SSH_PORT}
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://${GITLAB_HOST}'
         registry_external_url 'https://${GITLAB_REGISTRY}'
