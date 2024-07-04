@@ -298,6 +298,58 @@
     },
     {
       "type": 3,
+      "title": "GitLab CE Runner",
+      "description": "Gitlab Runner is an application that works with GitLab CI/CD to run the job in a pipeline.",
+      "note": "Deploys a GitLab Runner instance.",
+      "categories": ["Code Server"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/gitlab-ce-runner/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "24.0.7-dind-alpine3.19",
+          "label": "Docker Tag",
+          "name": "DOCKER_TAG"
+        },
+        {
+          "default": "gitlab/gitlab-runner",
+          "label": "GitLab CE Runner Image",
+          "name": "GITLAB_CE_RUNNER_IMAGE"
+        },
+        {
+          "default": "v16.7.0",
+          "label": "GitLab CE Runner Tag",
+          "name": "GITLAB_CE_RUNNER_TAG"
+        },
+        {
+          "label": "Runner name",
+          "name": "RUNNER_NAME"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Time Zone",
+          "name": "TZ"
+        },
+        {
+          "label": "Registration Token",
+          "name": "REGISTRATION_TOKEN"
+        },
+        {
+          "label": "CI Server URL",
+          "name": "CI_SERVER_URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
+      "type": 3,
       "title": "GNU Health",
       "description": "GNU Health is a free/libre health and hospital information system.",
       "note": "Deploys a GNU Health instance connected to a PostgreSQL database.",
