@@ -11,16 +11,6 @@ services:
       - cache:/cache
     environment:
       TZ: ${TZ}
-      
-  gitlab-ce-runner-register:
-    container_name: ${COMPOSE_PROJECT_NAME}-register
-    restart: 'no'
-    image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
-    depends_on:
-      - gitlab-ce-runner
-    environment:
-      CI_SERVER_URL: ${CI_SERVER_URL}
-      REGISTRATION_TOKEN: ${REGISTRATION_TOKEN}
     command:
       - register
       - --non-interactive
@@ -29,10 +19,6 @@ services:
       - --executor=docker
       - --docker-image=docker:latest
       - --description=${RUNNER_NAME}
-      - --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
-    volumes:
-      - config:/etc/gitlab-runner/
-      - cache:/cache
       
 volumes:
   config:
