@@ -1,16 +1,30 @@
 version: '3'
 
 services:
+  gitlab-dind:
+    container_name: ${COMPOSE_PROJECT_NAME}-dind
+    image: docker:dind
+    environment:
+      - CONTAINER_NAME=gitlab-dnid
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dind:/var/lib/docker
+    privileged: true
+    restart: always
+
   gitlab-ce-runner:
-    container_name: ${COMPOSE_PROJECT_NAME}-app
+    container_name: ${COMPOSE_PROJECT_NAME}
     image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - config:/etc/gitlab-runner/
-      - cache:/cache
+      - dind:/var/lib/docker
     environment:
       TZ: ${TZ}
+      DOCKER_HOST: tcp://${COMPOSE_PROJECT_NAME}-dind:2375
+      CI_SERVER_URL: ${CI_SERVER_URL}
+      REGISTRATION_TOKEN: ${REGISTRATION_TOKEN}
     command:
       - register
       - --non-interactive
@@ -21,8 +35,8 @@ services:
       - --description=${RUNNER_NAME}
       
 volumes:
+  dind:
   config:
-  cache:
 
 networks:
   default:
