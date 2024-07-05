@@ -1,36 +1,24 @@
 version: '3'
 
 services:
-  dind:
-    container_name: ${COMPOSE_PROJECT_NAME}-dind
-    image: docker:${DOCKER_TAG}
-    restart: always
-    privileged: true
-    environment:
-      DOCKER_TLS_CERTDIR: ""
-    command:
-      - --storage-driver=overlay2
-    volumes:
-      - dind:/var/lib/docker
-
   gitlab-ce-runner:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
     restart: always
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - config:/etc/gitlab-runner/
       - cache:/cache
-      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       TZ: ${TZ}
-      DOCKER_HOST: tcp://dind:2375
+      DOCKER_HOST: tcp://docker:2375
       
   gitlab-ce-runner-register:
     container_name: ${COMPOSE_PROJECT_NAME}-register
     restart: 'no'
     image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
     depends_on:
-      - dind
+      - gitlab-ce-runner
     environment:
       TZ: ${TZ}
       CI_SERVER_URL: ${CI_SERVER_URL}
@@ -41,18 +29,16 @@ services:
       - --locked=false
       - --name=${RUNNER_NAME}
       - --executor=docker
-      - --docker-image=docker:${DOCKER_TAG}
+      - --docker-image=docker:latest
       - --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
-      #- --run-untagged="true"
-      #- --description ${COMPOSE_PROJECT_NAME}
-      #- --tag-list "privileged"
-      #- --access-level="not_protected"
+      - --run-untagged="true"
+      - --description ${COMPOSE_PROJECT_NAME}
+      - --tag-list "docker"
+      - --access-level="not_protected"
     volumes:
       - config:/etc/gitlab-runner/
-      - dind:/var/lib/docker
       
 volumes:
-  dind:
   config:
   cache:
 

@@ -310,21 +310,17 @@
       },
       "env": [
         {
-          "default": "24.0.7-dind-alpine3.19",
-          "label": "Docker Tag",
-          "name": "DOCKER_TAG"
-        },
-        {
           "default": "gitlab/gitlab-runner",
           "label": "GitLab CE Runner Image",
           "name": "GITLAB_CE_RUNNER_IMAGE"
         },
         {
-          "default": "v16.7.0",
+          "default": "v17.1.0",
           "label": "GitLab CE Runner Tag",
           "name": "GITLAB_CE_RUNNER_TAG"
         },
         {
+          "default": "GitLab Docker CI/CD",
           "label": "Runner name",
           "name": "RUNNER_NAME"
         },
