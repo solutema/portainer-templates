@@ -15,7 +15,7 @@ services:
       - register
       - --non-interactive
       - --url=${CI_SERVER_URL}
-      - --token ${REGISTRATION_TOKEN}
+      - --token=${REGISTRATION_TOKEN}
       - --executor=docker
       - --docker-image=docker:latest
       - --description=${RUNNER_NAME}
