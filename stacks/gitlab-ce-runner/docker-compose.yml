@@ -4,8 +4,6 @@ services:
   gitlab-dind:
     container_name: ${COMPOSE_PROJECT_NAME}-dind
     image: docker:dind
-    environment:
-      - CONTAINER_NAME=gitlab-dnid
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - dind:/var/lib/docker
