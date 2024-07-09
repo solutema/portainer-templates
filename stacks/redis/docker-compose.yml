@@ -4,10 +4,12 @@ services:
   redis:
     container_name: ${COMPOSE_PROJECT_NAME}-server
     image: ${REDIS_IMAGE}:${REDIS_TAG}
+    restart: always
     volumes:
       - data:/data/db
       - logs:/data/logs
-    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
     environment:
       - CONTAINER_NAME=${COMPOSE_PROJECT_NAME}-server
       - TIMEZONE=${TIMEZONE}
