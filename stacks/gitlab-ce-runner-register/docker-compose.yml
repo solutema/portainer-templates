@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  gitlab-runner-register:
+    container_name: ${COMPOSE_PROJECT_NAME}-register
+    image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
+    restart: no
+    command:
+      - register
+      - --non-interactive
+      - --url ${GITLAB_URL}
+      - --token ${RUNNER_TOKEN}
+      - --executor ${EXECUTOR}
+      - --docker-image ${DOCKER_IMAGE}
+      - --description ${DESCRIPTION}
+    volumes:
+      - config:/etc/gitlab-runner/
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
