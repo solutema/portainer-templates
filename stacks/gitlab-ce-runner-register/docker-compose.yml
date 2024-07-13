@@ -8,11 +8,11 @@ services:
     command:
       - register
       - --non-interactive
-      - --url ${GITLAB_URL}
-      - --token ${RUNNER_TOKEN}
-      - --executor ${EXECUTOR}
-      - --docker-image ${DOCKER_IMAGE}
-      - --description ${DESCRIPTION}
+      - --url "${GITLAB_URL}"
+      - --token "${RUNNER_TOKEN}"
+      - --executor "${EXECUTOR}"
+      - --docker-image "${DOCKER_IMAGE}"
+      - --description "${DESCRIPTION}"
     volumes:
       - config:/etc/gitlab-runner/
 
