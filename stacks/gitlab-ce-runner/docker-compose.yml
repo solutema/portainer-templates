@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  gitlab-ce-runner:
+  gitlab-runner:
     container_name: ${COMPOSE_PROJECT_NAME}
     image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
     restart: always
