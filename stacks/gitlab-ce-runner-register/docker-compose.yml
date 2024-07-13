@@ -16,6 +16,9 @@ services:
     volumes:
       - config:/etc/gitlab-runner/
 
+volumes:
+  config:
+
 networks:
   default:
     name: ${NETWORK}
