@@ -1,19 +1,6 @@
 version: '3'
 
 services:
-  dind:
-    container_name: ${COMPOSE_PROJECT_NAME}-dind
-    image: docker:${DOCKER_TAG}
-    restart: always
-    privileged: true
-    environment:
-      DOCKER_TLS_CERTDIR: ""
-    command:
-      - --storage-driver=overlay2
-    volumes:
-      - dind:/var/lib/docker
-
-
   gitlab-ce-runner:
     container_name: ${COMPOSE_PROJECT_NAME}
     image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
@@ -24,36 +11,13 @@ services:
       - cache:/cache
     environment:
       TZ: ${TZ}
-      DOCKER_HOST: tcp://dind:2375
-
-  gitlab-ce-runner-register:
-    container_name: ${COMPOSE_PROJECT_NAME}-register
-    restart: 'no'
-    image: gitlab/gitlab-runner:${GITLAB_CE_RUNNER_TAG}
-    depends_on:
-      - dind
-    environment:
-      TZ: ${TZ}
-      CI_SERVER_URL: ${CI_SERVER_URL}
-      REGISTRATION_TOKEN: ${REGISTRATION_TOKEN}
-    command:
-      - register
-      - --non-interactive
-      - --url ${CI_SERVER_URL}
-      - --token ${REGISTRATION_TOKEN}
-      - --executor docker
-      - --docker-image docker:${DOCKER_TAG}    
-      - --description ${RUNNER_NAME}
-      - --docker-volumes /var/run/docker.sock:/var/run/docker.sock
 
     volumes:
       - config:/etc/gitlab-runner/
-      - dind:/var/lib/docker
       
 volumes:
-  cache:
   config:
-  dind:
+  cache:
 
 networks:
   default:
