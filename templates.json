@@ -310,11 +310,6 @@
       },
       "env": [
         {
-          "default": "27.0.3-dind-alpine3.20",
-          "label": "Docker Tag",
-          "name": "DOCKER_TAG"
-        },
-        {
           "default": "gitlab/gitlab-runner",
           "label": "GitLab CE Runner Image",
           "name": "GITLAB_CE_RUNNER_IMAGE"
@@ -325,22 +320,9 @@
           "name": "GITLAB_CE_RUNNER_TAG"
         },
         {
-          "default": "GitLab Docker CI/CD",
-          "label": "Runner name",
-          "name": "RUNNER_NAME"
-        },
-        {
           "default": "America/Santo_Domingo",
           "label": "Time Zone",
           "name": "TZ"
-        },
-        {
-          "label": "Registration Token",
-          "name": "REGISTRATION_TOKEN"
-        },
-        {
-          "label": "CI Server URL",
-          "name": "CI_SERVER_URL"
         },
         {
           "default": "proxy",
