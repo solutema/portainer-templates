@@ -11,9 +11,6 @@ services:
       - cache:/cache
     environment:
       TZ: ${TZ}
-
-    volumes:
-      - config:/etc/gitlab-runner/
       
 volumes:
   config:
