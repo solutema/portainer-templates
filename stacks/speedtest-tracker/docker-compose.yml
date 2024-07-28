@@ -24,6 +24,7 @@ services:
       PGID: ${PGID}
       APP_NAME: ${APP_NAME}
       APP_KEY: ${APP_KEY}
+      APP_URL: https://${URL_DOMAIN}
       DB_CONNECTION: mysql
       DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
       DB_PORT: 3306
