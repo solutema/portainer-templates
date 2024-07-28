@@ -1215,11 +1215,6 @@
           "name": "APP_KEY"
         },
         {
-          "default": "",
-          "label": "App URL",
-          "name": "APP_URL"
-        },
-        {
           "default": "0",
           "label": "Prune Results Older Than",
           "name": "PRUNE_RESULTS_OLDER_THAN"
