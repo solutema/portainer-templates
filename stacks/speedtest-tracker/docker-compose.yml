@@ -40,6 +40,12 @@ services:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
     volumes:
       - speedtest-tracker-config:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.speedtest.rule=Host(`${URL_DOMAIN}`)"
+      - "traefik.http.services.speedtest.loadbalancer.server.port=9000"
+      - "traefik.http.routers.speedtest.entrypoints=websecure"
+      - "traefik.http.routers.speedtest.tls.certresolver=myresolver"
       
 volumes:
   speedtest-db:
