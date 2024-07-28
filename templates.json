@@ -103,7 +103,7 @@
       "note": "Deploys a Gitea instance connected to a MySQL database.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/5603d5a79452bc237ac44f663d39f9aa.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitea/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/gitea/docker-compose.yml"
@@ -171,7 +171,7 @@
       "note": "Deploys a Gitea act runner.",
       "categories": ["CI/CD"],
       "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/5603d5a79452bc237ac44f663d39f9aa.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitea-act-runner/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/gitea-act-runner/docker-compose.yml"
