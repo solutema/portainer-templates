@@ -387,7 +387,7 @@
       "note": "Deploys a GNU Health instance connected to a PostgreSQL database.",
       "categories": ["health"],
       "platform": "linux",
-      "logo": "https://files.mastodon.social/accounts/avatars/108/222/419/986/466/608/original/468031f81410a19d.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gnuhealth/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/gnuhealth/docker-compose.yml"
@@ -548,7 +548,7 @@
       "description": "Gravitee helps organizations manage and secure their entire API lifecycle with solutions for API design, management, security, productization, real-time observability, and more.",
       "categories": ["project-management"],
       "platform": "linux",
-      "logo": "https://download.gravitee.io/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gravitee/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/gravitee/docker-compose.yml"
@@ -609,7 +609,7 @@
       "note": "Deploys an nextcloud instance.",
       "categories": ["Cloud", "Productivity", "Tools", "Web"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/nextcloud-icon.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/nextcloud/logo/logo.png",
       "repository": {
         "url": "https://github.com/joseagrc/portainer-templates",
         "stackfile": "stacks/nextcloud/docker-stack.yml"
@@ -674,7 +674,7 @@
       "description": "Open-source business apps.",
       "categories": ["project-management"],
       "platform": "linux",
-      "logo": "https://d1q6f0aelx0por.cloudfront.net/product-logos/library-odoo-logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/nextcloud/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/odoo/docker-compose.yml"
@@ -742,7 +742,7 @@
       "note": "Deploys an OpenLDAP Server.",
       "categories": ["Directory Access Protocol"],
       "platform": "linux",
-      "logo": "https://somebooks.es/wp-content/uploads/2022/02/OpenLDAP.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/openldap/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/openldap/docker-compose.yml"
@@ -832,7 +832,7 @@
       "note": "Deploys an OpenLDAP Server.",
       "categories": ["Directory Access Protocol"],
       "platform": "linux",
-      "logo": "https://somebooks.es/wp-content/uploads/2022/02/OpenLDAP.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/openldap2/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/openldap2/docker-compose.yml"
@@ -943,7 +943,7 @@
       "note": "Phorge is a community-maintained fork of Phabricator.",
       "categories": ["continuous-integration"],
       "platform": "linux",
-      "logo": "https://phorge.it/img/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/phorge/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/phorge/docker-compose.yml"
@@ -1069,7 +1069,7 @@
       "note": "Deploys a Redis server instance as an application cache or quick-response database.",
       "categories": ["database"],
       "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redis.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/redis/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/redis/docker-compose.yml"
@@ -1153,7 +1153,7 @@
       "note": "Deploys an image to check your internet speed using Ookla's Speedtest service.",
       "categories": ["Tools"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/speedtest-tracker-logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/speedtest-tracker/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/speedtest-tracker/docker-compose.yml"
@@ -1281,7 +1281,7 @@
       "note": "Deploys an Weblate instance.",
       "categories": ["Computer-assisted translation"],
       "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/e5f0d5efe7cd63ab2219d2bdd875cb0f.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/weblate/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/weblate/docker-compose.yml"
@@ -1656,7 +1656,7 @@
       "note": "Deploys a WireHole instance.",
       "categories": ["Network"],
       "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wirehole/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/wirehole/docker-compose.yml"
@@ -1763,7 +1763,7 @@
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wordpress/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/wordpress/docker-compose.yml"
@@ -1917,7 +1917,7 @@
       "note": "Deploys a Zabbix Server to monitor IT infrastructure such as networks, servers, virtual machines, and cloud services.",
       "categories": ["Monitor Tool"],
       "platform": "linux",
-      "logo": "https://www.gravatar.com/avatar/80546ec7b550e478c2333bef451ae888.png",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/zabbix/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/templates",
         "stackfile": "stacks/zabbix/docker-compose.yml"
