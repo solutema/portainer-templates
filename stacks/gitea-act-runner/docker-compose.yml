@@ -3,8 +3,8 @@ services:
   runner:
     image: ${GITEA_ACT_RUNNER_IMAGE}:${GITEA_ACT_RUNNER_TAG}
     environment:
-      GITEA_INSTANCE_URL: "${INSTANCE_URL}"
-      GITEA_RUNNER_REGISTRATION_TOKEN: "${REGISTRATION_TOKEN}"
+      GITEA_INSTANCE_URL: "${GITEA_INSTANCE_URL}"
+      GITEA_RUNNER_REGISTRATION_TOKEN: "${GITEA_RUNNER_REGISTRATION_TOKEN}"
     volumes:
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock
