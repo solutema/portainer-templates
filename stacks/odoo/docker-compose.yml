@@ -33,9 +33,12 @@ services:
       HOST: ${COMPOSE_PROJECT_NAME}-postgres
       USER: ${POSTGRES_USER}
       PASSWORD: ${POSTGRES_PASSWORD}
-      VIRTUAL_PORT: 8069
-      VIRTUAL_HOST: ${URL},www.${URL}
-      LETSENCRYPT_HOST: ${URL},www.${URL}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.odoo.rule=Host(`${URL}`)"
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
+      - "traefik.http.routers.odoo.entrypoints=websecure"
+      - "traefik.http.routers.odoo.tls.certresolver=gruposolutema"
 
 volumes:
   postgres-db:
