@@ -10,9 +10,17 @@ services:
     environment:
       EMULATOR_DEVICE: ${EMULATOR_DEVICE}
       WEB_VNC: true
-      VIRTUAL_PORT: 6080
-      VIRTUAL_HOST: ${DOMAIN}
-      LETSENCRYPT_HOST: ${DOMAIN}
+    volumes:
+      - data:/home/androidusr
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.android.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.services.android.loadbalancer.server.port=6080"
+      - "traefik.http.routers.android.entrypoints=websecure"
+      - "traefik.http.routers.android.tls.certresolver=myresolver"
+      
+volumes:
+  data:
 
 networks:
   default:
