@@ -12,12 +12,10 @@ services:
       WEB_VNC: true
     volumes:
       - data:/home/androidusr
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.android.rule=Host(`${DOMAIN}`)"
-      - "traefik.http.services.android.loadbalancer.server.port=6080"
-      - "traefik.http.routers.android.entrypoints=websecure"
-      - "traefik.http.routers.android.tls.certresolver=myresolver"
+    environment:
+      VIRTUAL_PORT: 6080
+      VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
       
 volumes:
   data:
