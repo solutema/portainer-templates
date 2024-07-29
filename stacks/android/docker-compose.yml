@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   android:
     container_name: ${COMPOSE_PROJECT_NAME}-app
