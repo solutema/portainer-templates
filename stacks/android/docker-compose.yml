@@ -8,12 +8,11 @@ services:
     environment:
       EMULATOR_DEVICE: ${EMULATOR_DEVICE}
       WEB_VNC: true
-    volumes:
-      - data:/home/androidusr
-    environment:
       VIRTUAL_PORT: 6080
       VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
+    volumes:
+      - data:/home/androidusr
       
 volumes:
   data:
