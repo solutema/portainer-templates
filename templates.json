@@ -1086,6 +1086,16 @@
           "name": "PIHOLE_TAG"
         },
         {
+          "default": "pihole",
+          "label": "Pi-hole Hostname",
+          "name": "PIHOLE_HOSTNAME"
+        },
+        {
+          "default": "192.168.1.100",
+          "label": "Local Ipv4",
+          "name": "FTLCONF_LOCAL_IPV4"
+        },
+        {
           "default": "America/Santo_Domingo",
           "label": "Timezone",
           "name": "TZ"

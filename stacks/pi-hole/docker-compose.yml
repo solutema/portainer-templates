@@ -3,21 +3,29 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}
     image: ${PIHOLE_IMAGE}:${PIHOLE_TAG}
     restart: unless-stopped
+    hostname: ${PIHOLE_HOSTNAME}
     ports:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
-#      - "80:80/tcp"
+      - "8053:80/tcp"
     volumes:
       - pihole-data:/etc/pihole
       - dnsmasq-data:/etc/dnsmasq.d
     cap_add:
       - NET_ADMIN
     environment:
-      TZ: ${TIMEZONE}
-      WEBPASSWORD: ${ENABLE_LOGS}
+      TZ: ${TZ}
+      PIHOLE_DOCKER_TAG: ${PIHOLE_TAG}
+      FTLCONF_LOCAL_IPV4: ${FTLCONF_LOCAL_IPV4}
+      PROXY_LOCATION: ${PIHOLE_HOSTNAME}
+      WEBPASSWORD: ${WEBPASSWORD}
+      VIRTUAL_PORT: 80
+      CORS_HOSTS: ${PIHOLE_URL}
       VIRTUAL_HOST: ${PIHOLE_URL},www.${PIHOLE_URL}
       LETSENCRYPT_HOST: ${PIHOLE_URL},www.${PIHOLE_URL}
+    extra_hosts:
+      - '${PIHOLE_HOSTNAME} ${PIHOLE_URL}:${FTLCONF_LOCAL_IPV4}'
       
 volumes:
   pihole-data:
