@@ -8,9 +8,9 @@
       "note": "Deploys a android instance.",
       "categories": ["OS"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/android/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/android/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/android/docker-compose.yml"
       },
       "env": [
@@ -50,7 +50,7 @@
       "platform": "linux",
       "logo": "https://www.apiopenstudio.com/wp-content/uploads/2021/03/APIOpenStudio_Logo_Name_Colour-e1616129856362.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/apiopenstudio/docker-compose.yml"
       },
       "env": [
@@ -103,9 +103,9 @@
       "note": "Deploys a Gitea instance connected to a MySQL database.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitea/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gitea/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gitea/docker-compose.yml"
       },
       "env": [
@@ -171,9 +171,9 @@
       "note": "Deploys a Gitea act runner.",
       "categories": ["CI/CD"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitea-act-runner/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gitea-act-runner/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gitea-act-runner/docker-compose.yml"
       },
       "env": [
@@ -209,9 +209,9 @@
       "note": "Deploys a GitLab instance.",
       "categories": ["Code Server"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gitlab-ce/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gitlab-ce/docker-compose.yml"
       },
       "env": [
@@ -303,9 +303,9 @@
       "note": "Deploys a GitLab Runner instance.",
       "categories": ["Code Server"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce-runner/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gitlab-ce-runner/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gitlab-ce-runner/docker-compose.yml"
       },
       "env": [
@@ -338,9 +338,9 @@
       "note": "Deploys a GitLab Runner instance to register a runner.",
       "categories": ["Code Server"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gitlab-ce-runner/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gitlab-ce-runner/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gitlab-ce-runner-register/docker-compose.yml"
       },
       "env": [
@@ -387,9 +387,9 @@
       "note": "Deploys a GNU Health instance connected to a PostgreSQL database.",
       "categories": ["health"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gnuhealth/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gnuhealth/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gnuhealth/docker-compose.yml"
       },
       "env": [
@@ -479,9 +479,9 @@
       "description": "Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS powered by PHP, Markdown, Twig, and Symfony.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/grav/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/grav/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/grav/docker-compose.yml"
       },
       "env": [
@@ -548,9 +548,9 @@
       "description": "Gravitee helps organizations manage and secure their entire API lifecycle with solutions for API design, management, security, productization, real-time observability, and more.",
       "categories": ["project-management"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/gravitee/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/gravitee/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/gravitee/docker-compose.yml"
       },
       "env": [
@@ -609,7 +609,7 @@
       "note": "Deploys an nextcloud instance.",
       "categories": ["Cloud", "Productivity", "Tools", "Web"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/nextcloud/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/nextcloud/logo/logo.png",
       "repository": {
         "url": "https://github.com/joseagrc/portainer-templates",
         "stackfile": "stacks/nextcloud/docker-stack.yml"
@@ -674,9 +674,9 @@
       "description": "Open-source business apps.",
       "categories": ["project-management"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/nextcloud/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/nextcloud/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/odoo/docker-compose.yml"
       },
       "env": [
@@ -742,9 +742,9 @@
       "note": "Deploys an OpenLDAP Server.",
       "categories": ["Directory Access Protocol"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/openldap/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/openldap/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/openldap/docker-compose.yml"
       },
       "env": [   
@@ -832,9 +832,9 @@
       "note": "Deploys an OpenLDAP Server.",
       "categories": ["Directory Access Protocol"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/openldap2/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/openldap2/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/openldap2/docker-compose.yml"
       },
       "env": [   
@@ -943,9 +943,9 @@
       "note": "Phorge is a community-maintained fork of Phabricator.",
       "categories": ["continuous-integration"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/phorge/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/phorge/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/phorge/docker-compose.yml"
       },
       "env": [
@@ -1019,9 +1019,9 @@
       "note": "Phorge is a community-maintained fork of Phabricator.",
       "categories": ["continuous-integration"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/phorge2/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/phorge2/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/phorge2/docker-compose.yml"
       },
       "env": [
@@ -1069,9 +1069,9 @@
       "note": "Pi-hole is a DNS sinkhole that protects your devices from unwanted content without installing any client-side software.",
       "categories": ["Network-wide Ad Blocking"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/pi-hole/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/pi-hole/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/pi-hole/docker-compose.yml"
       },
       "env": [
@@ -1114,9 +1114,9 @@
       "note": "Deploys a Redis server instance as an application cache or quick-response database.",
       "categories": ["database"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/redis/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/redis/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/redis/docker-compose.yml"
       },
       "env": [
@@ -1198,9 +1198,9 @@
       "note": "Deploys an image to check your internet speed using Ookla's Speedtest service.",
       "categories": ["Tools"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/speedtest-tracker/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/speedtest-tracker/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/speedtest-tracker/docker-compose.yml"
       },
       "env": [
@@ -1326,9 +1326,9 @@
       "note": "Deploys an Weblate instance.",
       "categories": ["Computer-assisted translation"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/weblate/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/weblate/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/weblate/docker-compose.yml"
       },
       "env": [
@@ -1512,9 +1512,9 @@
       "note": "Deploys an windows os instance.",
       "categories": ["KVM"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/windows/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/windows/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/windows/docker-compose.yml"
       },
       "env": [
@@ -1612,9 +1612,9 @@
       "note": "Deploys a iireguard instance.",
       "categories": ["Network"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wireguard/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/wireguard/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/wireguard/docker-compose.yml"
       },
       "env": [
@@ -1701,9 +1701,9 @@
       "note": "Deploys a WireHole instance.",
       "categories": ["Network"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wirehole/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/wirehole/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/wirehole/docker-compose.yml"
       },
       "env": [
@@ -1808,9 +1808,9 @@
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
       "categories": ["CMS"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/wordpress/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/wordpress/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/wordpress/docker-compose.yml"
       },
       "env": [
@@ -1962,9 +1962,9 @@
       "note": "Deploys a Zabbix Server to monitor IT infrastructure such as networks, servers, virtual machines, and cloud services.",
       "categories": ["Monitor Tool"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/zabbix/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/zabbix/logo/logo.png",
       "repository": {
-        "url": "https://github.com/solutema/templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/zabbix/docker-compose.yml"
       },
       "env": [
