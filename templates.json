@@ -611,8 +611,8 @@
       "platform": "linux",
       "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/nextcloud/logo/logo.png",
       "repository": {
-        "url": "https://github.com/joseagrc/portainer-templates",
-        "stackfile": "stacks/nextcloud/docker-stack.yml"
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/nextcloud/docker-compose.yml"
       },
       "env": [
         {
@@ -626,10 +626,24 @@
           "name": "MARIADB_TAG"
         },
         {
-          "default": "America/Santo_Domingo",
-          "label": "Time Zone",
-          "name": "TIMEZONE"
+          "default": "user_mariadb",
+          "label": "MariaDB User",
+          "name": "MARIADB_USER"
         },
+        {
+          "default": "password_mariadb",
+          "label": "MariaDB Password",
+          "name": "MARIADB_PASSWORD"
+        },
+        {
+          "default": "password_mariadb",
+          "label": "MariaDB Password",
+          "name": "MARIADB_PASSWORD"
+        },
+
+MARIADB_DATABASE
+
+
         {
           "label": "Root Password",
           "name": "ROOT_PASS"
