@@ -1064,6 +1064,51 @@
       },
       {
       "type": 3,
+      "title": "Pi-hole",
+      "description": "Pi-hole is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network.",
+      "note": "Pi-hole is a DNS sinkhole that protects your devices from unwanted content without installing any client-side software.",
+      "categories": ["Network-wide Ad Blocking"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/templates/main/stacks/pi-hole/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/templates",
+        "stackfile": "stacks/pi-hole/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "pihole/pihole",
+          "label": "Pi-hole Image",
+          "name": "PIHOLE_IMAGE"
+        },
+        {
+          "default": "2024.07.0",
+          "label": "Pi-hole Tag",
+          "name": "PIHOLE_TAG"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TZ"
+        },
+        {
+          "default": "admin",
+          "label": "Web password",
+          "name": "WEBPASSWORD"
+        },    
+        {
+          "default": "pihole.example.com",
+          "label": "Pi-hole URL",
+          "name": "PIHOLE_URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
+      "type": 3,
       "title": "Redis",
       "description": "Open-source in-memory data structure store",
       "note": "Deploys a Redis server instance as an application cache or quick-response database.",
