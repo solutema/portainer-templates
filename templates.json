@@ -674,7 +674,7 @@
       "description": "Open-source business apps.",
       "categories": ["project-management"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/nextcloud/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/odoo/logo/logo.png",
       "repository": {
         "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/odoo/docker-compose.yml"
