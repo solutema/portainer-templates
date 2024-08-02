@@ -39,14 +39,11 @@ services:
       APP_TIMEZONE: ${APP_TIMEZONE}
       DISPLAY_TIMEZONE: ${DISPLAY_TIMEZONE}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      VIRTUAL_HOST: ${URL_DOMAIN},www.${URL_DOMAIN}
+      LETSENCRYPT_HOST: ${URL_DOMAIN},www.${URL_DOMAIN}
     volumes:
       - speedtest-tracker-config:/config
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.speedtest.rule=Host(`${URL_DOMAIN}`)"
-      - "traefik.http.services.speedtest.loadbalancer.server.port=80"
-      - "traefik.http.routers.speedtest.entrypoints=websecure"
-      - "traefik.http.routers.speedtest.tls.certresolver=myresolver"
+
       
 volumes:
   speedtest-db:
