@@ -640,10 +640,6 @@
           "label": "MariaDB Password",
           "name": "MARIADB_PASSWORD"
         },
-
-MARIADB_DATABASE
-
-
         {
           "label": "Root Password",
           "name": "ROOT_PASS"
