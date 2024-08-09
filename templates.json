@@ -43,61 +43,6 @@
       },
       {
       "type": 3,
-      "title": "ApiOpenStudio",
-      "description": "ApiOpenStudio setup with a MySQL database",
-      "note": "Deploys a ApiOpenStudio instance connected to a MySQL database.",
-      "categories": ["API"],
-      "platform": "linux",
-      "logo": "https://www.apiopenstudio.com/wp-content/uploads/2021/03/APIOpenStudio_Logo_Name_Colour-e1616129856362.png",
-      "repository": {
-        "url": "https://github.com/solutema/portainer-templates",
-        "stackfile": "stacks/apiopenstudio/docker-compose.yml"
-      },
-      "env": [
-        {
-          "default": "mysql",
-          "label": "MySQL database image",
-          "name": "MYSQL_IMAGE"
-        },
-        {
-          "default": "8",
-          "label": "MySQL Database tag",
-          "name": "MYSQL_TAG"
-        },
-        {
-          "default": "apiopenstudio-db",
-          "label": "DB Hostname",
-          "name": "DB_HOSTNAME"
-        },
-        {
-          "default": "apiopenstudio",
-          "label": "MySQL database name",
-          "name": "MYSQL_DATABASE"
-        },
-        {
-          "default": "apiopenstudio",
-          "label": "MySQL database username",
-          "name": "MYSQL_USER"
-        },
-        {
-          "default": "my_s3cr3t",
-          "label": "MySQL Database password for user",
-          "name": "MYSQL_PASSWORD"
-        },
-        {
-          "default": "my_s3cr3t",
-          "label": "Database root password",
-          "name": "MYSQL_ROOT_PASSWORD"
-        },
-        {
-          "default": "proxy",
-          "label": "Network name",
-          "name": "NETWORK"
-        }
-      ]
-      },
-      {
-      "type": 3,
       "title": "Gitea",
       "description": "Gitea setup with a MySQL database",
       "note": "Deploys a Gitea instance connected to a MySQL database.",
