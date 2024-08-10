@@ -11,3 +11,8 @@ services:
 
 volumes:
   data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
