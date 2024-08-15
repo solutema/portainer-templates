@@ -43,6 +43,68 @@
       },
       {
       "type": 3,
+      "title": "Drone",
+      "description": "Drone",
+      "note": "Deploys a drone server instance.",
+      "categories": ["CI/CD"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/drone/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/drone/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "drone/drone",
+          "label": "Drone Image",
+          "name": "DRONE_IMAGE"
+        },
+        {
+          "default": "2.24",
+          "label": "Drone Tag",
+          "name": "DRONE_TAG"
+        },
+        {
+          "default": "gitea.example.com",
+          "label": "Drone Gitea Server",
+          "name": "DRONE_GITEA_SERVER"
+        },
+        {
+          "label": "Drone Gitea Client ID",
+          "name": "DRONE_GITEA_CLIENT_ID"
+        },
+        {
+          "label": "Drone Gitea Client Secret",
+          "name": "DRONE_GITEA_CLIENT_SECRET"
+        },
+        {
+          "label": "Drone RPC Secret",
+          "name": "DRONE_RPC_SECRET"
+        },
+        {
+          "default": "drone.example.com",
+          "label": "Drone Server Host",
+          "name": "DRONE_SERVER_HOST"
+        },
+        {
+          "default": "https",
+          "label": "Drone Server Proto",
+          "name": "DRONE_SERVER_PROTO"
+        },
+        {
+          "default": "drone.example.com",
+          "label": "Domain",
+          "name": "DRONE_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network Name",
+          "name": "NETWORK"
+        }
+      ]
+      },
+      {
+      "type": 3,
       "title": "Gitea",
       "description": "Gitea setup with a MySQL database",
       "note": "Deploys a Gitea instance connected to a MySQL database.",
