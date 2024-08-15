@@ -1,0 +1,42 @@
+services:
+  woodpecker-server:
+    container_name: ${COMPOSE_PROJECT_NAME}-server
+    image: ${WOODPECKER_SERVER_IMAGE}:${WOODPECKER_SERVER_TAG}
+#    ports:
+#      - 8000:8000
+    volumes:
+      - woodpecker-server-data:/var/lib/woodpecker/
+    environment:
+      WOODPECKER_OPEN: true
+      WOODPECKER_GITEA_URL: ${WOODPECKER_GITEA_URL}
+      WOODPECKER_GITEA: true
+      WOODPECKER_GITEA_CLIENT: ${WOODPECKER_GITEA_CLIENT}
+      WOODPECKER_GITEA_SECRET: ${WOODPECKER_GITEA_SECRET}
+      WOODPECKER_AGENT_SECRET: ${WOODPECKER_AGENT_SECRET}
+      VIRTUAL_HOST: ${WOODPECKER_GITEA_URL}
+      LETSENCRYPT_HOST: ${WOODPECKER_GITEA_URL}
+
+  woodpecker-agent:
+    container_name: ${COMPOSE_PROJECT_NAME}-agent
+    image: ${WOODPECKER_AGENT_IMAGE}:${WOODPECKER_AGENT_TAG}
+    command: agent
+    restart: always
+    depends_on:
+      - woodpecker-server
+    volumes:
+      - woodpecker-agent-config:/etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WOODPECKER_SERVER: woodpecker-server
+      WOODPECKER_AGENT_SECRET: ${WOODPECKER_AGENT_SECRET}
+      WOODPECKER_MAX_WORKFLOWS: 3
+      WOODPECKER_BACKEND_DOCKER_NETWORK: ${NETWORK}
+
+volumes:
+  woodpecker-server-data:
+  woodpecker-agent-config:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

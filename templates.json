@@ -1830,6 +1830,81 @@
     },
     {
       "type": 3,
+      "title": "Woodpecker + Gitea",
+      "description": "Woodpecker + Gitea setup with a Gitea instance.",
+      "note": "Deploys a Woodpecker instance connected to a Gitea instance.",
+      "categories": ["CI"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/woodpecker/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/woodpecker/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "woodpeckerci/woodpecker-server",
+          "label": "Woodpecker Server Image",
+          "name": "WOODPECKER_SERVER_IMAGE"
+        },
+        {
+          "default": "next-289f530b2b-alpine",
+          "label": "Woodpecker Server Tag",
+          "name": "WOODPECKER_SERVER_TAG"
+        },
+        {
+          "default": "woodpeckerci/woodpecker-agent",
+          "label": "Woodpecker Agent Image",
+          "name": "WOODPECKER_AGENT_IMAGE"
+        },
+        {
+          "default": "next-289f530b2b-alpine",
+          "label": "Woodpecker Agent Tag",
+          "name": "WOODPECKER_AGENT_TAG"
+        },
+        {
+          "label": "Woodpecker Gitea URL",
+          "name": "WOODPECKER_GITEA_URL"
+        },
+        {
+          "label": "Woodpecker Gitea Client",
+          "name": "WOODPECKER_GITEA_CLIENT"
+        },
+        {
+          "label": "Woodpecker Gitea Secret",
+          "name": "WOODPECKER_GITEA_SECRET"
+        },
+        {
+          "label": "Woodpecker Agent Secret",
+          "name": "WOODPECKER_AGENT_SECRET"
+        },
+
+
+
+
+
+
+
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      "type": 3,
       "title": "WordPress",
       "description": "WordPress setup with a Mariadb database",
       "note": "Deploys a WordPress instance connected to a Mariadb database.",
