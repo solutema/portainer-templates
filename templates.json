@@ -1862,6 +1862,12 @@
           "name": "WOODPECKER_AGENT_TAG"
         },
         {
+          "default": "woodpecker.example.com",
+          "label": "Woodpecker Host",
+          "name": "WOODPECKER_HOST"
+        },
+        {
+          "default": "gitea.example.com",
           "label": "Woodpecker Gitea URL",
           "name": "WOODPECKER_GITEA_URL"
         },
@@ -1877,13 +1883,6 @@
           "label": "Woodpecker Agent Secret",
           "name": "WOODPECKER_AGENT_SECRET"
         },
-
-
-
-
-
-
-
         {
           "default": "proxy",
           "label": "Network name",
