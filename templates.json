@@ -1148,12 +1148,12 @@
       },
       "env": [
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-redis",
+          "default": "code.gruposolutema.com/solutema/redis",
           "label": "Redis image",
           "name": "REDIS_IMAGE"
         },
         {
-          "default": "7.2.4",
+          "default": "7.4.0",
           "label": "Redis tag",
           "name": "REDIS_TAG"
         },
@@ -1207,7 +1207,7 @@
           "name": "RI_STDOUT_LOGGER"
         },
         {
-          "default": "insight.example.com",
+          "default": "redis.example.com",
           "label": "Insight domain",
           "name": "INSIGHT_DOMAIN"
         },
