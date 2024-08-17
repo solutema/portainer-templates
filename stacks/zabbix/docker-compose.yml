@@ -3,7 +3,8 @@ services:
   zabbix-server-db:
     container_name: zabbix-server-db
     image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
-    #user: root
+    restart: always
+    user: root
     volumes:
       - zabbix-server-db:/var/lib/postgresql/data
     environment:
@@ -13,8 +14,7 @@ services:
       - DB_PASS=${POSTGRES_PASSWORD}
       - DB_NAME=${POSTGRES_DB}
       - SUPERUSER_PASS=${SUPERUSER_PASS}
-      
-    restart: always
+      - ZABBIX_SERVER_ACTIVE=zabbix-server
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}" ]
       interval: 10s

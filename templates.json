@@ -2075,12 +2075,12 @@
           "name": "TIMEZONE"
         },
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
+          "default": "code.gruposolutema.com/solutema/postgres",
           "label": "Postgres image",
           "name": "POSTGRES_IMAGE"
         },
         {
-          "default": "16",
+          "default": "16.4",
           "label": "Postgres tag",
           "name": "POSTGRES_TAG"
         },
@@ -2105,12 +2105,12 @@
           "name": "POSTGRES_DB"
         },
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-zabbix",
+          "default": "code.gruposolutema.com/solutema/zabbix",
           "label": "Zabbix server image",
           "name": "ZABBIX_IMAGE"
         },
         {
-          "default": "6.4.13",
+          "default": "7.0.2",
           "label": "Zabbix server tag",
           "name": "ZABBIX_TAG"
         },
