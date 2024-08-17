@@ -1182,8 +1182,13 @@
           "name": "REDIS_PASS"
         },
         {
-          "default": "v2",
-          "label": "Insight tag",
+          "default": "redis/redisinsight",
+          "label": "Insight Image",
+          "name": "INSIGHT_IMAGE"
+        },
+        {
+          "default": "2.54.0",
+          "label": "Insight Tag",
           "name": "INSIGHT_TAG"
         },
         {

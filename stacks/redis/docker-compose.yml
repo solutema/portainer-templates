@@ -18,8 +18,8 @@ services:
       - REDIS_PASS=${REDIS_PASS}
 
   insight:
-    image: redislabs/redisinsight:${INSIGHT_TAG}
     container_name: ${COMPOSE_PROJECT_NAME}-insight
+    image: ${INSIGHT_IMAGE}:${INSIGHT_TAG}
     restart: always
     depends_on:
       - redis
