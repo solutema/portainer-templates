@@ -1207,7 +1207,7 @@
           "name": "RI_STDOUT_LOGGER"
         },
         {
-          "default": "redis.example.com",
+          "default": "insight.example.com",
           "label": "Insight domain",
           "name": "INSIGHT_DOMAIN"
         },
