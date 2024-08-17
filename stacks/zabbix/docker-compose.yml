@@ -5,6 +5,8 @@ services:
     image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
     restart: always
     user: root
+    ports:
+      - 5432:5432
     volumes:
       - zabbix-server-db:/var/lib/postgresql/data
     environment:
