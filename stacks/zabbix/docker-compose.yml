@@ -28,7 +28,7 @@ services:
     container_name: zabbix-server
     image: ${ZABBIX_IMAGE}:${ZABBIX_TAG}
     ports:
-      - 127.0.0.1:10051:10051
+      - 10051:10051
     volumes:
       - zabbix-server-externalscripts:/assets/externalscripts
       - zabbix-server-alertscripts:/assets/alertscripts
