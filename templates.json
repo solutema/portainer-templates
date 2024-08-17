@@ -1890,18 +1890,6 @@
         }
       ]
     },
-
-
-
-
-
-
-
-
-
-
-
-
     {
       "type": 3,
       "title": "WordPress",
@@ -1916,12 +1904,12 @@
       },
       "env": [
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-mariadb",
+          "default": "code.gruposolutema.com/solutema/mariadb",
           "label": "Database image",
           "name": "MARIADB_IMAGE"
         },
         {
-          "default": "11.5",
+          "default": "11.2.5-alpine-latest",
           "label": "Database tag",
           "name": "MARIADB_TAG"
         },
@@ -1975,12 +1963,12 @@
           "name": "ENABLE_HTTPS_REVERSE_PROXY"
         },                
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-wordpress",
+          "default": "code.gruposolutema.com/solutema/wordpress",
           "label": "Wordpress image",
           "name": "WORDPRESS_IMAGE"
         },
         {
-          "default": "6.5.4",
+          "default": "alpine-3.20-php8.3",
           "label": "Wordpress tag",
           "name": "WORDPRESS_TAG"
         },
