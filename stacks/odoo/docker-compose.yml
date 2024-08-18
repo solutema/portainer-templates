@@ -7,7 +7,6 @@ services:
     volumes:
       - postgres-db:/var/lib/postgresql/data
     environment:
-      #POSTGRES_INITDB_ARGS: odoo -i base -d ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -19,12 +18,12 @@ services:
     restart: unless-stopped
     links:
       - postgres:postgres
-#    ports:
-#      - "${ODOO_PORT}:8069"
-#      - "${CHAT_PORT}:8072" # live chat
-#    expose:
-#      - "${ODOO_PORT}:8069"
-#      - "${CHAT_PORT}:8072" # live chat
+   ports:
+     - "${ODOO_PORT}:8069"
+     - "${CHAT_PORT}:8072" # live chat
+   expose:
+     - "${ODOO_PORT}:8069"
+     - "${CHAT_PORT}:8072" # live chat
     tty: true
     volumes:
       - extra-addons:/mnt/extra-addons
@@ -33,12 +32,7 @@ services:
       HOST: ${COMPOSE_PROJECT_NAME}-postgres
       USER: ${POSTGRES_USER}
       PASSWORD: ${POSTGRES_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.odoo.rule=Host(`${URL}`)"
-      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
-      - "traefik.http.routers.odoo.entrypoints=websecure"
-      - "traefik.http.routers.odoo.tls.certresolver=gruposolutema"
+
 
 volumes:
   postgres-db:
