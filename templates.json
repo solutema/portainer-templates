@@ -781,6 +781,16 @@
           "name": "OPENLDAP_HOSTNAME"
         },
         {
+          "default": "Example Organization",
+          "label": "Organization",
+          "name": "ORGANIZATION"
+        },
+        {
+          "default": "nis",
+          "label": "Schema Type",
+          "name": "SCHEMA_TYPE"
+        },
+        {
           "default": "389",
           "label": "LDAP Port",
           "name": "LDAP_PORT"

@@ -10,6 +10,8 @@ services:
       - ${LDAPS_PORT}:636
     environment:
       HOSTNAME: ${OPENLDAP_HOSTNAME}
+      ORGANIZATION: ${ORGANIZATION}
+      SCHEMA_TYPE: ${SCHEMA_TYPE}
       LOG_LEVEL: 256
       DOMAIN: ${DOMAIN}
       BASE_DN: ${BASE_DN}
