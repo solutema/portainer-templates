@@ -1,22 +1,30 @@
 version: '3'
 services:
   openldap:
-    hostname: ${OPENLDAP_HOSTNAME}
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${LDAP_IMAGE}:${LDAP_TAG}
+    hostname: ${OPENLDAP_HOSTNAME}
     restart: always
-    environment:
-      LDAP_FORCE_STARTTLS: ${LDAP_FORCE_STARTTLS}
-      LDAP_DOMAIN: ${LDAP_DOMAIN}
-      LDAP_BASEDN: ${LDAP_BASEDN}
-      LDAP_ORGANISATION: ${LDAP_ORGANISATION}
-      LDAP_BINDDN: ${LDAP_BINDDN}
-      LDAP_SECRET: ${LDAP_SECRET}
     ports:
       - ${LDAP_PORT}:389
       - ${LDAPS_PORT}:636
+    environment:
+      HOSTNAME: ${OPENLDAP_HOSTNAME}
+      LOG_LEVEL: 256
+      DOMAIN: ${DOMAIN}
+      BASE_DN: ${BASE_DN}
+      ADMIN_PASS: ${ADMIN_PASS}
+      CONFIG_PASS: ${CONFIG_PASS}
+      DEBUG_MODE: false
+      ENABLE_READONLY_USER: false
+      READONLY_USER_USER: ${READONLY_USER_USER}
+      READONLY_USER_PASS: ${READONLY_USER_PASS}
+      CONTAINER_ENABLE_MONITORING: true
+      CONTAINER_NAME: openldap
     volumes:
+      - backup:/data/backup
       - data:/var/lib/openldap
+      - config:/etc/openldap/slapd.d
 
   phpldapadmin:
     container_name: ${COMPOSE_PROJECT_NAME}-phpldapadmin
