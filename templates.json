@@ -766,12 +766,12 @@
       },
       "env": [   
         {
-          "default": "registry.gruposolutema.com/openldap/docker-openldap",
+          "default": "code.gruposolutema.com/solutema/openldap",
           "label": "LDAP Image",
           "name": "LDAP_IMAGE"
         },
         {
-          "default": "test",
+          "default": "latest",
           "label": "LDAP Tag",
           "name": "LDAP_TAG"
         },
@@ -779,36 +779,6 @@
           "default": "openldap.example.com",
           "label": "Hostname",
           "name": "OPENLDAP_HOSTNAME"
-        },
-        {
-          "default": "true",
-          "label": "LDAP Force StartTLS",
-          "name": "LDAP_FORCE_STARTTLS"
-        },
-        {
-          "default": "example.com",
-          "label": "LDAP Domain",
-          "name": "LDAP_DOMAIN"
-        },
-        {
-          "default": "dc=example,dc=com",
-          "label": "LDAP Base DN",
-          "name": "LDAP_BASEDN"
-        },
-        {
-          "default": "Example, Inc.",
-          "label": "LDAP Organisation",
-          "name": "LDAP_ORGANISATION"
-        },
-        {
-          "default": "cn=admin,dc=example,dc=com",
-          "label": "LDAP Bind DN",
-          "name": "LDAP_BINDDN"
-        },
-        {
-          "default": "adminAdmin",
-          "label": "LDAP Secret",
-          "name": "LDAP_SECRET"
         },
         {
           "default": "389",
@@ -819,6 +789,36 @@
           "default": "636",
           "label": "LDAPS Port",
           "name": "LDAPS_PORT"
+        },
+        {
+          "default": "example.com",
+          "label": "Domain",
+          "name": "DOMAIN"
+        },
+        {
+          "default": "dc=example,dc=com",
+          "label": "Base DN",
+          "name": "BASE_DN"
+        },
+        {
+          "default": "admin",
+          "label": "Admin Password",
+          "name": "ADMIN_PASS"
+        },
+        {
+          "default": "config",
+          "label": "Config Password",
+          "name": "CONFIG_PASS"
+        },
+        {
+          "default": "reader",
+          "label": "Readonly User User",
+          "name": "READONLY_USER_USER"
+        },
+        {
+          "default": "reader",
+          "label": "Readonly User Pass",
+          "name": "READONLY_USER_PASS"
         },
         {
           "default": "osixia/phpldapadmin",
