@@ -930,56 +930,6 @@
       },
       {
       "type": 3,
-      "title": "Phorge 2",
-      "description": "Phorge is a collection of web applications which help software companies build better software.",
-      "note": "Phorge is a community-maintained fork of Phabricator.",
-      "categories": ["continuous-integration"],
-      "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/phorge2/logo/logo.png",
-      "repository": {
-        "url": "https://github.com/solutema/portainer-templates",
-        "stackfile": "stacks/phorge2/docker-compose.yml"
-      },
-      "env": [
-        {
-          "default": "mariadb",
-          "label": "MariaDB image",
-          "name": "MARIADB_IMAGE"
-        },
-        {
-          "default": "latest",
-          "label": "MariaDB tag",
-          "name": "MARIADB_TAG"
-        },
-        {
-          "default": "ChangeMe",
-          "label": "Database Root Password",
-          "name": "MYSQL_ROOT_PASSWORD"
-        },
-        {
-          "default": "zeigren/phorge",
-          "label": "Phorge Image",
-          "name": "PHORGE_IMAGE"
-        },    
-        {
-          "default": "latest",
-          "label": "Phorge Tag",
-          "name": "PHORGE_TAG"
-        },
-        {
-          "default": "code.example.com",
-          "label": "Phorge Domain",
-          "name": "PH_BASE_URI"
-        },
-        {
-          "default": "proxy",
-          "label": "Network name",
-          "name": "NETWORK"
-        }
-      ]
-      },
-      {
-      "type": 3,
       "title": "Pi-hole",
       "description": "Pi-hole is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network.",
       "note": "Pi-hole is a DNS sinkhole that protects your devices from unwanted content without installing any client-side software.",
@@ -1729,68 +1679,6 @@
         },
         {
           "container": "/app/db"
-        }
-      ]
-    },
-    {
-      "type": 3,
-      "title": "Woodpecker + Gitea",
-      "description": "Woodpecker + Gitea setup with a Gitea instance.",
-      "note": "Deploys a Woodpecker instance connected to a Gitea instance.",
-      "categories": ["CI"],
-      "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/woodpecker/logo/logo.png",
-      "repository": {
-        "url": "https://github.com/solutema/portainer-templates",
-        "stackfile": "stacks/woodpecker/docker-compose.yml"
-      },
-      "env": [
-        {
-          "default": "woodpeckerci/woodpecker-server",
-          "label": "Woodpecker Server Image",
-          "name": "WOODPECKER_SERVER_IMAGE"
-        },
-        {
-          "default": "next-289f530b2b-alpine",
-          "label": "Woodpecker Server Tag",
-          "name": "WOODPECKER_SERVER_TAG"
-        },
-        {
-          "default": "woodpeckerci/woodpecker-agent",
-          "label": "Woodpecker Agent Image",
-          "name": "WOODPECKER_AGENT_IMAGE"
-        },
-        {
-          "default": "next-289f530b2b-alpine",
-          "label": "Woodpecker Agent Tag",
-          "name": "WOODPECKER_AGENT_TAG"
-        },
-        {
-          "default": "woodpecker.example.com",
-          "label": "Woodpecker Host",
-          "name": "WOODPECKER_HOST"
-        },
-        {
-          "default": "gitea.example.com",
-          "label": "Woodpecker Gitea URL",
-          "name": "WOODPECKER_GITEA_URL"
-        },
-        {
-          "label": "Woodpecker Gitea Client",
-          "name": "WOODPECKER_GITEA_CLIENT"
-        },
-        {
-          "label": "Woodpecker Gitea Secret",
-          "name": "WOODPECKER_GITEA_SECRET"
-        },
-        {
-          "label": "Woodpecker Agent Secret",
-          "name": "WOODPECKER_AGENT_SECRET"
-        },
-        {
-          "default": "proxy",
-          "label": "Network name",
-          "name": "NETWORK"
         }
       ]
     },
