@@ -43,9 +43,6 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
-      REDIS_HOST_PASSWORD: ${REDIS_HOST_PASSWORD}
     cap_add:
       - NET_ADMIN
 
