@@ -14,13 +14,6 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
 
-  redis:
-    container_name: ${COMPOSE_PROJECT_NAME}-redis
-    image: ${REDIS_IMAGE}:${REDIS_TAG}
-    volumes:
-      - cache:/data
-    restart: always
-
   nextcloud:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${NEXTCLOUD_IMAGE}:${NEXTCLOUD_TAG}
