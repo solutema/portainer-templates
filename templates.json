@@ -611,98 +611,6 @@
       },
       {
       "type": 3,
-      "title": "Libreplan",
-      "description": "Libreplan: the Open Source web application for planning, monitoring and control.",
-      "note": "Deploys an libreplan instance.",
-      "categories": ["Cloud", "Productivity", "Tools", "Web"],
-      "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/libreplan/logo/logo.png",
-      "repository": {
-        "url": "https://github.com/solutema/portainer-templates",
-        "stackfile": "stacks/libreplan/docker-compose.yml"
-      },
-      "env": [
-        {
-          "default": "mariadb",
-          "label": "MariaDB Image",
-          "name": "MARIADB_IMAGE"
-        },
-        {
-          "default": "11.2.4",
-          "label": "MariaDB Tag",
-          "name": "MARIADB_TAG"
-        },
-        {
-          "default": "user_mariadb",
-          "label": "MariaDB User",
-          "name": "MARIADB_USER"
-        },
-        {
-          "default": "password_mariadb",
-          "label": "MariaDB Password",
-          "name": "MARIADB_PASSWORD"
-        },
-        {
-          "default": "password_mariadb",
-          "label": "MariaDB Password",
-          "name": "MARIADB_PASSWORD"
-        },
-        {
-          "label": "Root Password",
-          "name": "ROOT_PASS"
-        },
-        {
-          "label": "MariaDB Password",
-          "name": "DB_PASS"
-        },
-        {
-          "default": "nextcloud",
-          "label": "Nextcloud Image",
-          "name": "NEXTCLOUD_IMAGE"
-        },
-        {
-          "default": "29.0.4",
-          "label": "Nextcloud Tag",
-          "name": "NEXTCLOUD_TAG"
-        },
-        {
-          "default": "cloud.example.com",
-          "label": "Domain",
-          "name": "DOMAIN"
-        },
-        {
-          "label": "Admin User",
-          "name": "ADMIN_USER"
-        },
-        {
-          "label": "Admin Password",
-          "name": "ADMIN_PASS"
-        },
-        {
-          "default": "proxy",
-          "label": "Network name",
-          "name": "NETWORK"
-        }
-      ]
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {
-      "type": 3,
       "title": "Nextcloud",
       "description": "Nextcloud is a suite of client-server software for creating and using file hosting services.",
       "note": "Deploys an nextcloud instance.",
@@ -735,17 +643,12 @@
           "name": "MARIADB_PASSWORD"
         },
         {
-          "default": "password_mariadb",
           "label": "MariaDB Password",
-          "name": "MARIADB_PASSWORD"
+          "name": "DB_PASS"
         },
         {
           "label": "Root Password",
           "name": "ROOT_PASS"
-        },
-        {
-          "label": "MariaDB Password",
-          "name": "DB_PASS"
         },
         {
           "default": "nextcloud",
