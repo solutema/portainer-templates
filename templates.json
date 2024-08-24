@@ -223,36 +223,6 @@
       },
       "env": [
         {
-          "default": "code.gruposolutema.com/solutema/postgres",
-          "label": "Postgres Image",
-          "name": "POSTGRES_IMAGE"
-        },
-        {
-          "default": "16.4",
-          "label": "Postgres Tag",
-          "name": "POSTGRES_TAG"
-        },
-        {
-          "default": "gitlab_user",
-          "label": "Database User",
-          "name": "DB_USER"
-        },
-        {
-          "default": "gitlabpassword",
-          "label": "Database Password",
-          "name": "DB_PASS"
-        },
-        {
-          "default": "gitlab_database",
-          "label": "Database Name",
-          "name": "DB_NAME"
-        },
-        {
-          "default": "pg_trgm,btree_gist",
-          "label": "Database Extensions",
-          "name": "DB_EXTENSION"
-        },
-        {
           "label": "Hostname",
           "name": "GITLAB_HOSTNAME"
         },
@@ -267,7 +237,7 @@
           "name": "GITLAB_CE_IMAGE"
         },
         {
-          "default": "16.7.0-ce.0",
+          "default": "17.3.1-ce.0",
           "label": "GitLab Tag",
           "name": "GITLAB_CE_TAG"
         },
