@@ -653,6 +653,16 @@
           "name": "ROOT_PASS"
         },
         {
+          "default": "code.gruposolutema.com/solutema/redis",
+          "label": "Redis Image",
+          "name": "REDIS_IMAGE"
+        },
+        {
+          "default": "7.4.0",
+          "label": "Redis Tag",
+          "name": "REDIS_TAG"
+        },
+        {
           "default": "code.gruposolutema.com/solutema/nextcloud",
           "label": "Nextcloud Image",
           "name": "NEXTCLOUD_IMAGE"
