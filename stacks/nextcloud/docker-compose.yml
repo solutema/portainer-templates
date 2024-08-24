@@ -10,73 +10,56 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      ROOT_PASS: ${ROOT_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+
+  redis:
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    image: ${REDIS_IMAGE}:${REDIS_TAG}
+    volumes:
+      - cache:/data
+    restart: always
 
   nextcloud:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${NEXTCLOUD_IMAGE}:${NEXTCLOUD_TAG}
-    hostname: ${NEXTCLOUD_HOSTNAME}
+    hostname: ${DOMAIN}
     restart: always
     depends_on:
       - mariadb
+      - redis
     volumes:
-      - nextcloud:/var/www/html
-      - apps:/var/www/html/custom_apps
-      - config:/var/www/html/config
-      - data:/var/www/html/data
-      - theme:/var/www/html/themes
+      - data:/data/userdata
+      - config:/www/nextcloud/config
+      - apps:/data/apps
+      - themes:/www/nextcloud/themes
+      - logs:/www/logs
+      - templates:/data/templates
     environment:
-      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
-      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
-      NEXTCLOUD_TRUSTED_DOMAINS: ${DOMAIN}
-      NEXTCLOUD_UPDATE: ${NEXTCLOUD_UPDATE}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_HOST_PORT: ${REDIS_HOST_PORT}
-      REDIS_HOST_PASSWORD: ${REDIS_HOST_PASSWORD}
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_SECURE: ${SMTP_SECURE}
-      SMTP_PORT: ${SMTP_PORT}
-      SMTP_AUTHTYPE: ${SMTP_AUTHTYPE}
-      SMTP_NAME: ${SMTP_NAME}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
-      MAIL_DOMAIN: ${MAIL_DOMAIN}
-      PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT}
-      PHP_UPLOAD_LIMIT: ${PHP_UPLOAD_LIMIT}
-      APACHE_BODY_LIMIT: ${APACHE_BODY_LIMIT}
-      APACHE_DISABLE_REWRITE_IP: ${APACHE_DISABLE_REWRITE_IP}
-      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
-
-
-
-
+      VIRTUAL_HOST: ${DOMAIN}
+      VIRTUAL_NETWORK: ${NETWORK}
+      LETSENCRYPT_HOST: ${DOMAIN}
       CRON_PERIOD: 5
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASS: ${ADMIN_PASS}
-      DOMAIN: ${DOMAIN}
       DB_TYPE: mysql
       DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
-      NEXTCLOUD_UPDATE: 1
-      DB_NAME: nextcloud
-      DB_USER: nextcloud
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
-      VIRTUAL_HOST: ${DOMAIN}
-      LETSENCRYPT_HOST: ${DOMAIN}
     cap_add:
       - NET_ADMIN
 
 volumes:
-  backup:
-  mariadb:
-  mariadb-logs:
+  db:
+  cache:
   data:
   config:
   apps:
   themes:
-  nextcloud-logs:
+  logs:
   templates:
 
 networks:

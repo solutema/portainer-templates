@@ -633,20 +633,22 @@
           "name": "MARIADB_TAG"
         },
         {
-          "default": "user_mariadb",
+          "default": "nextcloud_database",
+          "label": "Database Name",
+          "name": "DB_NAME"
+        },
+        {
+          "default": "nextcloud_user",
           "label": "MariaDB User",
-          "name": "MARIADB_USER"
+          "name": "DB_USER"
         },
         {
-          "default": "password_mariadb",
-          "label": "MariaDB Password",
-          "name": "MARIADB_PASSWORD"
-        },
-        {
+          "default": "nextcloud",
           "label": "MariaDB Password",
           "name": "DB_PASS"
         },
         {
+          "default": "rootnextcloud",
           "label": "Root Password",
           "name": "ROOT_PASS"
         },
