@@ -1,13 +1,49 @@
 version: '3'
 
 services:
+  postgresql:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgresql
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: always
+    volumes:
+    - postgresql-data:/var/lib/postgresql:Z
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_EXTENSION: ${DB_EXTENSION}
+
   gitlab-ce:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     hostname: ${GITLAB_HOSTNAME}
     image: ${GITLAB_CE_IMAGE}:${GITLAB_CE_TAG}
     restart: always
+    depends_on:
+      - postgresql
     environment:
       TZ: ${TZ}
+      GITLAB_TIMEZONE: ${TZ} 
+      DEBUG: false
+      DB_ADAPTER: postgresql
+      DB_HOST: ${COMPOSE_PROJECT_NAME}-postgresql
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      GITLAB_HTTPS: false
+      SSL_SELF_SIGNED: false
+
+
+
+
+
+
+
+
+
+
+
+
       VIRTUAL_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
       LETSENCRYPT_HOST: ${GITLAB_HOST},${GITLAB_REGISTRY},${GITLAB_PAGES}
       SSH_HOST: ${GITLAB_HOST}
@@ -48,18 +84,19 @@ services:
         user['uid'] = 1234
         user['gid'] = 1234
     ports:
-#      - "${GITLAB_CE_SSH_PORT}:22"
       - "${GITLAB_CE_REGISTRY_PORT}:5000"
     volumes:
-      - config:/etc/gitlab
-      - logs:/var/log/gitlab
-      - data:/var/opt/gitlab
-    shm_size: '256m'
+      - gitlab-data:/home/git/data:Z
+    healthcheck:
+      test: ["CMD", "/usr/local/sbin/healthcheck"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      start_period: 5m
 
 volumes:
-  config:
-  logs:
-  data:
+  postgresql-data:
+  gitlab-data:
 
 networks:
   default:
