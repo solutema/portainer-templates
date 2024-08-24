@@ -4,7 +4,6 @@ services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
     image: ${MARIADB_IMAGE}:${MARIADB_TAG}
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     stop_grace_period: 3m
     restart: always
     volumes:
@@ -27,6 +26,9 @@ services:
     image: ${NEXTCLOUD_IMAGE}:${NEXTCLOUD_TAG}
     hostname: ${DOMAIN}
     restart: always
+    links:
+      - mariadb
+      - redis
     depends_on:
       - mariadb
       - redis
@@ -41,6 +43,7 @@ services:
       VIRTUAL_HOST: ${DOMAIN}
       VIRTUAL_NETWORK: ${NETWORK}
       LETSENCRYPT_HOST: ${DOMAIN}
+      TRUSTED_DOMAINS: ${DOMAIN}
       CRON_PERIOD: 5
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASS: ${ADMIN_PASS}
@@ -49,6 +52,9 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST_PASSWORD: ${REDIS_HOST_PASSWORD}
     cap_add:
       - NET_ADMIN
 

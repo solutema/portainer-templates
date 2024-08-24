@@ -653,14 +653,19 @@
           "name": "ROOT_PASS"
         },
         {
-          "default": "code.gruposolutema.com/solutema/redis",
-          "label": "Redis Image",
-          "name": "REDIS_IMAGE"
+          "default": "",
+          "label": "Redis Host",
+          "name": "REDIS_HOST"
         },
         {
-          "default": "7.4.0",
-          "label": "Redis Tag",
-          "name": "REDIS_TAG"
+          "default": "6379",
+          "label": "Redis Port",
+          "name": "REDIS_PORT"
+        },
+        {
+          "default": "",
+          "label": "Redis Host Password",
+          "name": "REDIS_HOST_PASSWORD"
         },
         {
           "default": "code.gruposolutema.com/solutema/nextcloud",
