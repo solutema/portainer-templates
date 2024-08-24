@@ -623,12 +623,12 @@
       },
       "env": [
         {
-          "default": "mariadb",
+          "default": "code.gruposolutema.com/solutema/mariadb",
           "label": "MariaDB Image",
           "name": "MARIADB_IMAGE"
         },
         {
-          "default": "11.2.4",
+          "default": "11.2.5-alpine-latest",
           "label": "MariaDB Tag",
           "name": "MARIADB_TAG"
         },
@@ -651,7 +651,7 @@
           "name": "ROOT_PASS"
         },
         {
-          "default": "nextcloud",
+          "default": "code.gruposolutema.com/solutema/nextcloud",
           "label": "Nextcloud Image",
           "name": "NEXTCLOUD_IMAGE"
         },
