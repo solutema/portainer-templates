@@ -21,10 +21,8 @@ services:
     restart: always
     links:
       - mariadb
-      - redis
     depends_on:
       - mariadb
-      - redis
     volumes:
       - data:/data/userdata
       - config:/www/nextcloud/config
