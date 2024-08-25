@@ -1264,6 +1264,235 @@
     },
     {
       "type": 3,
+      "title": "Tryton Series 6.0",
+      "description": "Tryton 6.0 setup with a PostgreSQL database",
+      "note": "Deploys a Tryton 6.0 instance connected to a PostgreSQL database.",
+      "categories": ["erp"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/tryton60/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/tryton60/docker-compose.yml"
+      },
+      "env": [
+        {
+          "label": "PostgreSQL container name",
+          "name": "POSTGRES_CONTAINER_NAME"
+        },
+        {
+          "default": "postgres",
+          "label": "Database image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "15.3",
+          "label": "Database tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "label": "Database username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "label": "Database password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "label": "Database server port",
+          "name": "POSTGRES_PORT"
+        },
+        {
+          "label": "Tryton container name",
+          "name": "TRYTON_CONTAINER_NAME"
+        },
+        {
+          "default": "registry.gruposolutema.com/tryton/tryton-republica-dominicana/tryton-docker",
+          "label": "Tryton image",
+          "name": "TRYTON_IMAGE"
+        },
+        {
+          "default": "6.8-office",
+          "label": "Tryton tag",
+          "name": "TRYTON_TAG"
+        },
+        {
+          "label": "Email from",
+          "name": "EMAIL_FROM"
+        },
+        {
+          "default": "es_419",
+          "label": "Tryton language",
+          "name": "TRYTOND_LANGUAGE"
+        },
+        {
+          "label": "Tryton Admin E-mail",
+          "name": "TRYTOND_ADMIN_EMAIL"
+        },
+        {
+          "label": "Tryton Admin Password",
+          "name": "TRYTOND_ADMIN_PASSWORD"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "title": "Tryton Series 7.0",
+      "description": "Tryton 7.0 setup with a PostgreSQL database",
+      "note": "Deploys a Tryton 7.0 instance connected to a PostgreSQL database.",
+      "categories": ["erp"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/tryton70/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/tryton70/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
+          "label": "Database image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16",
+          "label": "Database tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "label": "Database username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "label": "Database password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "registry.gruposolutema.com/tryton/tryton-republica-dominicana/tryton-docker",
+          "label": "Tryton image",
+          "name": "TRYTON_IMAGE"
+        },
+        {
+          "default": "7.0-office",
+          "label": "Tryton tag",
+          "name": "TRYTON_TAG"
+        },
+        {
+          "label": "Email from",
+          "name": "EMAIL_FROM"
+        },
+        {
+          "default": "es_419",
+          "label": "Tryton language",
+          "name": "TRYTOND_LANGUAGE"
+        },
+        {
+          "label": "Tryton Admin E-mail",
+          "name": "TRYTOND_ADMIN_EMAIL"
+        },
+        {
+          "label": "Tryton Admin Password",
+          "name": "TRYTOND_ADMIN_PASSWORD"
+        },
+        {
+          "default": "tryton.example.com",
+          "label": "URL domain",
+          "name": "URL_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "title": "Tryton Series 7.2",
+      "description": "Tryton 7.2 setup with a PostgreSQL database",
+      "note": "Deploys a Tryton 7.2 instance connected to a PostgreSQL database.",
+      "categories": ["erp"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/tryton72/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/tryton72/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
+          "label": "Database image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16",
+          "label": "Database tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "label": "Database username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "label": "Database password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "registry.gruposolutema.com/tryton/tryton-republica-dominicana/tryton-docker",
+          "label": "Tryton image",
+          "name": "TRYTON_IMAGE"
+        },
+        {
+          "default": "7.0-office",
+          "label": "Tryton tag",
+          "name": "TRYTON_TAG"
+        },
+        {
+          "label": "Email from",
+          "name": "EMAIL_FROM"
+        },
+        {
+          "default": "es_419",
+          "label": "Tryton language",
+          "name": "TRYTOND_LANGUAGE"
+        },
+        {
+          "label": "Tryton Admin E-mail",
+          "name": "TRYTOND_ADMIN_EMAIL"
+        },
+        {
+          "label": "Tryton Admin Password",
+          "name": "TRYTOND_ADMIN_PASSWORD"
+        },
+        {
+          "default": "tryton.example.com",
+          "label": "URL domain",
+          "name": "URL_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
+      "type": 3,
       "title": "Weblate",
       "description": "Weblate is a Web based localization tool with tight version control integration",
       "note": "Deploys an Weblate instance.",

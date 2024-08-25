@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    hostname: 0.0.0.0
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - tryton_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_PORT: ${POSTGRES_PORT}
+      
+  tryton:
+    container_name: ${TRYTON_CONTAINER_NAME}
+    image: ${TRYTON_IMAGE}:${TRYTON_TAG}
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
+    volumes:
+      - tryton_data:/var/lib/trytond/db
+    command: sh -c "trytond-admin -vv -d ${POSTGRES_DB} --all -l ${TRYTOND_LANGUAGE} --email ${TRYTOND_ADMIN_EMAIL} --password"
+    environment:
+      TRYTOND_EMAIL__FROM: ${EMAIL_FROM}
+      TRYTOND_EMAIL__URI: smtp://mailhog:1025
+      TRYTOND_DATABASE__URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+      TRYTOND_ADMIN_PASSWORD: ${TRYTOND_ADMIN_PASSWORD}
+      VIRTUAL_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
+      LETSENCRYPT_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
+
+  tryton-cron:
+    container_name: ${TRYTON_CONTAINER_NAME}-cron
+    image: ${TRYTON_IMAGE}:${TRYTON_TAG}
+    command: trytond-cron -d ${POSTGRES_DB}
+    volumes:
+      - tryton_data:/var/lib/trytond/db
+    depends_on:
+      - postgres
+    restart: always
+
+  tryton-update:
+    container_name: ${TRYTON_CONTAINER_NAME}-update
+    image: ${TRYTON_IMAGE}:${TRYTON_TAG}
+    command: sh -c "trytond-admin -d ${POSTGRES_DB} --all ---activate-dependencies -v && tail -f /dev/null"
+    volumes:
+      - tryton_data:/var/lib/trytond/db
+    depends_on:
+      - postgres
+    restart: "no"
+
+  mailhog:
+    container_name: ${TRYTON_CONTAINER_NAME}-mailhog
+    image: mailhog/mailhog:latest
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+volumes:
+  tryton_db:
+  tryton_data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
