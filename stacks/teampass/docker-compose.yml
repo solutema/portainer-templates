@@ -4,7 +4,6 @@ services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
     image: ${MARIADB_IMAGE}:${MARIADB_TAG}
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     volumes:
       - data-db:/var/lib/mysql
