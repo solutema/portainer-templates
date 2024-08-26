@@ -1221,6 +1221,11 @@
           "name": "MARIADB_TAG"
         },
         {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },        
+        {
           "default": "teampass_database",
           "label": "MariaDB Database",
           "name": "DB_NAME"
@@ -1241,12 +1246,12 @@
           "name": "ROOT_PASS"
         },
         {
-          "default": "code.gruposolutema.com/solutema/teampass",
+          "default": "dormancygrace/teampass",
           "label": "Teampass Image",
           "name": "TEAMPASS_IMAGE"
         },
         {
-          "default": "3.1.1",
+          "default": "latest",
           "label": "Teampass Tag",
           "name": "TEAMPASS_TAG"
         },

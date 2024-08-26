@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
@@ -24,16 +22,15 @@ services:
       - mariadb
     links:
       - mariadb
+    volumes:
+      - html:/var/www/html
     environment:
-      DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
       VIRTUAL_HOST: ${DOMAIN},www.${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
 volumes:
   data-db:
+  html:
 
 networks:
   default:
