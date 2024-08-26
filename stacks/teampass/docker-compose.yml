@@ -9,6 +9,7 @@ services:
     volumes:
       - data-db:/var/lib/mysql
     environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-mariadb
       TIMEZONE: ${TIMEZONE}
       ROOT_PASS: ${ROOT_PASS}
       DB_NAME: ${DB_NAME}
@@ -19,7 +20,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${TEAMPASS_IMAGE}:${TEAMPASS_TAG}
     restart: unless-stopped
-    command: --hostname=${DOMAIN}
+    hostname: ${DOMAIN}
     depends_on:
       - mariadb
     links:
