@@ -4,9 +4,10 @@ services:
   mariadb:
     container_name: ${COMPOSE_PROJECT_NAME}-mariadb
     image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     volumes:
-      - mariadb:/var/lib/mysql
+      - data-db:/var/lib/mysql
     environment:
       TIMEZONE: ${TIMEZONE}
       ROOT_PASS: ${ROOT_PASS}
@@ -18,13 +19,11 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${TEAMPASS_IMAGE}:${TEAMPASS_TAG}
     restart: unless-stopped
+    command: --hostname=${DOMAIN}
     depends_on:
       - mariadb
     links:
-      - mariadb:mariadb
-    volumes:
-      - data:/www/
-      - logs:/www/logs
+      - mariadb
     environment:
       DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
       DB_NAME: ${DB_NAME}
@@ -34,7 +33,7 @@ services:
       LETSENCRYPT_HOST: ${DOMAIN},www.${DOMAIN}
 
 volumes:
-  mariadb:
+  data-db:
   data:
   logs:
 
