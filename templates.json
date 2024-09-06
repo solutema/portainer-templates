@@ -1937,23 +1937,23 @@
           "name": "TIMEZONE"
         },
         {
-          "label": "Root password",
-          "name": "ROOT_PASS"
+          "label": "MySQL Root Password",
+          "name": "MYSQL_ROOT_PASSWORD"
         },
         {
           "default": "wordpress",
-          "label": "Database name",
-          "name": "DB_NAME"
+          "label": "Database Name",
+          "name": "MYSQL_DATABASE"
         },
         {
           "default": "user",
-          "label": "Database username",
-          "name": "DB_USER"
+          "label": "Database Username",
+          "name": "MYSQL_USER"
         },
         {
           "default": "password",
-          "label": "Database password",
-          "name": "DB_PASS"
+          "label": "Database Password",
+          "name": "MYSQL_PASSWORD"
         },
         {
           "default": "wp_",
