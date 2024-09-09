@@ -7,10 +7,10 @@ services:
       - mariadb:/var/lib/mysql
     environment:
       TIMEZONE: ${TIMEZONE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ROOT_PASS: ${ROOT_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
 
   phpmyadmin:
     container_name: ${COMPOSE_PROJECT_NAME}-phpmyadmin
@@ -40,9 +40,9 @@ services:
       ENABLE_HTTPS_REVERSE_PROXY: ${ENABLE_HTTPS_REVERSE_PROXY}
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-app
       DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
-      DB_NAME: ${MYSQL_DATABASE}
-      DB_USER: ${MYSQL_USER}
-      DB_PASS: ${MYSQL_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
       DB_PREFIX: ${DB_PREFIX}
       TIMEZONE: ${TIMEZONE}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
