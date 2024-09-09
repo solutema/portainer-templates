@@ -1927,7 +1927,7 @@
           "name": "MARIADB_IMAGE"
         },
         {
-          "default": "11.2.5-alpine-latest",
+          "default": "11.2.5-alpine-3.20",
           "label": "Database tag",
           "name": "MARIADB_TAG"
         },
@@ -1937,27 +1937,27 @@
           "name": "TIMEZONE"
         },
         {
-          "label": "MySQL Root Password",
-          "name": "MYSQL_ROOT_PASSWORD"
+          "label": "MariaDB Root Password",
+          "name": "ROOT_PASS"
         },
         {
-          "default": "wordpress",
-          "label": "Database Name",
-          "name": "MYSQL_DATABASE"
+          "default": "wordpress_database",
+          "label": "MariaDB Database Name",
+          "name": "DB_NAME"
         },
         {
-          "default": "user",
-          "label": "Database Username",
-          "name": "MYSQL_USER"
+          "default": "wordpress_user",
+          "label": "MariaDB Database Username",
+          "name": "DB_USER"
         },
         {
           "default": "password",
-          "label": "Database Password",
-          "name": "MYSQL_PASSWORD"
+          "label": "MariaDB Database Password",
+          "name": "DB_PASS"
         },
         {
           "default": "wp_",
-          "label": "Database prefix",
+          "label": "MariaDB Database prefix",
           "name": "DB_PREFIX"
         }, 
         {
@@ -1986,7 +1986,7 @@
           "name": "WORDPRESS_IMAGE"
         },
         {
-          "default": "alpine-3.20-php8.3",
+          "default": "php8.3",
           "label": "Wordpress tag",
           "name": "WORDPRESS_TAG"
         },
