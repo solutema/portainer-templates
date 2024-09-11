@@ -27,6 +27,7 @@ services:
 
   wordpress:
     container_name: ${COMPOSE_PROJECT_NAME}-app
+    hostname: ${COMPOSE_PROJECT_NAME}-app
     image: ${WORDPRESS_IMAGE}:${WORDPRESS_TAG}
     restart: unless-stopped
     depends_on:
@@ -53,9 +54,10 @@ services:
       SITE_TITLE: ${SITE_TITLE}
       SITE_LOCALE: ${SITE_LOCALE}
       WP_CACHE: ${WP_CACHE}
-      WP_CACHE_KEY_SALT: ${WP_CACHE_KEY_SALT}
       WP_REDIS_HOST: ${WP_REDIS_HOST}
       WP_REDIS_PORT: ${WP_REDIS_PORT}
+      WP_REDIS_PASSWORD: ${WP_REDIS_PASSWORD}
+      WP_CACHE_KEY_SALT: ${WP_CACHE_KEY_SALT}
       ROTATE_KEYS: ${ROTATE_KEYS}
       UPDATE_MODE: ${UPDATE_MODE}
       VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
