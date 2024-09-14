@@ -1927,7 +1927,7 @@
           "name": "MARIADB_IMAGE"
         },
         {
-          "default": "11.2.5-alpine-3.20",
+          "default": "11.2.5",
           "label": "Database tag",
           "name": "MARIADB_TAG"
         },
@@ -1986,7 +1986,7 @@
           "name": "WORDPRESS_IMAGE"
         },
         {
-          "default": "php8.3",
+          "default": "alpine3.20-nginx-php8.3",
           "label": "Wordpress tag",
           "name": "WORDPRESS_TAG"
         },
