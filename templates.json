@@ -2044,7 +2044,12 @@
           "default": "6379",
           "label": "Wp redis port",
           "name": "WP_REDIS_PORT"
-        },      
+        },
+        {
+          "default": "6379",
+          "label": "Wp Redis Password",
+          "name": "WP_REDIS_PASSWORD"
+        },
         {
           "default": "false",
           "label": "Rotate keys",
