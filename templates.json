@@ -1991,7 +1991,7 @@
           "name": "WORDPRESS_TAG"
         },
         {
-          "default": "email@example.com",
+          "default": "jose.arturo.garcia@gmail.com",
           "label": "Admin email",
           "name": "ADMIN_EMAIL"
         },
@@ -2036,7 +2036,7 @@
           "name": "WP_CACHE_KEY_SALT"
         },
         {
-          "default": "",
+          "default": "redis-gruposolutema-server",
           "label": "Wp redis host",
           "name": "WP_REDIS_HOST"
         },
@@ -2046,7 +2046,7 @@
           "name": "WP_REDIS_PORT"
         },
         {
-          "default": "password",
+          "default": "arturo0510",
           "label": "Wp Redis Password",
           "name": "WP_REDIS_PASSWORD"
         },
