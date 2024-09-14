@@ -2031,11 +2031,6 @@
           "name": "WP_CACHE"
         },
         {
-          "default": "KqBkavctnL6AFNUL3oo5w9ap2tMe1m4n",
-          "label": "Wp cache key salt",
-          "name": "WP_CACHE_KEY_SALT"
-        },
-        {
           "default": "redis-gruposolutema-server",
           "label": "Wp redis host",
           "name": "WP_REDIS_HOST"
