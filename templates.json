@@ -2054,7 +2054,12 @@
           "default": "false",
           "label": "Rotate keys",
           "name": "ROTATE_KEYS"
-        },      
+        }, 
+        {
+          "default": "10G",
+          "label": "Nginx Upload Max Size",
+          "name": "NGINX_UPLOAD_MAX_SIZE"
+        }, 
         {
           "default": "all",
           "label": "Update mode",
