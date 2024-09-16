@@ -2061,6 +2061,11 @@
           "name": "NGINX_UPLOAD_MAX_SIZE"
         }, 
         {
+          "default": "300",
+          "label": "PHP tIMEOUT",
+          "name": "PHP_TIMEOUT"
+        }, 
+        {
           "default": "all",
           "label": "Update mode",
           "name": "UPDATE_MODE"
