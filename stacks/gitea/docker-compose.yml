@@ -22,6 +22,7 @@ services:
     volumes:
       - data:/var/lib/gitea
       - config:/etc/gitea
+      - custom:/data/gitea/custom
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
@@ -38,6 +39,7 @@ volumes:
   db:
   data:
   config:
+  custom:
 
 networks:
   default:
