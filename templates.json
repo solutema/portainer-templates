@@ -411,6 +411,11 @@
           "name": "POSTGRES_TAG"
         },
         {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
           "label": "Database name",
           "name": "DB_NAME"
         },
@@ -447,12 +452,12 @@
           "name": "MAILHOG_HTTP_PORT"
         },
         {
-          "default": "registry.gruposolutema.com/gnuhealth/republica-dominicana/docker-gnuhealth",
+          "default": "code.gruposolutema.com/solutema/gnuhealth",
           "label": "GNU Health image",
           "name": "GNUHEALTH_IMAGE"
         },
         {
-          "default": "4.2.3",
+          "default": "4.4",
           "label": "GNU Health tag",
           "name": "GNUHEALTH_TAG"
         },
@@ -473,6 +478,18 @@
           "label": "GNU Health admin password",
           "name": "GNUHEALTH_ADMIN_PASSWORD"
         },
+        {
+          "default": "demo",
+          "label": "Subdomain",
+          "name": "SUBDOMAIN"
+        }
+        {
+          "default": "gnuhealth.org.do",
+          "label": "Domain",
+          "name": "DOMAIN"
+        }
+
+        
         {
           "default": "proxy",
           "label": "Network name",
