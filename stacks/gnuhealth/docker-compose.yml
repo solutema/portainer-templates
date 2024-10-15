@@ -17,6 +17,7 @@ services:
     image: ${GNUHEALTH_IMAGE}:${GNUHEALTH_TAG}
     environment:
       TZ: ${TIMEZONE}
+      VIRTUAL_PORT: 8000
       TRYTOND_EMAIL__FROM: ${EMAIL_FROM}
       TRYTOND_EMAIL__URI: smtp://mailhog:1025
       TRYTOND_DATABASE__URI: postgresql://${DB_USER}:${DB_PASS}@${COMPOSE_PROJECT_NAME}-postgres/${DB_NAME}
