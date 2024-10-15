@@ -482,14 +482,12 @@
           "default": "demo",
           "label": "Subdomain",
           "name": "SUBDOMAIN"
-        }
+        },
         {
           "default": "gnuhealth.org.do",
           "label": "Domain",
           "name": "DOMAIN"
-        }
-
-        
+        },
         {
           "default": "proxy",
           "label": "Network name",
