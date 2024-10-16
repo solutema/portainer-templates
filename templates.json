@@ -432,6 +432,31 @@
           "name": "SUPERUSER_PASS"
         },
         {
+          "default": "code.gruposolutema.com/solutema/gnuhealth",
+          "label": "GNU Health image",
+          "name": "GNUHEALTH_IMAGE"
+        },
+        {
+          "default": "4.4",
+          "label": "GNU Health tag",
+          "name": "GNUHEALTH_TAG"
+        },
+        {
+          "default": "es_419",
+          "label": "GNU Health language",
+          "name": "GNUHEALTH_LANGUAGE"
+        },
+        {
+          "default": "jose.arturo.garcia@gmail.com",
+          "label": "Admin E-Mail",
+          "name": "EMAIL"
+        },
+        {
+          "default": "admin",
+          "label": "Admin Password",
+          "name": "PASSWORD"
+        },
+        {
           "default": "mailhog/mailhog",
           "label": "Mailhog image",
           "name": "MAILHOG_IMAGE"
@@ -450,43 +475,11 @@
           "default": "8025",
           "label": "Mailhog http port",
           "name": "MAILHOG_HTTP_PORT"
-        },
+        },  
         {
-          "default": "code.gruposolutema.com/solutema/gnuhealth",
-          "label": "GNU Health image",
-          "name": "GNUHEALTH_IMAGE"
-        },
-        {
-          "default": "4.4",
-          "label": "GNU Health tag",
-          "name": "GNUHEALTH_TAG"
-        },
-        {
-          "label": "Email from",
-          "name": "EMAIL_FROM"
-        },
-        {
-          "default": "es_419",
-          "label": "GNU Health language",
-          "name": "GNUHEALTH_LANGUAGE"
-        },
-        {
-          "label": "GNU Health admin e-mail",
-          "name": "GNUHEALTH_ADMIN_EMAIL"
-        },
-        {
-          "label": "GNU Health admin password",
-          "name": "GNUHEALTH_ADMIN_PASSWORD"
-        },
-        {
-          "default": "demo",
-          "label": "Subdomain",
-          "name": "SUBDOMAIN"
-        },
-        {
-          "default": "gnuhealth.org.do",
-          "label": "Domain",
-          "name": "DOMAIN"
+          "default": "demo.domain.org.do",
+          "label": "URL",
+          "name": "URL"
         },
         {
           "default": "proxy",
