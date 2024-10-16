@@ -7,6 +7,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
+      SUPERUSER_PASS: ${SUPERUSER_PASS}
     volumes:
       - db:/var/lib/postgresql/data
     restart: always
@@ -17,13 +18,20 @@ services:
     environment:
       TZ: ${TIMEZONE}
       VIRTUAL_PORT: 8000
-      TRYTOND_EMAIL__FROM: ${EMAIL_FROM}
-      TRYTOND_EMAIL__URI: smtp://mailhog:1025
-      TRYTOND_DATABASE__URI: postgresql://${DB_USER}:${DB_PASS}@${COMPOSE_PROJECT_NAME}-postgres/${DB_NAME}
-      VIRTUAL_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
-      LETSENCRYPT_HOST: ${SUBDOMAIN}.${DOMAIN},www.${SUBDOMAIN}.${DOMAIN}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASS} 
+      VIRTUAL_HOST: ${URL},www.${URL}
+      LETSENCRYPT_HOST: ${URL},www.${URL}
     volumes:
       - data:/var/lib/trytond/db
+    command:
+      - /bin/bash
+      - -c
+      - |
+        (until echo > /dev/tcp/${COMPOSE_PROJECT_NAME}-postgres; do sleep 0.5; done) 2>/dev/null
+        echo "${PASSWORD:-admin}" > /tmp/.passwd
+        TRYTONPASSFILE=/tmp/.passwd /entrypoint.sh trytond-admin -d "${DB_NAME:-tryton}" --all -l ${GNUHEALTH_LANGUAGE} --email "${EMAIL:-}" -vv
+        if command -v uwsgi &>/dev/null; then uwsgi --ini /etc/uwsgi.conf; else gunicorn --config=/etc/gunicorn.conf.py; fi
     depends_on:
       - postgres
     restart: always
