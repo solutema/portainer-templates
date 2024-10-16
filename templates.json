@@ -401,12 +401,12 @@
       },
       "env": [
         {
-          "default": "registry.gruposolutema.com/docker-base-images/docker-postgres",
+          "default": "code.gruposolutema.com/solutema/postgres",
           "label": "Database image",
           "name": "POSTGRES_IMAGE"
         },
         {
-          "default": "16",
+          "default": "16.4",
           "label": "Database tag",
           "name": "POSTGRES_TAG"
         },
