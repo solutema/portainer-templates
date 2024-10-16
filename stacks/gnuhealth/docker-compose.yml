@@ -49,7 +49,7 @@ services:
   gnuhealth-update:
     container_name: ${COMPOSE_PROJECT_NAME}-update
     image: ${GNUHEALTH_IMAGE}:${GNUHEALTH_TAG}
-    command: sh -c "trytond-admin -d ${DB_NAME} --all --emai ${GNUHEALTH_ADMIN_EMAIL} --password ${GNUHEALTH_ADMIN_PASSWORD} ---activate-dependencies -v && tail -f /dev/null"
+    command: sh -c "trytond-admin -d ${DB_NAME} --all --email ${EMAIL} --password ${PASSWORD} ---activate-dependencies -v && tail -f /dev/null"
     volumes:
       - data:/var/lib/trytond/db
     depends_on:
