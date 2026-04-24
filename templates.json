@@ -995,7 +995,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 11,
       "type": 3,
       "title": "Freescout",
       "description": "Freescout setup with a database MySQL.",
@@ -1107,7 +1107,77 @@
           "name": "NETWORK"
         }
       ]
-    }       
+    },
+    {
+      "id": 12,
+      "type": 3,
+      "title": "DGII RNC API + CSV + Web scraping",
+      "description": "Esta es una API diseñada con FastAPI para facilitar el acceso y la integración de los datos del Registro Nacional de Contribuyentes (RNC) y Cédula de Identidad de la Dirección General de Impuestos Internos (DGII) de la República Dominicana en aplicaciones de terceros.",
+      "categories": ["API"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/business-web-services/portainer-templates/main/stacks/dgii-rnc-api/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/business-web-services/portainer-templates",
+        "stackfile": "stacks/dgii-rnc-api/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "postgres",
+          "label": "PostgreSQL image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "16.2-alpine3.19",
+          "label": "PostgreSQL tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "default": "rnc_user",
+          "label": "Database Username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "default": "rnc_pass",
+          "label": "Database Password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "rnc_db",
+          "label": "Database Name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "5432",
+          "label": "Postgres Port",
+          "name": "POSTGRES_PORT"
+        },
+        {
+          "default": "gitea.joseagrc.com/joseagrc/dgii-rnc-fastapi",
+          "label": "RNC API image",
+          "name": "RNC_API_IMAGE"
+        },
+        {
+          "default": "latest",
+          "label": "RNC API Tag",
+          "name": "RNC_API_TAG"
+        },
+        {
+          "default": "rnc.example.com",
+          "label": "URL",
+          "name": "URL"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/postgresql/data"
+        }
+      ]
+    }           
 
 
 

@@ -1,0 +1,52 @@
+services:
+  vaultwarden:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${VAULTWARDEN_IMAGE}:${VAULTWARDEN_TAG}
+    hostname: ${COMPOSE_PROJECT_NAME}-app
+    restart: unless-stopped
+    volumes:
+      - vw-data:/data/
+    environment:
+      ADMIN_TOKEN: ${VAULTWARDEN_ADMIN_TOKEN}
+      DOMAIN: https://${DOMAIN}
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED}
+      SIGNUPS_VERIFY: ${SIGNUPS_VERIFY}
+      INVITATIONS_ALLOWED: ${INVITATIONS_ALLOWED}
+      LOG_FILE: ${LOG_FILE}
+      ROCKET_ENV: ${ROCKET_ENV}
+      ROCKET_WORKERS: ${ROCKET_WORKERS}
+      LOG_LEVEL: ${LOG_LEVEL}
+      EXTENDED_LOGGING: ${EXTENDED_LOGGING}
+      PUSH_ENABLED: ${PUSH_ENABLED}
+      PUSH_INSTALLATION_ID: ${PUSH_INSTALLATION_ID}
+      PUSH_INSTALLATION_KEY: ${PUSH_INSTALLATION_KEY}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_FROM: ${SMTP_FROM}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_SECURITY: ${SMTP_SECURITY}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${NETWORK}"
+      # Redirecciona HTTP -> HTTPS
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=${COMPOSE_PROJECT_NAME}-https-redirect"
+      - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-https-redirect.redirectscheme.scheme=https"
+      # HTTPS (con SSL automático)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+      # Servicio backend Vaultwarden
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80"
+
+volumes:
+  vw-data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
