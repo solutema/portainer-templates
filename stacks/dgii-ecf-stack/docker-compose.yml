@@ -1,0 +1,153 @@
+services:
+  postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - dgii_ecf_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  dgii-ecf-engine:
+    container_name: ${COMPOSE_PROJECT_NAME}-engine
+    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      TRUST_PROXY: 1
+
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN}
+      API_KEY_PEPPER: ${API_KEY_PEPPER}
+      APP_JWT_SECRET: ${APP_JWT_SECRET}
+      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64}
+
+      DATABASE_ENABLED: ${DATABASE_ENABLED}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES}
+      RUN_PRISMA_MIGRATE_ON_BOOT: ${RUN_PRISMA_MIGRATE_ON_BOOT}
+
+      APP_DATA_DIR: /data
+      APP_LOG_DIR: /logs
+
+      CERT_STORE_DIR: /data/certificates
+      REGISTRY_FILE: /data/registry.json
+      API_KEYS_FILE: /data/api_keys.json
+      USERS_FILE: /data/users.json
+      TRANSACTIONS_DIR: /data/transactions
+      AUDIT_LOG_FILE: /logs/audit.log
+
+      AUDIT_TO_FILE: ${AUDIT_TO_FILE}
+      LOG_LEVEL: ${LOG_LEVEL}
+      LOG_PRETTY: ${LOG_PRETTY}
+
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+
+      XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED}
+      XML_VALIDATOR_PYTHON: python3
+
+      DGII_RETRY_AFTER_SECONDS: ${DGII_RETRY_AFTER_SECONDS}
+      DGII_AUTO_ROUTE_B2C: ${DGII_AUTO_ROUTE_B2C}
+      DGII_B2C_SUMMARY_MAX_TOTAL: ${DGII_B2C_SUMMARY_MAX_TOTAL}
+      DGII_STATUS_API_KEY: ${DGII_STATUS_API_KEY}
+
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS}
+      RATE_LIMIT_DEFAULT_MAX: ${RATE_LIMIT_DEFAULT_MAX}
+      RATE_LIMIT_BYPASS_INTERNAL: ${RATE_LIMIT_BYPASS_INTERNAL}
+      RATE_LIMIT_RULES: ${RATE_LIMIT_RULES}
+
+    volumes:
+      - dgii_ecf_engine_data:/data
+      - dgii_ecf_engine_logs:/logs
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:4000/api/v1/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))\""
+        ]
+      interval: 20s
+      timeout: 10s
+      retries: 30
+      start_period: 300s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${NETWORK:-proxy}
+
+      - traefik.http.routers.dgii-ecf-engine.rule=Host(`${ENGINE_DOMAIN}`)
+      - traefik.http.routers.dgii-ecf-engine.entrypoints=websecure
+      - traefik.http.routers.dgii-ecf-engine.tls=true
+      - traefik.http.routers.dgii-ecf-engine.tls.certresolver=letsencrypt
+
+      - traefik.http.services.dgii-ecf-engine.loadbalancer.server.port=4000
+
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Frame-Options=DENY
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.Referrer-Policy=no-referrer
+
+      - traefik.http.routers.dgii-ecf-engine.middlewares=dgii-ecf-engine-headers
+
+  dgii-ecf-portal:
+    container_name: ${COMPOSE_PROJECT_NAME}-portal
+    image: ${DGII_ECF_PORTAL_IMAGE}:${DGII_ECF_PORTAL_TAG}
+    restart: unless-stopped
+    depends_on:
+      dgii-ecf-engine:
+        condition: service_healthy
+        restart: true
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      CHROMIUM_PATH: /usr/bin/chromium
+
+      NEXT_PUBLIC_API_BASE_URL: https://${PUBLIC_ENGINE_URL}
+      API_BASE_URL: https://${PUBLIC_ENGINE_URL}
+      
+    tmpfs:
+      - /tmp:size=512m,nosuid
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${NETWORK:-proxy}
+
+      - traefik.http.routers.dgii-ecf-portal.rule=Host(`${PORTAL_DOMAIN}`)
+      - traefik.http.routers.dgii-ecf-portal.entrypoints=websecure
+      - traefik.http.routers.dgii-ecf-portal.tls=true
+      - traefik.http.routers.dgii-ecf-portal.tls.certresolver=letsencrypt
+
+      - traefik.http.services.dgii-ecf-portal.loadbalancer.server.port=3000
+
+      - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
+      - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.Referrer-Policy=strict-origin-when-cross-origin
+
+      - traefik.http.routers.dgii-ecf-portal.middlewares=dgii-ecf-portal-headers
+
+volumes:
+  dgii_ecf_postgres_data:
+  dgii_ecf_engine_data:
+  dgii_ecf_engine_logs:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

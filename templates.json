@@ -802,7 +802,203 @@
           "container": "/tmp/buildx-cache"
         }
       ]
-    }
+    },
+    {
+      "id": 10,
+      "type": 3,
+      "title": "DGII e-CF Stack",
+      "description": "DGII e-CF stack is an application that works electronic invoicing for Dominican Republic.",
+      "note": "Deploys a DGII e-CF stack instance to electronic invoicing.",
+      "categories": ["API"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/business-web-services/portainer-templates/refs/heads/main/stacks/dgii-ecf-stack/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/business-web-services/portainer-templates",
+        "stackfile": "stacks/dgii-ecf-stack/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "postgres",
+          "label": "Postgres Image",
+          "name": "POSTGRES_IMAGE"
+        },        
+        {
+          "default": "16-alpine",
+          "label": "Postgres Tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "default": "dgii_ecf_user",
+          "label": "Database Username",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "default": "dgii_ecf_pass",
+          "label": "Database Password for user",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "dgii_ecf_db",
+          "label": "Database Name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "5432",
+          "label": "Postgres Port",
+          "name": "POSTGRES_PORT"
+        },
+        {
+          "default": "registry.joseagrc.com/e-cf/dgii-ecf-engine",
+          "label": "DGII e-CF Engine Image",
+          "name": "DGII_ECF_ENGINE_IMAGE"
+        },        
+        {
+          "default": "1-0-0",
+          "label": "DGII e-CF Engine Tag",
+          "name": "DGII_ECF_ENGINE_TAG"
+        },
+        {
+          "default": "ecf.example.com",
+          "label": "Engine Domain",
+          "name": "ENGINE_DOMAIN"
+        },
+        {
+          "default": "change-me-with-a-long-random-token",
+          "label": "Internal API Token",
+          "name": "INTERNAL_API_TOKEN"
+        },
+        {
+          "default": "replace-with-at-least-32-characters",
+          "label": "API Key Pepper",
+          "name": "API_KEY_PEPPER"
+        },
+        {
+          "default": "replace-with-a-long-random-secret",
+          "label": "APP JWT Secret",
+          "name": "APP_JWT_SECRET"
+        },
+        {
+          "default": "replace-with-base64-32-byte-key",
+          "label": "Cert Master Key BASE64",
+          "name": "CERT_MASTER_KEY_BASE64"
+        },
+        {
+          "default": "true",
+          "label": "Database Enabled",
+          "name": "DATABASE_ENABLED"
+        },        
+        {
+          "default": "false",
+          "label": "Database Log Queries",
+          "name": "DATABASE_LOG_QUERIES"
+        },
+        {
+          "default": "true",
+          "label": "Run Prisma Migration on Boot",
+          "name": "RUN_PRISMA_MIGRATE_ON_BOOT"
+        },
+        {
+          "default": "true",
+          "label": "Audit to File",
+          "name": "AUDIT_TO_FILE"
+        },
+        {
+          "default": "info",
+          "label": "Log Level",
+          "name": "LOG_LEVEL"
+        },
+        {
+          "default": "false",
+          "label": "Log Pretty",
+          "name": "LOG_PRETTY"
+        },
+        {
+          "default": "https://app.example.com",
+          "label": "Cors Allowed Origins",
+          "name": "CORS_ALLOWED_ORIGINS"
+        },
+        {
+          "default": "true",
+          "label": "XML XSD Validation Enabled",
+          "name": "XML_XSD_VALIDATION_ENABLED"
+        },
+        {
+          "default": "30",
+          "label": "DGII Retry after seconds",
+          "name": "DGII_RETRY_AFTER_SECONDS"
+        },
+        {
+          "default": "true",
+          "label": "DGII Auto Route B2C",
+          "name": "DGII_AUTO_ROUTE_B2C"
+        },
+        {
+          "default": "250000",
+          "label": "DGII B2C Summary Max Total",
+          "name": "DGII_B2C_SUMMARY_MAX_TOTAL"
+        },
+        {
+          "default": "replace-with-api-key",
+          "label": "DGII Status API Key",
+          "name": "DGII_STATUS_API_KEY"
+        },
+        {
+          "default": "true",
+          "label": "Rate Limit Enabled",
+          "name": "RATE_LIMIT_ENABLED"
+        },
+        {
+          "default": "60000",
+          "label": "Rate Limit Window MS",
+          "name": "RATE_LIMIT_WINDOW_MS"
+        },
+        {
+          "default": "120",
+          "label": "Rate Limit Default Max",
+          "name": "RATE_LIMIT_DEFAULT_MAX"
+        },
+        {
+          "default": "true",
+          "label": "Rate Limit Bypass Internal",
+          "name": "RATE_LIMIT_BYPASS_INTERNAL"
+        },
+        {
+          "default": "/dgii/send-ecf=30;/dgii/track=180;/dgii/directory=120",
+          "label": "Rate Limit Rules",
+          "name": "RATE_LIMIT_RULES"
+        },
+        {
+          "default": "registry.joseagrc.com/e-cf/dgii-ecf-portal",
+          "label": "DGII e-CF Engine Image",
+          "name": "DGII_ECF_PORTAL_IMAGE"
+        },        
+        {
+          "default": "1-0-0",
+          "label": "DGII e-CF Engine Tag",
+          "name": "DGII_ECF_PORTAL_TAG"
+        },
+        {
+          "default": "ecf.example.com",
+          "label": "Public Engine URL",
+          "name": "PUBLIC_ENGINE_URL"
+        },
+        {
+          "default": "app.example.com",
+          "label": "Portal Domain",
+          "name": "PORTAL_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    }   
+
+
+
+
+
 
 
   ]
