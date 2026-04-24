@@ -993,7 +993,121 @@
           "name": "NETWORK"
         }
       ]
-    }   
+    },
+    {
+      "id": 3,
+      "type": 3,
+      "title": "Freescout",
+      "description": "Freescout setup with a database MySQL.",
+      "note": "Deploys a Freescout instance connected to a database MySQL.",
+      "categories": ["Help Desk"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/business-web-services/portainer-templates/refs/heads/main/stacks/freescout/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/business-web-services/portainer-templates",
+        "stackfile": "stacks/freescout/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "gitea.joseagrc.com/joseagrc/mariadb",
+          "label": "Database Image",
+          "name": "MARIADB_IMAGE"
+        },
+        {
+          "default": "11.4",
+          "label": "Database Tag",
+          "name": "MARIADB_TAG"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "label": "Database Root Password",
+          "name": "ROOT_PASS"
+        },
+        {
+          "default": "freescout_db",
+          "label": "Database Name",
+          "name": "DB_NAME"
+        },
+        {
+          "default": "freescout_user",
+          "label": "Database Username",
+          "name": "DB_USER"
+        },
+        {
+          "default": "freescout_pass",
+          "label": "Database Password for User",
+          "name": "DB_PASS"
+        },
+        {
+          "default": "gitea.joseagrc.com/joseagrc/freescout",
+          "label": "Freescout Image",
+          "name": "FREESCOUT_IMAGE"
+        },
+        {
+          "default": "1.8.193",
+          "label": "Freescout Tag",
+          "name": "FREESCOUT_TAG"
+        },
+        {
+          "default": "3306",
+          "label": "Database Port",
+          "name": "DB_PORT"
+        },
+        {
+          "default": "Freescout",
+          "label": "Application Name",
+          "name": "APPLICATION_NAME"
+        },
+        {
+          "default": "freescout.example.com",
+          "label": "SITE_URL",
+          "name": "SITE_URL"
+        },
+        {
+          "default": "email@example.com",
+          "label": "Admin Email",
+          "name": "ADMIN_EMAIL"
+        },
+        {
+          "label": "Admin Pass",
+          "name": "ADMIN_PASS"
+        },
+        {
+          "default": "First Name",
+          "label": "Admin First Name",
+          "name": "ADMIN_FIRST_NAME"
+        },
+        {
+          "default": "Last Name",
+          "label": "Admin Last Name",
+          "name": "ADMIN_LAST_NAME"
+        },
+        {
+          "default": "True",
+          "label": "Enable Auto Update",
+          "name": "ENABLE_AUTO_UPDATE"
+        },
+        {
+          "default": "True",
+          "label": "Enable APP Proxy",
+          "name": "APP_PROXY"
+        },
+        {
+          "default": "True",
+          "label": "Enable SSL Proxy",
+          "name": "ENABLE_SSL_PROXY"
+        },
+        {
+          "default": "proxy",
+          "label": "Network name",
+          "name": "NETWORK"
+        }
+      ]
+    }       
 
 
 
