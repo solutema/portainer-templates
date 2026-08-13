@@ -27,7 +27,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      ConnectionStrings__DefaultConnection: "Host=postgres;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+      ConnectionStrings__DefaultConnection: "Host=${COMPOSE_PROJECT_NAME}-postgres;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
       Authentication__Username: ${ADMIN_USERNAME}
       Authentication__Password: ${ADMIN_PASSWORD}
       TimeZone__DisplayTimeZoneId: ${TIMEZONE}
