@@ -2087,6 +2087,79 @@
     },
     {
       "type": 3,
+      "title": "Mail Archiver",
+      "description": "Archive, search, and export email from multiple IMAP and Microsoft 365 accounts.",
+      "note": "Deploys Mail Archiver with PostgreSQL and publishes it securely through the existing Traefik proxy.",
+      "categories": ["Email"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/s1t5/mail-archiver/main/wwwroot/favicon.svg",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/mail-archiver/docker-compose.yml"
+      },
+      "env": [
+        {
+          "default": "s1t5/mailarchiver",
+          "label": "Mail Archiver image",
+          "name": "MAILARCHIVER_IMAGE"
+        },
+        {
+          "default": "latest",
+          "label": "Mail Archiver tag",
+          "name": "MAILARCHIVER_TAG"
+        },
+        {
+          "default": "postgres",
+          "label": "PostgreSQL image",
+          "name": "POSTGRES_IMAGE"
+        },
+        {
+          "default": "17-alpine",
+          "label": "PostgreSQL tag",
+          "name": "POSTGRES_TAG"
+        },
+        {
+          "default": "MailArchiver",
+          "label": "Database name",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "mailuser",
+          "label": "Database user",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "label": "Database password",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "admin",
+          "label": "Administrator username",
+          "name": "ADMIN_USERNAME"
+        },
+        {
+          "label": "Administrator password",
+          "name": "ADMIN_PASSWORD"
+        },
+        {
+          "default": "America/Santo_Domingo",
+          "label": "Timezone",
+          "name": "TIMEZONE"
+        },
+        {
+          "default": "mailarchive.joseagrc.com",
+          "label": "Domain",
+          "name": "URL_DOMAIN"
+        },
+        {
+          "default": "proxy",
+          "label": "External proxy network",
+          "name": "NETWORK"
+        }
+      ]
+    },
+    {
+      "type": 3,
       "title": "Zabbix Server",
       "description": "Zabbix Server setup with postgres database.",
       "note": "Deploys a Zabbix Server to monitor IT infrastructure such as networks, servers, virtual machines, and cloud services.",

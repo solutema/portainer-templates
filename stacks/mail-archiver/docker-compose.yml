@@ -1,0 +1,58 @@
+services:
+  postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: ${TIMEZONE}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mailarchive_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  mailarchive:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${MAILARCHIVER_IMAGE}:${MAILARCHIVER_TAG}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+      Authentication__Username: ${ADMIN_USERNAME}
+      Authentication__Password: ${ADMIN_PASSWORD}
+      TimeZone__DisplayTimeZoneId: ${TIMEZONE}
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      TZ: ${TIMEZONE}
+    volumes:
+      - data_protection_keys:/app/DataProtection-Keys
+    networks:
+      - mailarchive_internal
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${NETWORK}"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${URL_DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=5000"
+
+volumes:
+  postgres_data:
+  data_protection_keys:
+
+networks:
+  mailarchive_internal:
+    internal: true
+  proxy:
+    name: ${NETWORK}
+    external: true
