@@ -11,6 +11,7 @@ x-tryton-environment: &tryton-environment
   DB_PASSWORD: ${DB_PASSWORD:?Defina una contraseña segura para PostgreSQL}
   DB_LANGUAGE: ${DB_LANGUAGE:-es_419}
   TRYTOND_BUS__URL_HOST: https://${TRYTON_HOST:?Defina el dominio público de Tryton}/
+  TRYTOND_WEB__CORS: https://${TRYTON_HOST:?Defina el dominio público de Tryton}
   TRYTOND_DATABASE__LIST: "False"
   TRYTOND_DATABASE__MINCONN: ${TRYTON_DATABASE_MINCONN:-1}
   TRYTOND_DATABASE__MAXCONN: ${TRYTON_DATABASE_MAXCONN:-16}
