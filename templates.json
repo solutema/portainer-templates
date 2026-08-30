@@ -1182,7 +1182,7 @@
       "id": 13,
       "type": 3,
       "title": "Tryton 8.0 LTS (República Dominicana)",
-      "description": "Tryton 8.0 LTS con SAO, módulos oficiales y dominicanos, PostgreSQL aislado, tareas, cron y copias de seguridad automáticas. Diseñado para publicarse exclusivamente detrás de un proxy HTTPS.",
+      "description": "Tryton 8.0 LTS con SAO, módulos oficiales y dominicanos, PostgreSQL aislado, tareas, cron y copias de seguridad automáticas. Integrado con Traefik mediante la red externa proxy y routers HTTPS separados para web y bus.",
       "categories": ["ERP", "Business"],
       "platform": "linux",
       "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/tryton70/logo/logo.png",
@@ -1239,9 +1239,24 @@
           "default": "https://tryton.example.com/"
         },
         {
+          "name": "TRYTON_HOST",
+          "label": "Dominio público para Traefik (sin https://)",
+          "default": "tryton.example.com"
+        },
+        {
           "name": "PROXY_NETWORK",
-          "label": "Red Docker externa del proxy HTTPS",
+          "label": "Red Docker externa de Traefik",
           "default": "proxy"
+        },
+        {
+          "name": "TRAEFIK_ENTRYPOINT",
+          "label": "Entrypoint HTTPS de Traefik",
+          "default": "websecure"
+        },
+        {
+          "name": "TRAEFIK_CERTRESOLVER",
+          "label": "Certificate resolver de Traefik",
+          "default": "letsencrypt"
         },
         {
           "name": "TRYTON_NUM_PROXIES",

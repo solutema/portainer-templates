@@ -86,6 +86,21 @@ services:
     networks:
       - backend
       - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${PROXY_NETWORK:-proxy}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.rule=Host(`${TRYTON_HOST:?Defina el dominio público de Tryton}`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.tls.certresolver=${TRAEFIK_CERTRESOLVER:?Defina el resolutor de certificados de Traefik}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.priority=10
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.service=${COMPOSE_PROJECT_NAME:-tryton80}-web
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-web.middlewares=${COMPOSE_PROJECT_NAME:-tryton80}-security
+      - traefik.http.services.${COMPOSE_PROJECT_NAME:-tryton80}-web.loadbalancer.server.port=8000
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.referrerPolicy=strict-origin-when-cross-origin
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.stsSeconds=31536000
+      - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.stsIncludeSubdomains=true
     depends_on:
       tryton-migrate:
         condition: service_completed_successfully
@@ -127,6 +142,17 @@ services:
     networks:
       - backend
       - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${PROXY_NETWORK:-proxy}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.rule=Host(`${TRYTON_HOST:?Defina el dominio público de Tryton}`) && PathRegexp(`^/[^/]+/bus`)
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.tls=true
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.tls.certresolver=${TRAEFIK_CERTRESOLVER:?Defina el resolutor de certificados de Traefik}
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.priority=100
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.service=${COMPOSE_PROJECT_NAME:-tryton80}-bus
+      - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.middlewares=${COMPOSE_PROJECT_NAME:-tryton80}-security
+      - traefik.http.services.${COMPOSE_PROJECT_NAME:-tryton80}-bus.loadbalancer.server.port=8000
     depends_on:
       tryton-migrate:
         condition: service_completed_successfully

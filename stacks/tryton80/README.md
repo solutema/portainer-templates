@@ -7,14 +7,20 @@ Template basado en la rama `8.0` de
 
 - Cree previamente una red Docker externa para el proxy, por ejemplo:
   `docker network create proxy`.
-- Publique `tryton-web:8000` y `tryton-bus:8000` únicamente mediante un proxy
-  inverso con HTTPS. El template no publica puertos directamente en el host.
+- Traefik debe estar conectado a esa red y tener habilitado el proveedor Docker.
+  El template crea routers TLS para `tryton-web:8000` y para la ruta autenticada
+  `/<base-de-datos>/bus` en `tryton-bus:8000`. No publica puertos en el host.
+- Defina `TRYTON_HOST` sin protocolo, por ejemplo `tryton.example.com`, y use el
+  mismo dominio en `PUBLIC_URL`, con `https://` y `/` al final.
+- Indique el entrypoint HTTPS y el certificate resolver que ya existan en
+  Traefik. Los valores comunes son `websecure` y `letsencrypt`, respectivamente.
 - Use contraseñas aleatorias, diferentes y de al menos 32 caracteres para
   `DB_PASSWORD` y `ADMIN_PASSWORD`. Portainer las almacena como variables del
   stack; restrinja el acceso administrativo al entorno y a sus respaldos.
 - Ajuste `TRYTON_NUM_PROXIES` al número exacto de proxies de confianza entre el
   cliente y Tryton. No lo aumente innecesariamente.
-- Mantenga `PUBLIC_URL` en HTTPS y con `/` al final.
+- Mantenga `PUBLIC_URL` en HTTPS y con `/` al final. Las etiquetas habilitan
+  HSTS, `nosniff` y una política de referencia restrictiva.
 
 PostgreSQL solo participa en una red interna y no queda accesible desde la red
 del proxy. Los procesos de Tryton se ejecutan con el usuario no privilegiado de
