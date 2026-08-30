@@ -1,0 +1,88 @@
+services:
+  postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: unless-stopped    
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - dgii_rnc_postgres_data:/var/lib/postgresql/data      
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10    
+    labels:
+      # Habilita Traefik para TCP (no HTTP)
+      - "traefik.enable=true"
+      # Regla de enrutamiento TCP (HostSNI para distinguir instancias)
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.rule=HostSNI(`pg.${URL}`) || HostSNI(`www.pg.${URL}`)"  # Ej: pg-instancia1.tudominio.com
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.entrypoints=postgres"  # Entrypoint TCP definido en Traefik
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.tls=true"  # Opcional: TLS para seguridad
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.tls.certresolver=letsencrypt"
+      # Backend (puerto de PostgreSQL)
+      - "traefik.tcp.services.${COMPOSE_PROJECT_NAME}-pg.loadbalancer.server.port=5432"
+
+  api:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    image: ${RNC_API_IMAGE}:${RNC_API_TAG}
+    restart: unless-stopped
+    links:
+      - postgres:postgres
+    volumes:
+      - dgii_rnc_data:/app/data      
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      APP_DEBUG: ${APP_DEBUG:-false}
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-dgii_rnc_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_URL: ${DATABASE_URL:-}
+      DGII_RNC_URL: ${DGII_RNC_URL:-https://dgii.gov.do/app/WebApps/ConsultasWeb2/ConsultasWeb/consultas/rnc.aspx}
+      DGII_TIMEOUT: ${DGII_TIMEOUT:-20}
+      DGII_ZIP_TIMEOUT: ${DGII_ZIP_TIMEOUT:-120}
+      DGII_BATCH_SIZE: ${DGII_BATCH_SIZE:-1000}
+      DGII_ZIP_SOURCE: ${DGII_ZIP_SOURCE:-remote}
+      DGII_ZIP_FORMAT: ${DGII_ZIP_FORMAT:-csv}
+      DGII_RNC_ZIP_LOCAL_PATH: ${DGII_RNC_ZIP_LOCAL_PATH:-}
+      DGII_ZIP_DOWNLOAD_RETRIES: ${DGII_ZIP_DOWNLOAD_RETRIES:-3}
+      DGII_ZIP_CHUNK_SIZE: ${DGII_ZIP_CHUNK_SIZE:-1048576}
+      STAGING_SQLITE_PATH: ${STAGING_SQLITE_PATH:-/app/data/dgii_staging.sqlite3}
+      CACHE_TTL_HOURS: ${CACHE_TTL_HOURS:-168}
+      HTML_REFRESH_HOURS: ${HTML_REFRESH_HOURS:-24}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      SCHEDULER_ENABLED: ${SCHEDULER_ENABLED:-true}
+      SCHEDULER_TIMEZONE: ${SCHEDULER_TIMEZONE:-America/Santo_Domingo}
+      SCHEDULER_FULL_SYNC_CRON: ${SCHEDULER_FULL_SYNC_CRON:-0 2 * * *}
+    labels:
+      - "traefik.enable=true"
+      # Redirecciona HTTP -> HTTPS
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${URL}`) || Host(`www.${URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=${COMPOSE_PROJECT_NAME}-https-redirect"
+      - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-https-redirect.redirectscheme.scheme=https"
+      # HTTPS (con SSL automático)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${URL}`) || Host(`www.${URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+      # Servicio backend RNC API
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  dgii_rnc_postgres_data:
+  dgii_rnc_data:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

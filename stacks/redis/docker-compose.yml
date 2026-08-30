@@ -8,14 +8,22 @@ services:
     volumes:
       - data:/data/db
       - logs:/data/logs
-    ports:
-      - ${REDIS_PORT}:6379
     environment:
       - CONTAINER_NAME=${COMPOSE_PROJECT_NAME}-server
       - TIMEZONE=${TIMEZONE}
       - ENABLE_LOGS=${ENABLE_LOGS}
       - LOG_LEVEL=${LOG_LEVEL}
       - REDIS_PASS=${REDIS_PASS}
+    labels:
+      # Habilita Traefik para TCP (no HTTP)
+      - "traefik.enable=true"
+      # Regla de enrutamiento TCP (HostSNI para distinguir instancias)
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-redis.rule=HostSNI(`redis.${DOMAIN}`) || HostSNI(`www.redis.${DOMAIN}`)"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-redis.entrypoints=redis"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-redis.tls=true"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-redis.tls.certresolver=letsencrypt"
+      # Backend (puerto de Redis)
+      - "traefik.tcp.services.${COMPOSE_PROJECT_NAME}-redis.loadbalancer.server.port=6379"
 
   insight:
     container_name: ${COMPOSE_PROJECT_NAME}-insight
@@ -23,19 +31,28 @@ services:
     restart: always
     depends_on:
       - redis
-    ports:
-      - ${INSIGHT_PORT}:5540
     environment:
       RI_APP_HOST: 0.0.0.0
       RI_APP_PORT: ${INSIGHT_PORT}
       RI_LOG_LEVEL: ${RI_LOG_LEVEL}
       RI_FILES_LOGGER: ${RI_FILES_LOGGER}
       RI_STDOUT_LOGGER: ${RI_STDOUT_LOGGER}
-      VIRTUAL_PORT: ${INSIGHT_PORT}
-      VIRTUAL_HOST: ${INSIGHT_DOMAIN}
-      LETSENCRYPT_HOST: ${INSIGHT_DOMAIN}
     volumes:
       - insight:/data
+    labels:
+      - "traefik.enable=true"
+      # HTTP → HTTPS (middleware definido en https_redirection.yml)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-insight.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-insight.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-insight.middlewares=https_redirection@file"
+      # HTTPS (SSL automático)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+
+      # Servicio backend (puerto Insight)
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=5540"
       
 volumes:
   data:

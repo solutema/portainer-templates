@@ -11,6 +11,16 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
+    labels:
+      # Habilita Traefik para TCP (no HTTP)
+      - "traefik.enable=true"
+      # Regla de enrutamiento TCP (HostSNI para distinguir instancias)
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-mariadb.rule=HostSNI(`mariadb.${SITE_URL}`) || HostSNI(`www.mariadb.${SITE_URL}`)"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-mariadb.entrypoints=mysql"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-mariadb.tls=true"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-mariadb.tls.certresolver=letsencrypt"
+      # Backend (puerto de MariaDB)
+      - "traefik.tcp.services.${COMPOSE_PROJECT_NAME}-mariadb.loadbalancer.server.port=3306"
 
   phpmyadmin:
     container_name: ${COMPOSE_PROJECT_NAME}-phpmyadmin
@@ -22,8 +32,17 @@ services:
       PMA_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
       PMA_PORT: 3306
       PMA_ARBITRARY: 1 # To allow fill db credentials
-      VIRTUAL_HOST: ${PHPMYADMIN_DOMAIN}
-      LETSENCRYPT_HOST: ${PHPMYADMIN_DOMAIN}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.${SITE_URL}`) || Host(`www.pma.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.middlewares=phpmyadmin-https-redirect"
+      - "traefik.http.middlewares.phpmyadmin-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.${SITE_URL}`) || Host(`www.pma.${SITE_URL}`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.phpmyadmin.tls=true"
+      - "traefik.http.routers.phpmyadmin.tls.certresolver=letsencrypt"
+      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
 
   wordpress:
     container_name: ${COMPOSE_PROJECT_NAME}-app
@@ -41,6 +60,7 @@ services:
       ENABLE_HTTPS_REVERSE_PROXY: ${ENABLE_HTTPS_REVERSE_PROXY}
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-app
       DB_HOST: ${COMPOSE_PROJECT_NAME}-mariadb
+      DB_PORT: 3306
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
@@ -65,8 +85,17 @@ services:
       PHP_POST_MAX_SIZE: ${NGINX_UPLOAD_MAX_SIZE}
       PHP_UPLOAD_MAX_SIZE: ${NGINX_UPLOAD_MAX_SIZE}
       PHP_TIMEOUT: ${PHP_TIMEOUT}
-      VIRTUAL_HOST: ${SITE_URL},www.${SITE_URL}
-      LETSENCRYPT_HOST: ${SITE_URL},www.${SITE_URL}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`${SITE_URL}`) || Host(`www.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.middlewares=wordpress-https-redirect"
+      - "traefik.http.middlewares.wordpress-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.wordpress.rule=Host(`${SITE_URL}`) || Host(`www.${SITE_URL}`)"
+      - "traefik.http.routers.wordprerss.entrypoints=websecure"
+      - "traefik.http.routers.wordpress.tls=true"
+      - "traefik.http.routers.wordpress.tls.certresolver=letsencrypt"
+      - "traefik.http.services.wordpress.loadbalancer.server.port=80"
 
 volumes:
   mariadb:

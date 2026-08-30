@@ -1,17 +1,61 @@
 version: "3"
 services:
+  generate-config:
+    container_name: ${COMPOSE_PROJECT_NAME}-generate-config
+    image: ${GITEA_ACT_RUNNER_IMAGE}:${GITEA_ACT_RUNNER_TAG}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        act_runner generate-config > /data/config.yaml && \
+        sed -i \
+        -e "s/^[[:space:]]*timeout: .*/  timeout: ${TIMEOUT}/" \
+        -e "s/^[[:space:]]*capacity: .*/  capacity: ${CAPACITY}/" \
+        -e "s/^[[:space:]]*shutdown_timeout: .*/  shutdown_timeout: ${SHUTDOWN_TIMEOUT}/" \
+        -e "s/^[[:space:]]*insecure: .*/  insecure: ${INSECURE}/" \
+        -e "s/^[[:space:]]*fetch_timeout: .*/  fetch_timeout: ${FETCH_TIMEOUT}/" \
+        -e "s/^[[:space:]]*fetch_interval: .*/  fetch_interval: ${FETCH_INTERVAL}/" \
+        -e "s#^[[:space:]]*network: .*#  network: \"${NETWORK}\"#" \
+        -e "s/^[[:space:]]*privileged: .*/  privileged: ${PRIVILEGED}/" \
+        -e "s#^[[:space:]]*valid_volumes: .*#  valid_volumes: ${VALID_VOLUMES}#" \
+        -e "s#^[[:space:]]*docker_host: .*#  docker_host: \"${DOCKER_HOST_VAR}\"#" \
+        -e "s/^[[:space:]]*force_pull: .*/  force_pull: ${FORCE_PULL}/" \
+        -e "s/^[[:space:]]*force_rebuild: .*/  force_rebuild: ${FORCE_REBUILD}/" \
+        /data/config.yaml
+    environment:
+      TIMEOUT_OVERRIDE: ${TIMEOUT_OVERRIDE}
+      CAPACITY: ${CAPACITY}
+      SHUTDOWN_TIMEOUT: ${SHUTDOWN_TIMEOUT}
+      INSECURE: ${INSECURE}
+      FETCH_TIMEOUT: ${FETCH_TIMEOUT}
+      FETCH_INTERVAL: ${FETCH_INTERVAL}
+      NETWORK: ${NETWORK}
+      PRIVILEGED: ${PRIVILEGED}
+      VALID_VOLUMES: ${VALID_VOLUMES}
+      DOCKER_HOST_VAR: ${DOCKER_HOST_VAR}
+      FORCE_PULL: ${FORCE_PULL}
+      FORCE_REBUILD: ${FORCE_REBUILD}
+    volumes:
+      - data:/data
+    stdin_open: true
+    tty: true
+
   runner:
+    container_name: ${COMPOSE_PROJECT_NAME}-runner
     image: ${GITEA_ACT_RUNNER_IMAGE}:${GITEA_ACT_RUNNER_TAG}
     restart: always
-    command: act_runner generate-config > /data/config.yaml
     environment:
-      GITEA_INSTANCE_URL: "${GITEA_INSTANCE_URL}"
-      GITEA_RUNNER_REGISTRATION_TOKEN: "${GITEA_RUNNER_REGISTRATION_TOKEN}"
+      CONFIG_FILE: /data/config.yaml
+      GITEA_INSTANCE_URL: ${GITEA_INSTANCE_URL}
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${GITEA_RUNNER_REGISTRATION_TOKEN}
+      GITEA_RUNNER_NAME: ${COMPOSE_PROJECT_NAME}
     volumes:
+      - cache:/tmp/buildx-cache
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
+  cache:
+  config:
   data:
 
 networks:

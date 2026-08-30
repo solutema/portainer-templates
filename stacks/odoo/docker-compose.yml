@@ -1,42 +1,73 @@
-version: '3'
-
 services:
   postgres:
     container_name: ${COMPOSE_PROJECT_NAME}-postgres
     image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - odoo-db:/var/lib/postgresql/data
+    shm_size: 128mb
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     restart: unless-stopped
+    labels:
+      # Habilita Traefik para TCP (no HTTP)
+      - "traefik.enable=true"
+      # Regla de enrutamiento TCP (HostSNI para distinguir instancias)
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.rule=HostSNI(`pg.${ODOO_URL}`) || HostSNI(`www.pg.${ODOO_URL}`)"  # Ej: pg-instancia1.tudominio.com
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.entrypoints=postgres"  # Entrypoint TCP definido en Traefik
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.tls=true"  # Opcional: TLS para seguridad
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-pg.tls.certresolver=letsencrypt"
+      # Backend (puerto de PostgreSQL)
+      - "traefik.tcp.services.${COMPOSE_PROJECT_NAME}-pg.loadbalancer.server.port=5432"
 
   odoo:
     container_name: ${COMPOSE_PROJECT_NAME}-app
     image: ${ODOO_IMAGE}:${ODOO_TAG}
+    depends_on:
+      - postgres
+    hostname: ${COMPOSE_PROJECT_NAME}-app
+    shm_size: ${SHM_SIZE}
     restart: unless-stopped
-    links:
-      - postgres:postgres
-   ports:
-     - "${ODOO_PORT}:8069"
-     - "${CHAT_PORT}:8072" # live chat
-   expose:
-     - "${ODOO_PORT}:8069"
-     - "${CHAT_PORT}:8072" # live chat
     tty: true
     volumes:
+      - odoo-data:/var/lib/odoo
       - extra-addons:/mnt/extra-addons
+      - backups:/mnt/backups
     command: -- --dev=reload
     environment:
       HOST: ${COMPOSE_PROJECT_NAME}-postgres
       USER: ${POSTGRES_USER}
       PASSWORD: ${POSTGRES_PASSWORD}
-
+    healthcheck:
+      test: ["CMD-SHELL", "curl -X HEAD -I http://127.0.0.1:8069"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    labels:
+      - "traefik.enable=true"
+      # Redirecciona HTTP -> HTTPS
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${ODOO_URL}`) || Host(`www.${ODOO_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=${COMPOSE_PROJECT_NAME}-https-redirect"
+      - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-https-redirect.redirectscheme.scheme=https"
+      # HTTPS (con SSL automático)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${ODOO_URL}`) || Host(`www.${ODOO_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+      # Servicio backend Odoo
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=8069"
 
 volumes:
-  postgres-db:
+  odoo-db:
+  odoo-data:
   extra-addons:
+  backups:
 
 networks:
   default:

@@ -1,0 +1,81 @@
+services:
+  freescout-db:
+    container_name: ${COMPOSE_PROJECT_NAME}-db
+    image: ${MARIADB_IMAGE}:${MARIADB_TAG}
+    volumes:
+      - freescout-db:/var/lib/mysql
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-db
+      TIMEZONE: ${TIMEZONE}
+      ROOT_PASS: ${ROOT_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+    restart: unless-stopped
+    labels:
+      # Habilita Traefik para TCP (no HTTP)
+      - "traefik.enable=true"
+      # Regla de enrutamiento TCP (HostSNI para distinguir instancias)
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-db.rule=HostSNI(`mysql.${SITE_URL}`) || HostSNI(`www.mysql.${SITE_URL}`)"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-db.entrypoints=mysql"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-db.tls=true"
+      - "traefik.tcp.routers.${COMPOSE_PROJECT_NAME}-db.tls.certresolver=letsencrypt"
+      # Backend (puerto de MySQL)
+      - "traefik.tcp.services.${COMPOSE_PROJECT_NAME}-db.loadbalancer.server.port=3306"
+
+  freescout-app:
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    hostname: ${COMPOSE_PROJECT_NAME}-app
+    image: ${FREESCOUT_IMAGE}:${FREESCOUT_TAG}
+    restart: unless-stopped
+    depends_on:
+      - freescout-db
+    links:
+      - freescout-db:freescout-db
+    volumes:
+      - freescout-data:/data
+      - freescout-logs:/www/logs
+      - freescout-modules:/assets/modules
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-app
+      TIMEZONE: ${TIMEZONE}
+      DB_HOST: ${COMPOSE_PROJECT_NAME}-db
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      APPLICATION_NAME: ${APPLICATION_NAME}
+      SITE_URL: https://${SITE_URL}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASS: ${ADMIN_PASS}
+      ADMIN_FIRST_NAME: ${ADMIN_FIRST_NAME}
+      ADMIN_LAST_NAME: ${ADMIN_LAST_NAME}
+      ENABLE_AUTO_UPDATE: ${ENABLE_AUTO_UPDATE}
+      APP_PROXY: ${APP_PROXY}
+      ENABLE_SSL_PROXY: ${ENABLE_SSL_PROXY}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${NETWORK}"
+      # Redirecciona HTTP -> HTTPS
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${SITE_URL}`) || Host(`www.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=${COMPOSE_PROJECT_NAME}-https-redirect"
+      - "traefik.http.middlewares.${COMPOSE_PROJECT_NAME}-https-redirect.redirectscheme.scheme=https"
+      # HTTPS (con SSL automático)
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${SITE_URL}`) || Host(`www.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=letsencrypt"
+      # Servicio backend Gitea
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80"
+
+volumes:
+  freescout-db:
+  freescout-data:
+  freescout-logs:
+  freescout-modules:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true

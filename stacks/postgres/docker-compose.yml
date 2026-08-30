@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    hostname: ${COMPOSE_PROJECT_NAME}-postgres
+    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      TIMEZONE: ${TIMEZONE}
+      INITDB_LOCALE: ${INITDB_LOCALE}
+      INITDB_ENCODING: ${INITDB_ENCODING}
+      INITDB_LC_COLLATE: ${INITDB_LC_COLLATE}
+      INITDB_LC_CTYPE: ${INITDB_LC_CTYPE}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      SUPERUSER_USER: ${SUPERUSER_USER}
+      SUPERUSER_PASS: ${SUPERUSER_PASS}
+      DB_EXTENSION: ${DB_EXTENSION}
+      LISTEN_IP: ${LISTEN_IP}
+      LISTEN_PORT: ${LISTEN_PORT}
+      ENABLE_REPLICATION: ${ENABLE_REPLICATION}
+      REPLICATION_MODE: ${REPLICATION_MODE}
+      REPLICATION_HOST: ${REPLICATION_HOST}
+      REPLICATION_PORT: ${REPLICATION_PORT}
+      REPLICATION_USER: ${REPLICATION_USER}
+      REPLICATION_PASS: ${REPLICATION_PASS}
+      CONTAINER_ENABLE_MONITORING: ${CONTAINER_ENABLE_MONITORING}
+      MONITOR_USER: ${MONITOR_USER}
+      MONITOR_PASS: ${MONITOR_PASS}
+      VIRTUAL_HOST: ${URL},www.${URL}
+      LETSENCRYPT_HOST: ${URL},www.${URL}
+    volumes:
+      - postgres-logs:/logs
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+  postgres-logs:
+
+networks:
+  default:
+    name: ${NETWORK}
+    external: true
