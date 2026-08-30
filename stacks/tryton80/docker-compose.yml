@@ -4,7 +4,7 @@ x-tryton-image: &tryton-image
   pull_policy: always
 
 x-tryton-environment: &tryton-environment
-  DB_HOSTNAME: postgres
+  DB_HOSTNAME: tryton-postgres
   DB_PORT: "5432"
   DB_NAME: ${DB_NAME:-tryton}
   DB_USER: ${DB_USER:-tryton}
@@ -42,7 +42,9 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - backend
+      backend:
+        aliases:
+          - tryton-postgres
     security_opt:
       - no-new-privileges:true
     healthcheck:
