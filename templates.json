@@ -1234,6 +1234,56 @@
           "label": "Contraseña segura del administrador"
         },
         {
+          "name": "TRYTON_MODULES",
+          "label": "Módulos a activar (separados por espacios)",
+          "default": "company country currency party party_do currency_do"
+        },
+        {
+          "name": "IMPORT_COUNTRIES",
+          "label": "Importar países y subdivisiones ISO",
+          "default": "true"
+        },
+        {
+          "name": "IMPORT_CURRENCIES",
+          "label": "Importar monedas ISO",
+          "default": "true"
+        },
+        {
+          "name": "COMPANY_NAME",
+          "label": "Nombre de la empresa"
+        },
+        {
+          "name": "COMPANY_TAX_IDENTIFIER",
+          "label": "RNC de la empresa (sin guiones)"
+        },
+        {
+          "name": "COMPANY_COUNTRY_CODE",
+          "label": "Código ISO del país de la empresa",
+          "default": "DO"
+        },
+        {
+          "name": "COMPANY_CURRENCY_CODE",
+          "label": "Código ISO de la moneda de la empresa",
+          "default": "DOP"
+        },
+        {
+          "name": "COMPANY_TIMEZONE",
+          "label": "Zona horaria de la empresa",
+          "default": "America/Santo_Domingo"
+        },
+        {
+          "name": "COMPANY_STREET",
+          "label": "Dirección de la empresa (opcional)"
+        },
+        {
+          "name": "COMPANY_CITY",
+          "label": "Ciudad de la empresa (opcional)"
+        },
+        {
+          "name": "COMPANY_POSTAL_CODE",
+          "label": "Código postal de la empresa (opcional)"
+        },
+        {
           "name": "TRYTON_HOST",
           "label": "Dominio público (sin https:// ni / final)",
           "default": "tryton.example.com"

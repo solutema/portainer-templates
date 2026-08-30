@@ -40,4 +40,26 @@ aislado: un respaldo no verificado no constituye un plan de recuperación.
 La imagen usa la etiqueta mantenida `8.0` y `pull_policy: always`. Antes de
 actualizar producción, cree un respaldo, pruebe la nueva imagen en un entorno
 separado y conserve un procedimiento de reversión. El servicio de migración se
-ejecuta antes de iniciar los procesos web y de trabajo.
+ejecuta antes del bootstrap y este debe terminar correctamente antes de iniciar
+los procesos web y de trabajo.
+
+## Inicialización automática
+
+`tryton-bootstrap` activa los módulos indicados en `TRYTON_MODULES`, importa
+los catálogos ISO de países y monedas y crea la empresa. La operación es
+idempotente, por lo que actualizar el stack no duplica la empresa.
+
+```text
+TRYTON_MODULES=company country currency party party_do currency_do
+IMPORT_COUNTRIES=true
+IMPORT_CURRENCIES=true
+COMPANY_NAME=Mi Empresa SRL
+COMPANY_TAX_IDENTIFIER=131000000
+COMPANY_COUNTRY_CODE=DO
+COMPANY_CURRENCY_CODE=DOP
+COMPANY_TIMEZONE=America/Santo_Domingo
+```
+
+También se pueden definir `COMPANY_STREET`, `COMPANY_CITY` y
+`COMPANY_POSTAL_CODE`. Si `COMPANY_NAME` queda vacío se activan los módulos y
+se importan los catálogos, pero se omite la creación de la empresa.

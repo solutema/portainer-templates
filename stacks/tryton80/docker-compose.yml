@@ -79,6 +79,37 @@ services:
         condition: service_healthy
     restart: "no"
 
+  tryton-bootstrap:
+    <<: *tryton-image
+    environment:
+      <<: *tryton-environment
+      TRYTON_MODULES: ${TRYTON_MODULES:-company country currency party party_do currency_do}
+      IMPORT_COUNTRIES: ${IMPORT_COUNTRIES:-true}
+      IMPORT_CURRENCIES: ${IMPORT_CURRENCIES:-true}
+      COMPANY_NAME: ${COMPANY_NAME:-}
+      COMPANY_TAX_IDENTIFIER: ${COMPANY_TAX_IDENTIFIER:-}
+      COMPANY_TAX_IDENTIFIER_TYPE: ${COMPANY_TAX_IDENTIFIER_TYPE:-do_vat}
+      COMPANY_COUNTRY_CODE: ${COMPANY_COUNTRY_CODE:-DO}
+      COMPANY_CURRENCY_CODE: ${COMPANY_CURRENCY_CODE:-DOP}
+      COMPANY_TIMEZONE: ${COMPANY_TIMEZONE:-America/Santo_Domingo}
+      COMPANY_STREET: ${COMPANY_STREET:-}
+      COMPANY_CITY: ${COMPANY_CITY:-}
+      COMPANY_POSTAL_CODE: ${COMPANY_POSTAL_CODE:-}
+    command: ["bootstrap"]
+    volumes:
+      - tryton-filestore:/var/lib/trytond/db
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    init: true
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    restart: "no"
+
   tryton-web:
     <<: *tryton-service
     command: ["web"]
@@ -105,7 +136,7 @@ services:
       - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.stsSeconds=31536000
       - traefik.http.middlewares.${COMPOSE_PROJECT_NAME:-tryton80}-security.headers.stsIncludeSubdomains=true
     depends_on:
-      tryton-migrate:
+      tryton-bootstrap:
         condition: service_completed_successfully
     healthcheck:
       test:
@@ -122,7 +153,7 @@ services:
     <<: *tryton-service
     command: ["worker", "-n", "${WORKER_PROCESSES:-2}"]
     depends_on:
-      tryton-migrate:
+      tryton-bootstrap:
         condition: service_completed_successfully
     stop_grace_period: 2m
 
@@ -130,7 +161,7 @@ services:
     <<: *tryton-service
     command: ["cron"]
     depends_on:
-      tryton-migrate:
+      tryton-bootstrap:
         condition: service_completed_successfully
     stop_grace_period: 2m
 
@@ -157,7 +188,7 @@ services:
       - traefik.http.routers.${COMPOSE_PROJECT_NAME:-tryton80}-bus.middlewares=${COMPOSE_PROJECT_NAME:-tryton80}-security
       - traefik.http.services.${COMPOSE_PROJECT_NAME:-tryton80}-bus.loadbalancer.server.port=8000
     depends_on:
-      tryton-migrate:
+      tryton-bootstrap:
         condition: service_completed_successfully
     healthcheck:
       test:
@@ -188,7 +219,7 @@ services:
       - ALL
     init: true
     depends_on:
-      tryton-migrate:
+      tryton-bootstrap:
         condition: service_completed_successfully
     restart: unless-stopped
 
