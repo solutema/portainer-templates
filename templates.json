@@ -1177,13 +1177,114 @@
           "container": "/var/lib/postgresql/data"
         }
       ]
-    }           
-
-
-
-
-
-
-
+    },
+    {
+      "id": 13,
+      "type": 3,
+      "title": "Tryton 8.0 LTS (República Dominicana)",
+      "description": "Tryton 8.0 LTS con SAO, módulos oficiales y dominicanos, PostgreSQL aislado, tareas, cron y copias de seguridad automáticas. Diseñado para publicarse exclusivamente detrás de un proxy HTTPS.",
+      "categories": ["ERP", "Business"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/tryton70/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/tryton80/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "TRYTON_IMAGE",
+          "label": "Imagen de Tryton",
+          "default": "code.unpaismejor.org.do/tryton-do/tryton:8.0"
+        },
+        {
+          "name": "TRYTON_PLATFORM",
+          "label": "Plataforma de la imagen",
+          "default": "linux/amd64"
+        },
+        {
+          "name": "POSTGRES_IMAGE",
+          "label": "Imagen de PostgreSQL",
+          "default": "postgres:17-alpine"
+        },
+        {
+          "name": "DB_NAME",
+          "label": "Nombre de la base de datos",
+          "default": "tryton"
+        },
+        {
+          "name": "DB_USER",
+          "label": "Usuario de la base de datos",
+          "default": "tryton"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "label": "Contraseña segura de PostgreSQL"
+        },
+        {
+          "name": "DB_LANGUAGE",
+          "label": "Idioma inicial de Tryton",
+          "default": "es_419"
+        },
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "Correo del administrador"
+        },
+        {
+          "name": "ADMIN_PASSWORD",
+          "label": "Contraseña segura del administrador"
+        },
+        {
+          "name": "PUBLIC_URL",
+          "label": "URL pública HTTPS (incluya / al final)",
+          "default": "https://tryton.example.com/"
+        },
+        {
+          "name": "PROXY_NETWORK",
+          "label": "Red Docker externa del proxy HTTPS",
+          "default": "proxy"
+        },
+        {
+          "name": "TRYTON_NUM_PROXIES",
+          "label": "Número de proxies de confianza",
+          "default": "1"
+        },
+        {
+          "name": "TRYTON_DATABASE_MAXCONN",
+          "label": "Máximo de conexiones por proceso",
+          "default": "16"
+        },
+        {
+          "name": "WEB_CONCURRENCY",
+          "label": "Procesos web",
+          "default": "2"
+        },
+        {
+          "name": "GUNICORN_THREADS",
+          "label": "Hilos por proceso web",
+          "default": "2"
+        },
+        {
+          "name": "WORKER_PROCESSES",
+          "label": "Procesos de tareas",
+          "default": "2"
+        },
+        {
+          "name": "BACKUP_INTERVAL",
+          "label": "Intervalo entre respaldos (segundos)",
+          "default": "86400"
+        },
+        {
+          "name": "BACKUP_RETENTION_DAYS",
+          "label": "Retención de respaldos (días)",
+          "default": "14"
+        }
+      ],
+      "ports": ["8000/tcp"],
+      "volumes": [
+        {"container": "/var/lib/postgresql/data"},
+        {"container": "/var/lib/trytond/db"},
+        {"container": "/var/lib/trytond/backups"}
+      ]
+    }
   ]
 }

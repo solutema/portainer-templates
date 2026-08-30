@@ -1,0 +1,176 @@
+x-tryton-image: &tryton-image
+  image: ${TRYTON_IMAGE:-code.unpaismejor.org.do/tryton-do/tryton:8.0}
+  platform: ${TRYTON_PLATFORM:-linux/amd64}
+  pull_policy: always
+
+x-tryton-environment: &tryton-environment
+  DB_HOSTNAME: postgres
+  DB_PORT: "5432"
+  DB_NAME: ${DB_NAME:-tryton}
+  DB_USER: ${DB_USER:-tryton}
+  DB_PASSWORD: ${DB_PASSWORD:?Defina una contraseña segura para PostgreSQL}
+  DB_LANGUAGE: ${DB_LANGUAGE:-es_419}
+  TRYTOND_BUS__URL_HOST: ${PUBLIC_URL:?Defina la URL pública HTTPS de Tryton}
+  TRYTOND_DATABASE__LIST: "False"
+  TRYTOND_DATABASE__MINCONN: ${TRYTON_DATABASE_MINCONN:-1}
+  TRYTOND_DATABASE__MAXCONN: ${TRYTON_DATABASE_MAXCONN:-16}
+  TRYTOND_WEB__NUM_PROXIES: ${TRYTON_NUM_PROXIES:-1}
+  TRYTOND_ATTACHMENT__FILESTORE: "True"
+
+x-tryton-service: &tryton-service
+  <<: *tryton-image
+  environment: *tryton-environment
+  volumes:
+    - tryton-filestore:/var/lib/trytond/db
+  networks:
+    - backend
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  init: true
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres:17-alpine}
+    environment:
+      POSTGRES_DB: ${DB_NAME:-tryton}
+      POSTGRES_USER: ${DB_USER:-tryton}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Defina una contraseña segura para PostgreSQL}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    stop_grace_period: 1m
+    restart: unless-stopped
+
+  tryton-migrate:
+    <<: *tryton-image
+    environment:
+      <<: *tryton-environment
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?Defina el correo del administrador}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Defina una contraseña segura para el administrador}
+    command: ["migrate"]
+    volumes:
+      - tryton-filestore:/var/lib/trytond/db
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    init: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  tryton-web:
+    <<: *tryton-service
+    command: ["web"]
+    environment:
+      <<: *tryton-environment
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+      GUNICORN_THREADS: ${GUNICORN_THREADS:-2}
+    networks:
+      - backend
+      - proxy
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - CMD
+        - python3
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5)
+      interval: 15s
+      timeout: 6s
+      retries: 10
+      start_period: 30s
+
+  tryton-worker:
+    <<: *tryton-service
+    command: ["worker", "-n", "${WORKER_PROCESSES:-2}"]
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    stop_grace_period: 2m
+
+  tryton-cron:
+    <<: *tryton-service
+    command: ["cron"]
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    stop_grace_period: 2m
+
+  tryton-bus:
+    <<: *tryton-service
+    command: ["bus"]
+    environment:
+      <<: *tryton-environment
+      BUS_CONCURRENCY: ${BUS_CONCURRENCY:-1}
+      GUNICORN_TIMEOUT: ${BUS_TIMEOUT:-360}
+      GUNICORN_GRACEFUL_TIMEOUT: ${BUS_GRACEFUL_TIMEOUT:-30}
+    networks:
+      - backend
+      - proxy
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - CMD
+        - python3
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5)
+      interval: 15s
+      timeout: 6s
+      retries: 10
+      start_period: 30s
+
+  tryton-backup:
+    <<: *tryton-image
+    environment:
+      <<: *tryton-environment
+      BACKUP_INTERVAL: ${BACKUP_INTERVAL:-86400}
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-14}
+    command: ["backup", "daemon"]
+    volumes:
+      - tryton-filestore:/var/lib/trytond/db:ro
+      - tryton-backups:/var/lib/trytond/backups
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    init: true
+    depends_on:
+      tryton-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  tryton-filestore:
+  tryton-backups:
+
+networks:
+  backend:
+    internal: true
+  proxy:
+    name: ${PROXY_NETWORK:-proxy}
+    external: true
