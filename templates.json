@@ -1234,13 +1234,8 @@
           "label": "Contraseña segura del administrador"
         },
         {
-          "name": "PUBLIC_URL",
-          "label": "URL pública HTTPS (incluya / al final)",
-          "default": "https://tryton.example.com/"
-        },
-        {
           "name": "TRYTON_HOST",
-          "label": "Dominio público para Traefik (sin https://)",
+          "label": "Dominio público (sin https:// ni / final)",
           "default": "tryton.example.com"
         },
         {
