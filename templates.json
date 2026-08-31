@@ -1204,7 +1204,7 @@
         {
           "name": "POSTGRES_IMAGE",
           "label": "Imagen de PostgreSQL",
-          "default": "postgres:17-alpine"
+          "default": "postgres:18.6-alpine"
         },
         {
           "name": "DB_NAME",
@@ -1726,7 +1726,7 @@
       ],
       "ports": ["8000/tcp"],
       "volumes": [
-        {"container": "/var/lib/postgresql/data"},
+        {"container": "/var/lib/postgresql"},
         {"container": "/var/lib/trytond/db"},
         {"container": "/var/lib/trytond/backups"}
       ]

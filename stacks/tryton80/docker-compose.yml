@@ -100,13 +100,13 @@ x-tryton-service: &tryton-service
 
 services:
   postgres:
-    image: ${POSTGRES_IMAGE:-postgres:17-alpine}
+    image: ${POSTGRES_IMAGE:-postgres:18.6-alpine}
     environment:
       POSTGRES_DB: ${DB_NAME:-tryton}
       POSTGRES_USER: ${DB_USER:-tryton}
       POSTGRES_PASSWORD: ${DB_PASSWORD:?Defina una contraseña segura para PostgreSQL}
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql
     networks:
       backend:
         aliases:

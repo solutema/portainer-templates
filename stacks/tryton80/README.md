@@ -57,6 +57,11 @@ PostgreSQL solo participa en una red interna y no queda accesible desde la red
 del proxy. Los procesos de Tryton se ejecutan con el usuario no privilegiado de
 la imagen, sin capacidades Linux adicionales y con `no-new-privileges`.
 
+El servicio utiliza PostgreSQL `18.6-alpine` y monta el volumen persistente en
+`/var/lib/postgresql`, como requieren las imágenes oficiales desde PostgreSQL
+18. No cambie el destino nuevamente a `/var/lib/postgresql/data`; esa ruta solo
+es compatible con las imágenes anteriores.
+
 ## Persistencia y recuperación
 
 El stack crea volúmenes separados para PostgreSQL, archivos adjuntos y copias
