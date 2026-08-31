@@ -18,6 +18,12 @@ Template basado en la rama `8.0` de
 - Use contraseñas aleatorias, diferentes y de al menos 32 caracteres para
   `DB_PASSWORD` y `ADMIN_PASSWORD`. Portainer las almacena como variables del
   stack; restrinja el acceso administrativo al entorno y a sus respaldos.
+- `DB_NAME` es obligatorio y debe contener el nombre exacto de la base. El
+  nombre asignado al stack en Portainer no reemplaza esta variable. El Compose
+  no usa un valor alternativo: si Portainer no entrega `DB_NAME`, el despliegue
+  se detiene antes de crear PostgreSQL.
+- Mantenga `TRYTOND_DATABASE__LIST=False` cuando el cliente deba abrir siempre
+  la base configurada y no mostrar un selector con otras bases disponibles.
 - Ajuste `TRYTON_NUM_PROXIES` al número exacto de proxies de confianza entre el
   cliente y Tryton. No lo aumente innecesariamente.
 - Las etiquetas habilitan HSTS, `nosniff` y una política de referencia

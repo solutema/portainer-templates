@@ -1208,8 +1208,7 @@
         },
         {
           "name": "DB_NAME",
-          "label": "Nombre de la base de datos",
-          "default": "tryton"
+          "label": "Nombre exacto de la base de datos (obligatorio; no es el nombre del stack)"
         },
         {
           "name": "DB_USER",
@@ -1390,7 +1389,7 @@
         },
         {
           "name": "TRYTOND_DATABASE__LIST",
-          "label": "Tryton database: permitir listar bases",
+          "label": "Tryton database: permitir listar bases (False recomendado)",
           "default": "False"
         },
         {
