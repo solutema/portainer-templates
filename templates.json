@@ -1314,6 +1314,391 @@
           "default": "16"
         },
         {
+          "name": "TRYTON_DATABASE_MINCONN",
+          "label": "Mínimo de conexiones por proceso",
+          "default": "1"
+        },
+        {
+          "name": "TRYTOND_WEB__HOSTNAME",
+          "label": "Tryton web: URL pública (vacío usa TRYTON_HOST)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_WEB__CORS",
+          "label": "Tryton web: orígenes CORS (vacío usa TRYTON_HOST)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_WEB__NUM_PROXIES",
+          "label": "Tryton web: proxies (vacío usa TRYTON_NUM_PROXIES)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__LANGUAGE",
+          "label": "Tryton database: idioma (vacío usa DB_LANGUAGE)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__MINCONN",
+          "label": "Tryton database: conexiones mínimas (vacío usa compatibilidad)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__MAXCONN",
+          "label": "Tryton database: conexiones máximas (vacío usa compatibilidad)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_BUS__URL_HOST",
+          "label": "Tryton bus: URL pública (vacío usa TRYTON_HOST)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_WEB__LISTEN",
+          "label": "Tryton web: dirección interna de escucha",
+          "default": "0.0.0.0:8000"
+        },
+        {
+          "name": "TRYTOND_WEB__ROOT_PATH",
+          "label": "Tryton web: prefijo de montaje",
+          "default": "/"
+        },
+        {
+          "name": "TRYTOND_WEB__ROOT",
+          "label": "Tryton web: directorio de contenido",
+          "default": "/var/lib/trytond/www"
+        },
+        {
+          "name": "TRYTOND_WEB__CACHE_TIMEOUT",
+          "label": "Tryton web: caché HTTP (segundos)",
+          "default": "43200"
+        },
+        {
+          "name": "TRYTOND_WEB__AVATAR_BASE",
+          "label": "Tryton web: URL base de avatares (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_WEB__AVATAR_TIMEOUT",
+          "label": "Tryton web: caché de avatares (segundos)",
+          "default": "604800"
+        },
+        {
+          "name": "TRYTOND_DATABASE__PATH",
+          "label": "Tryton database: ruta del filestore",
+          "default": "/var/lib/trytond/db"
+        },
+        {
+          "name": "TRYTOND_DATABASE__LIST",
+          "label": "Tryton database: permitir listar bases",
+          "default": "False"
+        },
+        {
+          "name": "TRYTOND_DATABASE__RETRY",
+          "label": "Tryton database: reintentos",
+          "default": "5"
+        },
+        {
+          "name": "TRYTOND_DATABASE__SUBQUERY_THRESHOLD",
+          "label": "Tryton database: umbral de subconsultas",
+          "default": "1000"
+        },
+        {
+          "name": "TRYTOND_DATABASE__AVATAR_FILESTORE",
+          "label": "Tryton database: avatares en filestore",
+          "default": "False"
+        },
+        {
+          "name": "TRYTOND_DATABASE__AVATAR_PREFIX",
+          "label": "Tryton database: prefijo de avatares (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__DEFAULT_NAME",
+          "label": "Tryton database: base predeterminada sin contexto",
+          "default": "template1"
+        },
+        {
+          "name": "TRYTOND_DATABASE__TIMEOUT",
+          "label": "Tryton database: cierre de conexiones inactivas (segundos)",
+          "default": "1800"
+        },
+        {
+          "name": "TRYTOND_DATABASE__DATABASE_MIXINS",
+          "label": "Tryton database: mixins de Database (uno por línea)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__TABLE_HANDLER_MIXINS",
+          "label": "Tryton database: mixins de TableHandler (uno por línea)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_DATABASE__UNACCENT_FUNCTION",
+          "label": "Tryton database: función unaccent",
+          "default": "unaccent"
+        },
+        {
+          "name": "TRYTOND_DATABASE__SIMILARITY_FUNCTION",
+          "label": "Tryton database: función similarity",
+          "default": "similarity"
+        },
+        {
+          "name": "TRYTOND_REQUEST__MAX_SIZE",
+          "label": "Tryton request: máximo no autenticado (bytes)",
+          "default": "2097152"
+        },
+        {
+          "name": "TRYTOND_REQUEST__MAX_SIZE_AUTHENTICATED",
+          "label": "Tryton request: máximo autenticado (bytes)",
+          "default": "2147483648"
+        },
+        {
+          "name": "TRYTOND_REQUEST__TIMEOUT",
+          "label": "Tryton request: timeout (segundos)",
+          "default": "60"
+        },
+        {
+          "name": "TRYTOND_REQUEST__RECORDS_LIMIT",
+          "label": "Tryton request: límite de registros (0 sin límite)",
+          "default": "0"
+        },
+        {
+          "name": "TRYTOND_CACHE__TRANSACTION",
+          "label": "Tryton cache: contextos por transacción",
+          "default": "10"
+        },
+        {
+          "name": "TRYTOND_CACHE__MODEL",
+          "label": "Tryton cache: modelos por transacción",
+          "default": "200"
+        },
+        {
+          "name": "TRYTOND_CACHE__RECORD",
+          "label": "Tryton cache: registros",
+          "default": "2000"
+        },
+        {
+          "name": "TRYTOND_CACHE__FIELD",
+          "label": "Tryton cache: campos eager",
+          "default": "100"
+        },
+        {
+          "name": "TRYTOND_CACHE__DEFAULT",
+          "label": "Tryton cache: tamaño predeterminado",
+          "default": "1024"
+        },
+        {
+          "name": "TRYTOND_CACHE__CLEAN_TIMEOUT",
+          "label": "Tryton cache: intervalo de limpieza (segundos)",
+          "default": "300"
+        },
+        {
+          "name": "TRYTOND_CACHE__SELECT_TIMEOUT",
+          "label": "Tryton cache: timeout de canales (segundos)",
+          "default": "60"
+        },
+        {
+          "name": "TRYTOND_CACHE__COUNT_TIMEOUT",
+          "label": "Tryton cache: duración de estimaciones (segundos)",
+          "default": "86400"
+        },
+        {
+          "name": "TRYTOND_CACHE__COUNT_CLEAR",
+          "label": "Tryton cache: operaciones antes de limpiar conteo",
+          "default": "1000"
+        },
+        {
+          "name": "TRYTOND_CRON__LOG_SIZE",
+          "label": "Tryton cron: entradas de log por tarea",
+          "default": "100"
+        },
+        {
+          "name": "TRYTOND_QUEUE__WORKER",
+          "label": "Tryton queue: procesamiento asíncrono",
+          "default": "True"
+        },
+        {
+          "name": "TRYTOND_QUEUE__CLEAN_DAYS",
+          "label": "Tryton queue: retención de tareas procesadas (días)",
+          "default": "30"
+        },
+        {
+          "name": "TRYTOND_QUEUE__BATCH_SIZE",
+          "label": "Tryton queue: tamaño de lote",
+          "default": "20"
+        },
+        {
+          "name": "TRYTOND_ERROR__CLEAN_DAYS",
+          "label": "Tryton error: retención de errores (días)",
+          "default": "90"
+        },
+        {
+          "name": "TRYTOND_SSL__PRIVATEKEY",
+          "label": "Tryton SSL: clave privada o true si delega SSL",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_SSL__CERTIFICATE",
+          "label": "Tryton SSL: certificado o true si delega SSL",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_EMAIL__URI",
+          "label": "Tryton email: URI SMTP",
+          "default": "smtp://localhost:25"
+        },
+        {
+          "name": "TRYTOND_EMAIL__FROM",
+          "label": "Tryton email: remitente predeterminado",
+          "default": "trytond"
+        },
+        {
+          "name": "TRYTOND_EMAIL__RETRY",
+          "label": "Tryton email: reintentos SMTP",
+          "default": "5"
+        },
+        {
+          "name": "TRYTOND_SESSION__AUTHENTICATIONS",
+          "label": "Tryton session: métodos de autenticación",
+          "default": "password"
+        },
+        {
+          "name": "TRYTOND_SESSION__AUTHENTICATION_IP_NETWORK",
+          "label": "Tryton session: redes conocidas (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_SESSION__COOKIE_DOMAIN",
+          "label": "Tryton session: dominio de cookie (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_SESSION__MAX_AGE",
+          "label": "Tryton session: vigencia máxima (segundos)",
+          "default": "2592000"
+        },
+        {
+          "name": "TRYTOND_SESSION__TIMEOUT",
+          "label": "Tryton session: frescura sin actividad (segundos)",
+          "default": "300"
+        },
+        {
+          "name": "TRYTOND_SESSION__MAX_ATTEMPT",
+          "label": "Tryton session: intentos máximos por usuario",
+          "default": "5"
+        },
+        {
+          "name": "TRYTOND_SESSION__MAX_ATTEMPT_IP_NETWORK",
+          "label": "Tryton session: intentos máximos por red",
+          "default": "300"
+        },
+        {
+          "name": "TRYTOND_SESSION__IP_NETWORK_4",
+          "label": "Tryton session: prefijo de red IPv4",
+          "default": "32"
+        },
+        {
+          "name": "TRYTOND_SESSION__IP_NETWORK_6",
+          "label": "Tryton session: prefijo de red IPv6",
+          "default": "56"
+        },
+        {
+          "name": "TRYTOND_PASSWORD__LENGTH",
+          "label": "Tryton password: longitud mínima",
+          "default": "8"
+        },
+        {
+          "name": "TRYTOND_PASSWORD__FORBIDDEN",
+          "label": "Tryton password: archivo de claves prohibidas (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_PASSWORD__RESET_TIMEOUT",
+          "label": "Tryton password: expiración del restablecimiento (segundos)",
+          "default": "86400"
+        },
+        {
+          "name": "TRYTOND_ATTACHMENT__FILESTORE",
+          "label": "Tryton attachment: almacenar en filestore",
+          "default": "True"
+        },
+        {
+          "name": "TRYTOND_ATTACHMENT__STORE_PREFIX",
+          "label": "Tryton attachment: prefijo del filestore (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_ATTACHMENT__RETENTION_DAYS",
+          "label": "Tryton attachment: retención de archivos sin uso (días)",
+          "default": "90"
+        },
+        {
+          "name": "TRYTOND_BUS__ALLOW_SUBSCRIBE",
+          "label": "Tryton bus: permitir suscripciones",
+          "default": "True"
+        },
+        {
+          "name": "TRYTOND_BUS__LONG_POLLING_TIMEOUT",
+          "label": "Tryton bus: long polling (segundos)",
+          "default": "300"
+        },
+        {
+          "name": "TRYTOND_BUS__CACHE_TIMEOUT",
+          "label": "Tryton bus: retención de mensajes (segundos)",
+          "default": "300"
+        },
+        {
+          "name": "TRYTOND_BUS__SELECT_TIMEOUT",
+          "label": "Tryton bus: timeout de escucha (segundos)",
+          "default": "5"
+        },
+        {
+          "name": "TRYTOND_REPORT__CONVERT_COMMAND",
+          "label": "Tryton report: comando de conversión",
+          "default": "soffice --headless --nolockcheck --nodefault --norestore --convert-to \"%(output_extension)s\" --outdir \"%(directory)s\" \"%(input_path)s\""
+        },
+        {
+          "name": "TRYTOND_HTML__SRC",
+          "label": "Tryton HTML: fuente de TinyMCE",
+          "default": "/tinymce/tinymce.js"
+        },
+        {
+          "name": "TRYTOND_HTML__LICENSE_KEY",
+          "label": "Tryton HTML: licencia de TinyMCE",
+          "default": "gpl"
+        },
+        {
+          "name": "TRYTOND_HTML__PLUGINS",
+          "label": "Tryton HTML: plugins de TinyMCE (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_HTML__CSS",
+          "label": "Tryton HTML: CSS adicional (opcional)",
+          "default": ""
+        },
+        {
+          "name": "TRYTOND_HTML__CLASS",
+          "label": "Tryton HTML: clase CSS (opcional)",
+          "default": ""
+        },
+        {
+          "name": "BUS_CONCURRENCY",
+          "label": "Procesos del servicio bus",
+          "default": "1"
+        },
+        {
+          "name": "BUS_TIMEOUT",
+          "label": "Timeout del servicio bus (segundos)",
+          "default": "360"
+        },
+        {
+          "name": "BUS_GRACEFUL_TIMEOUT",
+          "label": "Cierre gradual del servicio bus (segundos)",
+          "default": "30"
+        },
+        {
           "name": "WEB_CONCURRENCY",
           "label": "Procesos web",
           "default": "2"

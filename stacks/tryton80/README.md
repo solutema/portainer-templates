@@ -23,6 +23,36 @@ Template basado en la rama `8.0` de
 - Las etiquetas habilitan HSTS, `nosniff` y una política de referencia
   restrictiva.
 
+## Configuración completa de Tryton
+
+El formulario de Portainer expone las 73 opciones fijas de configuración del
+servidor Tryton 8.0 que utiliza esta imagen. Incluye las secciones `web`,
+`database`, `request`, `cache`, `cron`, `queue`, `error`, `ssl`, `email`,
+`session`, `password`, `attachment`, `bus`, `report` y `html`. Cada campo tiene
+el valor efectivo predeterminado de la imagen y puede modificarse antes de
+desplegar o al actualizar el stack.
+
+Los campos de URL pública, CORS, idioma, conexiones y proxies conservan la
+compatibilidad con `TRYTON_HOST`, `DB_LANGUAGE`, `TRYTON_DATABASE_MINCONN`,
+`TRYTON_DATABASE_MAXCONN` y `TRYTON_NUM_PROXIES`. Su sobreescritura oficial
+`TRYTOND_<SECCION>__<OPCION>` queda vacía de forma predeterminada y solo toma
+prioridad cuando el operador introduce un valor explícito.
+
+Tryton también admite secciones con claves dinámicas, por ejemplo `table`,
+`table_query_materialized` y las configuraciones particulares de módulos o de
+middleware WSGI. No existe una lista finita de nombres para esas claves. Se
+pueden agregar al editor del stack siguiendo la sintaxis:
+
+```yaml
+environment:
+  TRYTOND_TABLE__ACCOUNT.INVOICE.LINE: nombre_tabla_personalizado
+  TRYTOND_NOMBRE_MODULO__OPCION: valor
+```
+
+La imagen genera `/tmp/trytond.conf` durante cada arranque. Las variables
+`TRYTOND_<SECCION>__<OPCION>` reemplazan la opción correspondiente del archivo
+base; las opciones no sobrescritas permanecen intactas.
+
 PostgreSQL solo participa en una red interna y no queda accesible desde la red
 del proxy. Los procesos de Tryton se ejecutan con el usuario no privilegiado de
 la imagen, sin capacidades Linux adicionales y con `no-new-privileges`.
