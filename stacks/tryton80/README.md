@@ -62,6 +62,11 @@ El servicio utiliza PostgreSQL `18.6-alpine` y monta el volumen persistente en
 18. No cambie el destino nuevamente a `/var/lib/postgresql/data`; esa ruta solo
 es compatible con las imágenes anteriores.
 
+El servicio `tryton-backup` usa la misma imagen PostgreSQL para garantizar que
+la versión de `pg_dump` coincida con el servidor. Conserva el respaldo en
+formato custom, el archivo del filestore, `SHA256SUMS` y la política de
+retención configurada.
+
 ## Persistencia y recuperación
 
 El stack crea volúmenes separados para PostgreSQL, archivos adjuntos y copias

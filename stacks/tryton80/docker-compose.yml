@@ -269,11 +269,37 @@ services:
 
   tryton-backup:
     <<: *tryton-image
+    image: ${POSTGRES_IMAGE:-postgres:18.6-alpine}
     environment:
       <<: *tryton-environment
       BACKUP_INTERVAL: ${BACKUP_INTERVAL:-86400}
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-14}
-    command: ["backup", "daemon"]
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        create_backup() {
+          timestamp="$$(date -u +'%Y%m%dT%H%M%SZ')"
+          temporary="/var/lib/trytond/backups/.$${DB_NAME}-$${timestamp}.tmp"
+          final="/var/lib/trytond/backups/$${DB_NAME}-$${timestamp}"
+          mkdir -p "$${temporary}"
+          PGPASSWORD="$${DB_PASSWORD}" pg_dump \
+            --host "$${DB_HOSTNAME}" --port "$${DB_PORT}" \
+            --username "$${DB_USER}" --dbname "$${DB_NAME}" \
+            --format=custom --file "$${temporary}/database.dump"
+          tar -czf "$${temporary}/filestore.tar.gz" \
+            -C /var/lib/trytond/db .
+          (cd "$${temporary}" && \
+            sha256sum database.dump filestore.tar.gz > SHA256SUMS)
+          mv "$${temporary}" "$${final}"
+          find /var/lib/trytond/backups -mindepth 1 -maxdepth 1 \
+            -type d -name "$${DB_NAME}-*" \
+            -mtime "+$${BACKUP_RETENTION_DAYS}" -exec rm -rf -- {} +
+          echo "Backup created: $${final}"
+        }
+        while true; do
+          create_backup
+          sleep "$${BACKUP_INTERVAL}"
+        done
     volumes:
       - tryton-filestore:/var/lib/trytond/db:ro
       - tryton-backups:/var/lib/trytond/backups
