@@ -807,13 +807,13 @@
       "id": 10,
       "type": 3,
       "title": "DGII e-CF Stack",
-      "description": "DGII e-CF stack is an application that works electronic invoicing for Dominican Republic.",
-      "note": "Deploys a DGII e-CF stack instance to electronic invoicing.",
+      "description": "Plataforma e-CF aislada con PostgreSQL, PgBouncer, Redis, workers, portal y renderer.",
+      "note": "Despliegue reproducible de producción. Las migraciones usan conexión directa y el tráfico normal usa PgBouncer.",
       "categories": ["API"],
       "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/business-web-services/portainer-templates/refs/heads/main/stacks/dgii-ecf-stack/logo/logo.png",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/refs/heads/main/stacks/dgii-ecf-stack/logo/logo.png",
       "repository": {
-        "url": "https://github.com/business-web-services/portainer-templates",
+        "url": "https://github.com/solutema/portainer-templates",
         "stackfile": "stacks/dgii-ecf-stack/docker-compose.yml"
       },
       "env": [
@@ -843,17 +843,77 @@
           "name": "POSTGRES_DB"
         },
         {
+          "default": "100",
+          "label": "PostgreSQL Max Connections",
+          "name": "POSTGRES_MAX_CONNECTIONS"
+        },
+        {
+          "default": "512MB",
+          "label": "PostgreSQL Shared Buffers",
+          "name": "POSTGRES_SHARED_BUFFERS"
+        },
+        {
+          "default": "1536MB",
+          "label": "PostgreSQL Effective Cache Size",
+          "name": "POSTGRES_EFFECTIVE_CACHE_SIZE"
+        },
+        {
+          "default": "4MB",
+          "label": "PostgreSQL Work Memory",
+          "name": "POSTGRES_WORK_MEM"
+        },
+        {
+          "default": "10min",
+          "label": "PostgreSQL Idle Session Timeout",
+          "name": "POSTGRES_IDLE_SESSION_TIMEOUT"
+        },
+        {
+          "default": "60s",
+          "label": "PostgreSQL Idle Transaction Timeout",
+          "name": "POSTGRES_IDLE_IN_TRANSACTION_TIMEOUT"
+        },
+        {
+          "default": "1.25.1-p0",
+          "label": "PgBouncer Image Tag",
+          "name": "PGBOUNCER_IMAGE_TAG"
+        },
+        {
+          "default": "40",
+          "label": "PgBouncer Max Database Connections",
+          "name": "PGBOUNCER_MAX_DB_CONNECTIONS"
+        },
+        {
+          "default": "5",
+          "label": "API Database Connection Limit per Replica",
+          "name": "API_DATABASE_CONNECTION_LIMIT"
+        },
+        {
+          "default": "3",
+          "label": "Worker Database Connection Limit per Process",
+          "name": "WORKER_DATABASE_CONNECTION_LIMIT"
+        },
+        {
+          "default": "70",
+          "label": "Database Connection Warning Percent",
+          "name": "DATABASE_CONNECTION_WARNING_PERCENT"
+        },
+        {
+          "default": "85",
+          "label": "Database Connection Critical Percent",
+          "name": "DATABASE_CONNECTION_CRITICAL_PERCENT"
+        },
+        {
           "default": "5432",
           "label": "Postgres Port",
           "name": "POSTGRES_PORT"
         },
         {
-          "default": "registry.joseagrc.com/e-cf/dgii-ecf-engine",
+          "default": "gitea.joseagrc.com/joseagrc/dgii-ecf-engine",
           "label": "DGII e-CF Engine Image",
           "name": "DGII_ECF_ENGINE_IMAGE"
         },        
         {
-          "default": "1-0-0",
+          "default": "1.1.164",
           "label": "DGII e-CF Engine Tag",
           "name": "DGII_ECF_ENGINE_TAG"
         },
@@ -893,8 +953,8 @@
           "name": "DATABASE_LOG_QUERIES"
         },
         {
-          "default": "true",
-          "label": "Run Prisma Migration on Boot",
+          "default": "false",
+          "label": "Run Prisma Migration on Boot (use dedicated migration job)",
           "name": "RUN_PRISMA_MIGRATE_ON_BOOT"
         },
         {
@@ -968,13 +1028,13 @@
           "name": "RATE_LIMIT_RULES"
         },
         {
-          "default": "registry.joseagrc.com/e-cf/dgii-ecf-portal",
-          "label": "DGII e-CF Engine Image",
+          "default": "gitea.joseagrc.com/joseagrc/dgii-ecf-portal",
+          "label": "DGII e-CF Portal Image",
           "name": "DGII_ECF_PORTAL_IMAGE"
         },        
         {
-          "default": "1-0-0",
-          "label": "DGII e-CF Engine Tag",
+          "default": "1.1.164",
+          "label": "DGII e-CF Portal Tag",
           "name": "DGII_ECF_PORTAL_TAG"
         },
         {

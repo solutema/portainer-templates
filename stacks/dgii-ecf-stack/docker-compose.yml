@@ -1,22 +1,347 @@
+x-engine-env: &engine-env
+  NODE_ENV: ${NODE_ENV:-production}
+  APP_TIME_ZONE: ${APP_TIME_ZONE:-America/Santo_Domingo}
+  APP_VERSION: ${DGII_ECF_ENGINE_TAG}
+  TRUST_PROXY: ${TRUST_PROXY:-1}
+  APP_SERVICE_NAME: ${APP_SERVICE_NAME:-dgii-ecf-engine}
+  OPERATIONAL_MODE: ${OPERATIONAL_MODE:-normal}
+  OPERATIONAL_MODE_REASON: ${OPERATIONAL_MODE_REASON:-}
+  OPERATIONAL_DEGRADED_REJECT_WRITES: ${OPERATIONAL_DEGRADED_REJECT_WRITES:-false}
+  OPERATIONAL_RETRY_AFTER_SECONDS: ${OPERATIONAL_RETRY_AFTER_SECONDS:-60}
+  # Readiness is evaluated in the API and in background processes. Keep these
+  # settings shared so the scheduler cannot emit false ENGINE_NOT_READY alerts.
+  PORTAL_PUBLIC_URL: ${PORTAL_PUBLIC_URL:?PORTAL_PUBLIC_URL requerido}
+  DGII_STATUS_API_KEY: ${DGII_STATUS_API_KEY:-}
+  WEBHOOK_REQUIRE_HTTPS: ${WEBHOOK_REQUIRE_HTTPS:-true}
+  WEBHOOK_ALLOW_PRIVATE_URLS: ${WEBHOOK_ALLOW_PRIVATE_URLS:-false}
+
+  DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
+  DATABASE_URL: ${WORKER_DATABASE_URL:-postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgbouncer:5432/${POSTGRES_DB}?schema=public}
+  DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
+  DATABASE_CONNECTION_LIMIT: ${WORKER_DATABASE_CONNECTION_LIMIT:-3}
+  DATABASE_POOL_TIMEOUT_SECONDS: ${DATABASE_POOL_TIMEOUT_SECONDS:-15}
+  DATABASE_CONNECT_TIMEOUT_SECONDS: ${DATABASE_CONNECT_TIMEOUT_SECONDS:-5}
+  DATABASE_CONNECTION_WARNING_PERCENT: ${DATABASE_CONNECTION_WARNING_PERCENT:-70}
+  DATABASE_CONNECTION_CRITICAL_PERCENT: ${DATABASE_CONNECTION_CRITICAL_PERCENT:-85}
+  RUN_PRISMA_MIGRATE_ON_BOOT: "false"
+  NPM_CONFIG_UPDATE_NOTIFIER: "false"
+
+  REDIS_ENABLED: ${REDIS_ENABLED:-true}
+  REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD}@redis:6379}
+  REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine}
+  REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
+  REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
+  DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION: ${DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION:-true}
+  RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-false}
+
+  API_SEND_ECF_DEFAULT_PROCESSING_MODE: ${API_SEND_ECF_DEFAULT_PROCESSING_MODE:-async}
+  API_SEND_ECF_ALLOW_SYNC_IN_PRODUCTION: ${API_SEND_ECF_ALLOW_SYNC_IN_PRODUCTION:-false}
+  DGII_AUTO_RECONCILIATION_ENABLED: ${DGII_AUTO_RECONCILIATION_ENABLED:-true}
+  DGII_AUTO_RECONCILIATION_MAX_COMPANIES_PER_CYCLE: ${DGII_AUTO_RECONCILIATION_MAX_COMPANIES_PER_CYCLE:-25}
+  DGII_AUTO_RECONCILIATION_MAX_DOCUMENTS_PER_COMPANY: ${DGII_AUTO_RECONCILIATION_MAX_DOCUMENTS_PER_COMPANY:-20}
+  SINGLETON_CYCLE_DISTRIBUTED_LOCK_ENABLED: ${SINGLETON_CYCLE_DISTRIBUTED_LOCK_ENABLED:-true}
+  SINGLETON_CYCLE_LOCK_TTL_MS: ${SINGLETON_CYCLE_LOCK_TTL_MS:-300000}
+
+  BACKPRESSURE_ENABLED: ${BACKPRESSURE_ENABLED:-true}
+  BACKPRESSURE_MAX_GLOBAL_READY_JOBS: ${BACKPRESSURE_MAX_GLOBAL_READY_JOBS:-5000}
+  BACKPRESSURE_MAX_COMPANY_READY_JOBS: ${BACKPRESSURE_MAX_COMPANY_READY_JOBS:-1000}
+  BACKPRESSURE_MAX_GLOBAL_ACTIVE_JOBS: ${BACKPRESSURE_MAX_GLOBAL_ACTIVE_JOBS:-15000}
+  BACKPRESSURE_MAX_COMPANY_ACTIVE_JOBS: ${BACKPRESSURE_MAX_COMPANY_ACTIVE_JOBS:-3000}
+  BACKPRESSURE_MAX_OLDEST_READY_SECONDS: ${BACKPRESSURE_MAX_OLDEST_READY_SECONDS:-600}
+  BACKPRESSURE_RETRY_AFTER_SECONDS: ${BACKPRESSURE_RETRY_AFTER_SECONDS:-30}
+
+  FAIR_USAGE_ENABLED: ${FAIR_USAGE_ENABLED:-true}
+  FAIR_USAGE_MAX_RUNNING_JOBS_PER_COMPANY: ${FAIR_USAGE_MAX_RUNNING_JOBS_PER_COMPANY:-10}
+  FAIR_USAGE_HIGH_PRIORITY_MAX_RUNNING_JOBS_PER_COMPANY: ${FAIR_USAGE_HIGH_PRIORITY_MAX_RUNNING_JOBS_PER_COMPANY:-20}
+  FAIR_USAGE_BULK_MAX_RUNNING_JOBS_PER_COMPANY: ${FAIR_USAGE_BULK_MAX_RUNNING_JOBS_PER_COMPANY:-5}
+
+  PRINT_RENDERER_URL: ${PRINT_RENDERER_URL:-http://dgii-ecf-print-renderer:4010}
+  PRINT_RENDERER_INTERNAL_TOKEN: ${PRINT_RENDERER_INTERNAL_TOKEN:?PRINT_RENDERER_INTERNAL_TOKEN requerido}
+  PRINT_RENDERER_REQUIRED: ${PRINT_RENDERER_REQUIRED:-true}
+  PRINT_RENDERER_ALLOW_LOCAL_FALLBACK: ${PRINT_RENDERER_ALLOW_LOCAL_FALLBACK:-false}
+  PRINT_RENDERER_HTTP_TIMEOUT_MS: ${PRINT_RENDERER_HTTP_TIMEOUT_MS:-50000}
+
+  APP_DATA_DIR: ${APP_DATA_DIR:-/data}
+  APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
+  INSTANCE_BACKUP_ENABLED: ${INSTANCE_BACKUP_ENABLED:-true}
+  INSTANCE_BACKUP_WORK_DIR: ${INSTANCE_BACKUP_WORK_DIR:-/data/_instance-backup-work}
+  INSTANCE_BACKUP_MAX_UPLOAD_BYTES: ${INSTANCE_BACKUP_MAX_UPLOAD_BYTES:-10737418240}
+  INSTANCE_BACKUP_HTTP_TIMEOUT_MS: ${INSTANCE_BACKUP_HTTP_TIMEOUT_MS:-900000}
+  INSTANCE_BACKUP_DECRYPTION_KEY_FILE: ${INSTANCE_BACKUP_DECRYPTION_KEY_FILE:-}
+  INSTANCE_BACKUP_AGENT_URL: ${INSTANCE_BACKUP_AGENT_URL:-http://dgii-ecf-backup-automation:4006}
+  INSTANCE_BACKUP_AGENT_TOKEN: ${INSTANCE_BACKUP_AGENT_TOKEN:?INSTANCE_BACKUP_AGENT_TOKEN requerido}
+  BACKUP_RESTORE_VERIFY_ON_CREATE: ${BACKUP_RESTORE_VERIFY_ON_CREATE:-true}
+  BACKUP_AUTOMATION_SCHEDULER_ENABLED: "false"
+  BACKUP_REMOTE_ENABLED: ${BACKUP_REMOTE_ENABLED:-false}
+  BACKUP_REMOTE_DRIVER: ${BACKUP_REMOTE_DRIVER:-rclone}
+  BACKUP_REMOTE_TARGET: ${BACKUP_REMOTE_TARGET:-}
+  BACKUP_REMOTE_VERIFY: ${BACKUP_REMOTE_VERIFY:-true}
+  BACKUP_REMOTE_RCLONE_FLAGS: ${BACKUP_REMOTE_RCLONE_FLAGS:-}
+  BACKUP_REMOTE_RSYNC_FLAGS: ${BACKUP_REMOTE_RSYNC_FLAGS:-}
+  BACKUP_REMOTE_SCP_FLAGS: ${BACKUP_REMOTE_SCP_FLAGS:-}
+  BACKUP_REMOTE_LFTP_FLAGS: ${BACKUP_REMOTE_LFTP_FLAGS:-}
+  BACKUP_REMOTE_FTP_URL: ${BACKUP_REMOTE_FTP_URL:-}
+  BACKUP_REMOTE_FTP_USER: ${BACKUP_REMOTE_FTP_USER:-}
+  BACKUP_REMOTE_FTP_PASSWORD: ${BACKUP_REMOTE_FTP_PASSWORD:-}
+  BACKUP_REMOTE_FTP_DIR: ${BACKUP_REMOTE_FTP_DIR:-}
+  TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
+  CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
+  REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
+  API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
+  USERS_FILE: ${USERS_FILE:-/data/users.json}
+  AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
+  AUDIT_HASH_CHAIN_ENABLED: ${AUDIT_HASH_CHAIN_ENABLED:-true}
+  DGII_COMPLIANCE_REPORT_DIR: ${DGII_COMPLIANCE_REPORT_DIR:-/data/compliance-reports}
+  DOCUMENT_EXPORT_BATCH_SIZE: ${DOCUMENT_EXPORT_BATCH_SIZE:-500}
+  DOCUMENT_EXPORT_MAX_ROWS: ${DOCUMENT_EXPORT_MAX_ROWS:-100000}
+  ARTIFACT_STORAGE_BACKEND: ${ARTIFACT_STORAGE_BACKEND:-filesystem}
+  ARTIFACT_S3_ENDPOINT: ${ARTIFACT_S3_ENDPOINT:-}
+  ARTIFACT_S3_REGION: ${ARTIFACT_S3_REGION:-us-east-1}
+  ARTIFACT_S3_BUCKET: ${ARTIFACT_S3_BUCKET:-}
+  ARTIFACT_S3_PREFIX: ${ARTIFACT_S3_PREFIX:-dgii-ecf}
+  ARTIFACT_S3_ACCESS_KEY_ID: ${ARTIFACT_S3_ACCESS_KEY_ID:-}
+  ARTIFACT_S3_SECRET_ACCESS_KEY: ${ARTIFACT_S3_SECRET_ACCESS_KEY:-}
+  ARTIFACT_S3_FORCE_PATH_STYLE: ${ARTIFACT_S3_FORCE_PATH_STYLE:-false}
+  ARTIFACT_S3_SERVER_SIDE_ENCRYPTION: ${ARTIFACT_S3_SERVER_SIDE_ENCRYPTION:-}
+  FISCAL_RETENTION_POLICY_ENABLED: ${FISCAL_RETENTION_POLICY_ENABLED:-true}
+  FISCAL_RETENTION_IMMUTABLE_YEARS: ${FISCAL_RETENTION_IMMUTABLE_YEARS:-10}
+  FISCAL_COLD_ARCHIVE_ENABLED: ${FISCAL_COLD_ARCHIVE_ENABLED:-false}
+  FISCAL_COLD_ARCHIVE_DIR: ${FISCAL_COLD_ARCHIVE_DIR:-/data/fiscal-archive}
+  FISCAL_COLD_ARCHIVE_AFTER_DAYS: ${FISCAL_COLD_ARCHIVE_AFTER_DAYS:-365}
+  FISCAL_COLD_ARCHIVE_LAYOUT: ${FISCAL_COLD_ARCHIVE_LAYOUT:-tenant-year}
+  SAVE_TRANSACTIONS: ${SAVE_TRANSACTIONS:-true}
+  SAVE_TRANSACTIONS_INCLUDE_JSON: ${SAVE_TRANSACTIONS_INCLUDE_JSON:-true}
+  SAVE_TRANSACTIONS_INCLUDE_RESPONSE: ${SAVE_TRANSACTIONS_INCLUDE_RESPONSE:-true}
+  SERVICE_HEARTBEAT_INTERVAL_MS: ${SERVICE_HEARTBEAT_INTERVAL_MS:-15000}
+  SERVICE_HEARTBEAT_MAX_AGE_MS: ${SERVICE_HEARTBEAT_MAX_AGE_MS:-120000}
+  SERVICE_HEARTBEAT_RETENTION_MS: ${SERVICE_HEARTBEAT_RETENTION_MS:-86400000}
+
+  CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
+  CERT_MASTER_KEY_VERSION: ${CERT_MASTER_KEY_VERSION:-prod-primary}
+  INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
+  API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
+  APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
+  APP_JWT_EXPIRES_IN: ${APP_JWT_EXPIRES_IN:-7d}
+  XML_XSD_VALIDATION_ENABLED: "true"
+  XML_VALIDATOR_PYTHON: python3
+
+  BILLING_ENFORCE_SUBSCRIPTION: ${BILLING_ENFORCE_SUBSCRIPTION:-false}
+  RATE_LIMIT_HIGH_RISK_DEFAULT_RULES_ENABLED: ${RATE_LIMIT_HIGH_RISK_DEFAULT_RULES_ENABLED:-true}
+
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  LOG_PRETTY: ${LOG_PRETTY:-false}
+
+  SMTP_ENABLED: ${SMTP_ENABLED:-false}
+  SMTP_HOST: ${SMTP_HOST:-}
+  SMTP_PORT: ${SMTP_PORT:-587}
+  SMTP_SECURE: ${SMTP_SECURE:-false}
+  SMTP_USER: ${SMTP_USER:-}
+  SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-}
+  SMTP_FROM_NAME: ${SMTP_FROM_NAME:-DGII e-CF Portal}
+
+x-default-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: ${LOG_MAX_SIZE:-50m}
+    max-file: ${LOG_MAX_FILES:-5}
+
+x-api-resources: &api-resources
+  limits:
+    cpus: ${ENGINE_CPU_LIMIT:-1.50}
+    memory: ${ENGINE_MEMORY_LIMIT:-1536M}
+    pids: ${ENGINE_PIDS_LIMIT:-256}
+  reservations:
+    cpus: ${ENGINE_CPU_RESERVATION:-0.25}
+    memory: ${ENGINE_MEMORY_RESERVATION:-256M}
+
+x-worker-resources: &worker-resources
+  limits:
+    cpus: ${WORKER_CPU_LIMIT:-1.00}
+    memory: ${WORKER_MEMORY_LIMIT:-1024M}
+    pids: ${WORKER_PIDS_LIMIT:-192}
+  reservations:
+    cpus: ${WORKER_CPU_RESERVATION:-0.10}
+    memory: ${WORKER_MEMORY_RESERVATION:-128M}
+
+x-utility-resources: &utility-resources
+  limits:
+    cpus: ${UTILITY_CPU_LIMIT:-0.50}
+    memory: ${UTILITY_MEMORY_LIMIT:-512M}
+    pids: ${UTILITY_PIDS_LIMIT:-128}
+  reservations:
+    cpus: ${UTILITY_CPU_RESERVATION:-0.05}
+    memory: ${UTILITY_MEMORY_RESERVATION:-64M}
+
+x-engine-entrypoint: &engine-entrypoint
+  - /sbin/tini
+  - --
+  - sh
+  - -ec
+  - |
+    require_env() {
+      var_name="$$1"
+      eval "var_value=\$${$$var_name:-}"
+      if [ -z "$$var_value" ]; then
+        echo "ERROR: La variable de entorno requerida '$$var_name' no está definida." >&2
+        exit 1
+      fi
+    }
+
+    validate_base64_32_bytes() {
+      decoded_len="$$(printf '%s' "$$CERT_MASTER_KEY_BASE64" | base64 -d 2>/dev/null | wc -c | tr -d ' ')"
+      if [ "$$decoded_len" != "32" ]; then
+        echo "ERROR: CERT_MASTER_KEY_BASE64 debe decodificar exactamente a 32 bytes. Longitud actual: $$decoded_len." >&2
+        exit 1
+      fi
+    }
+
+    ensure_parent_dir() {
+      mkdir -p "$$(dirname "$$1")"
+    }
+
+    echo "Validando variables de entorno requeridas..."
+    require_env CERT_MASTER_KEY_BASE64
+    require_env INTERNAL_API_TOKEN
+    require_env API_KEY_PEPPER
+    require_env APP_JWT_SECRET
+    validate_base64_32_bytes
+
+    export PORT="$${PORT:-4000}"
+    export NODE_ENV="$${NODE_ENV:-production}"
+    export APP_DATA_DIR="$${APP_DATA_DIR:-/data}"
+    export APP_LOG_DIR="$${APP_LOG_DIR:-/logs}"
+    export CERT_STORE_DIR="$${CERT_STORE_DIR:-$$APP_DATA_DIR/certificates}"
+    export REGISTRY_FILE="$${REGISTRY_FILE:-$$APP_DATA_DIR/registry.json}"
+    export API_KEYS_FILE="$${API_KEYS_FILE:-$$APP_DATA_DIR/api_keys.json}"
+    export USERS_FILE="$${USERS_FILE:-$$APP_DATA_DIR/users.json}"
+    export AUDIT_LOG_FILE="$${AUDIT_LOG_FILE:-$$APP_LOG_DIR/audit.log}"
+    export DGII_COMPLIANCE_REPORT_DIR="$${DGII_COMPLIANCE_REPORT_DIR:-$$APP_DATA_DIR/compliance-reports}"
+    export TRANSACTIONS_DIR="$${TRANSACTIONS_DIR:-$$APP_DATA_DIR/transactions}"
+    export XML_VALIDATOR_PYTHON="$${XML_VALIDATOR_PYTHON:-python3}"
+    export XML_XSD_VALIDATION_ENABLED="$${XML_XSD_VALIDATION_ENABLED:-true}"
+    export DATABASE_ENABLED="$${DATABASE_ENABLED:-false}"
+    export RUN_PRISMA_MIGRATE_ON_BOOT="$${RUN_PRISMA_MIGRATE_ON_BOOT:-false}"
+
+    echo "Preparando directorios de datos..."
+    mkdir -p "$$CERT_STORE_DIR" "$$TRANSACTIONS_DIR" "$$DGII_COMPLIANCE_REPORT_DIR" "$$APP_LOG_DIR"
+    ensure_parent_dir "$$REGISTRY_FILE"
+    ensure_parent_dir "$$API_KEYS_FILE"
+    ensure_parent_dir "$$USERS_FILE"
+    ensure_parent_dir "$$AUDIT_LOG_FILE"
+
+    [ -f "$$REGISTRY_FILE" ] || printf '%s\n' '{"schema_version":1,"createdAt":"","updatedAt":"","tenants":[],"companies":[]}' > "$$REGISTRY_FILE"
+    [ -f "$$API_KEYS_FILE" ] || printf '%s\n' '{"schema_version":1,"createdAt":"","updatedAt":"","keys":[]}' > "$$API_KEYS_FILE"
+    [ -f "$$USERS_FILE" ] || printf '%s\n' '{"schema_version":1,"createdAt":"","updatedAt":"","users":[],"tenantMemberships":[]}' > "$$USERS_FILE"
+    [ -f "$$AUDIT_LOG_FILE" ] || touch "$$AUDIT_LOG_FILE"
+
+    echo "Ajustando permisos de volúmenes..."
+    chown -R node:node "$$APP_DATA_DIR" "$$APP_LOG_DIR"
+
+    if [ "$$DATABASE_ENABLED" = "true" ] && [ "$$RUN_PRISMA_MIGRATE_ON_BOOT" = "true" ]; then
+      echo "Ejecutando prisma migrate deploy..."
+      su-exec node npx prisma migrate deploy
+    fi
+
+    echo "Entorno validado correctamente."
+    echo "Comando a ejecutar: $$*"
+    exec su-exec node "$$@"
+  - --
+
+x-engine-service: &engine-service
+  image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+  entrypoint: *engine-entrypoint
+  restart: unless-stopped
+  depends_on:
+    postgres:
+      condition: service_healthy
+    pgbouncer:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    dgii-ecf-print-renderer:
+      condition: service_healthy
+  volumes:
+    - dgii_ecf_engine_data:/data
+    - dgii_ecf_engine_logs:/logs
+  security_opt:
+    - no-new-privileges:true
+  stop_grace_period: 60s
+  logging: *default-logging
+
 services:
+  dgii-ecf-print-renderer:
+    image: ${PRINT_RENDERER_IMAGE_NAME:-gitea.joseagrc.com/joseagrc/dgii-ecf-print-renderer}:${PRINT_RENDERER_IMAGE_TAG:-1.1.164}
+    container_name: ${PRINT_RENDERER_CONTAINER_NAME:-dgii-ecf-print-renderer}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "4010"
+      PRINT_RENDERER_INTERNAL_TOKEN: ${PRINT_RENDERER_INTERNAL_TOKEN:?PRINT_RENDERER_INTERNAL_TOKEN requerido}
+      PRINT_RENDERER_MAX_BODY_BYTES: ${PRINT_RENDERER_MAX_BODY_BYTES:-20971520}
+      PRINT_RENDERER_MAX_PDF_BYTES: ${PRINT_RENDERER_MAX_PDF_BYTES:-26214400}
+      PRINT_RENDERER_MAX_CONCURRENCY: ${PRINT_RENDERER_MAX_CONCURRENCY:-2}
+      PRINT_RENDERER_MAX_QUEUE: ${PRINT_RENDERER_MAX_QUEUE:-50}
+      PRINT_RENDERER_TIMEOUT_MS: ${PRINT_RENDERER_TIMEOUT_MS:-45000}
+    expose:
+      - "4010"
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=512M,mode=1777
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:4010/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging: *default-logging
+    networks:
+      - default
+      - egress
+    deploy:
+      resources:
+        limits:
+          cpus: ${PRINT_RENDERER_CPU_LIMIT:-1.50}
+          memory: ${PRINT_RENDERER_MEMORY_LIMIT:-1024M}
+          pids: ${PRINT_RENDERER_PIDS_LIMIT:-256}
+        reservations:
+          cpus: ${PRINT_RENDERER_CPU_RESERVATION:-0.10}
+          memory: ${PRINT_RENDERER_MEMORY_RESERVATION:-256M}
+
   postgres:
-    image: ${POSTGRES_IMAGE}:${POSTGRES_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-postgres
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_TAG:-16-alpine}
+    restart: unless-stopped
     command:
-      - "postgres"
-      - "-c"
-      - "max_connections=${POSTGRES_MAX_CONNECTIONS:-200}"
-      - "-c"
-      - "shared_buffers=${POSTGRES_SHARED_BUFFERS:-6GB}"
-      - "-c"
-      - "effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-24GB}"
-      - "-c"
-      - "maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-1GB}"
-      - "-c"
-      - "work_mem=${POSTGRES_WORK_MEM:-32MB}"
-      - "-c"
-      - "checkpoint_completion_target=${POSTGRES_CHECKPOINT_COMPLETION_TARGET:-0.9}"
-      - "-c"
-      - "wal_compression=${POSTGRES_WAL_COMPRESSION:-on}"
+      - postgres
+      - -c
+      - max_connections=${POSTGRES_MAX_CONNECTIONS:-100}
+      - -c
+      - shared_buffers=${POSTGRES_SHARED_BUFFERS:-256MB}
+      - -c
+      - effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-1536MB}
+      - -c
+      - maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-128MB}
+      - -c
+      - work_mem=${POSTGRES_WORK_MEM:-4MB}
+      - -c
+      - checkpoint_completion_target=${POSTGRES_CHECKPOINT_COMPLETION_TARGET:-0.9}
+      - -c
+      - wal_compression=${POSTGRES_WAL_COMPRESSION:-on}
+      - -c
+      - random_page_cost=${POSTGRES_RANDOM_PAGE_COST:-1.1}
+      - -c
+      - effective_io_concurrency=${POSTGRES_EFFECTIVE_IO_CONCURRENCY:-200}
+      - -c
+      - jit=${POSTGRES_JIT:-off}
+      - -c
+      - track_io_timing=${POSTGRES_TRACK_IO_TIMING:-on}
+      - -c
+      - idle_session_timeout=${POSTGRES_IDLE_SESSION_TIMEOUT:-10min}
+      - -c
+      - idle_in_transaction_session_timeout=${POSTGRES_IDLE_IN_TRANSACTION_TIMEOUT:-60s}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB requerido}
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER requerido}
@@ -24,175 +349,147 @@ services:
     volumes:
       - dgii_ecf_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-dgii_ecf_engine}"
-        ]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432 -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: ${POSTGRES_HEALTH_INTERVAL:-10s}
       timeout: ${POSTGRES_HEALTH_TIMEOUT:-5s}
-      retries: ${POSTGRES_HEALTH_RETRIES:-10}
-      start_period: ${POSTGRES_HEALTH_START_PERIOD:-30s}
+      retries: ${POSTGRES_HEALTH_RETRIES:-30}
+      start_period: ${POSTGRES_HEALTH_START_PERIOD:-120s}
+    stop_grace_period: 60s
+    logging: *default-logging
     deploy:
-      replicas: 1
-      update_config:
-        order: stop-first
-        failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 10
-        window: 120s
+      resources:
+        limits:
+          cpus: ${POSTGRES_CPU_LIMIT:-2.00}
+          memory: ${POSTGRES_MEMORY_LIMIT:-2048M}
+          pids: ${POSTGRES_PIDS_LIMIT:-256}
+        reservations:
+          cpus: ${POSTGRES_CPU_RESERVATION:-0.25}
+          memory: ${POSTGRES_MEMORY_RESERVATION:-512M}
 
-  pgadmin:
-    image: ${PGADMIN_IMAGE}:${PGADMIN_TAG}
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+  pgbouncer:
+    image: edoburu/pgbouncer:${PGBOUNCER_IMAGE_TAG:-1.25.1-p0}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?PGADMIN_DEFAULT_EMAIL requerido}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?PGADMIN_DEFAULT_PASSWORD requerido}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: ${PGBOUNCER_MAX_CLIENT_CONNECTIONS:-200}
+      DEFAULT_POOL_SIZE: ${PGBOUNCER_DEFAULT_POOL_SIZE:-35}
+      RESERVE_POOL_SIZE: ${PGBOUNCER_RESERVE_POOL_SIZE:-5}
+      RESERVE_POOL_TIMEOUT: ${PGBOUNCER_RESERVE_POOL_TIMEOUT:-3}
+      MAX_DB_CONNECTIONS: ${PGBOUNCER_MAX_DB_CONNECTIONS:-40}
+      MAX_PREPARED_STATEMENTS: ${PGBOUNCER_MAX_PREPARED_STATEMENTS:-100}
+      SERVER_IDLE_TIMEOUT: ${PGBOUNCER_SERVER_IDLE_TIMEOUT:-300}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432 -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    security_opt:
+      - no-new-privileges:true
+    logging: *default-logging
+    networks:
+      - default
     deploy:
-      replicas: 1
-      update_config:
-        order: start-first
-        failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=${NETWORK:-proxy}
-        - traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_DOMAIN}`)
-        - traefik.http.routers.pgadmin.entrypoints=websecure
-        - traefik.http.routers.pgadmin.tls=true
-        - traefik.http.routers.pgadmin.tls.certresolver=letsencrypt
-        - traefik.http.services.pgadmin.loadbalancer.server.port=80
+      resources:
+        limits:
+          cpus: ${PGBOUNCER_CPU_LIMIT:-0.50}
+          memory: ${PGBOUNCER_MEMORY_LIMIT:-256M}
+          pids: ${PGBOUNCER_PIDS_LIMIT:-128}
+        reservations:
+          cpus: ${PGBOUNCER_CPU_RESERVATION:-0.05}
+          memory: ${PGBOUNCER_MEMORY_RESERVATION:-32M}
 
   redis:
-    image: ${REDIS_IMAGE}:${REDIS_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-redis
+    image: ${REDIS_IMAGE:-redis}:${REDIS_TAG:-8-alpine}
+    restart: unless-stopped
     command:
-      [
-        "redis-server",
-        "--appendonly",
-        "${REDIS_APPENDONLY:-yes}",
-        "--requirepass",
-        "${REDIS_PASSWORD:?REDIS_PASSWORD requerido}",
-        "--protected-mode",
-        "yes"
-      ]
+      - redis-server
+      - --appendonly
+      - ${REDIS_APPENDONLY:-yes}
+      - --requirepass
+      - ${REDIS_PASSWORD:?REDIS_PASSWORD requerido}
+      - --protected-mode
+      - "yes"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD requerido}
     volumes:
       - redis_data:/data
     healthcheck:
-      test:
-        [
-          "CMD",
-          "redis-cli",
-          "--pass",
-          "${REDIS_PASSWORD:?REDIS_PASSWORD requerido}",
-          "ping"
-        ]
+      test: ["CMD-SHELL", "redis-cli --no-auth-warning --pass \"$${REDIS_PASSWORD}\" ping | grep -q PONG"]
       interval: ${REDIS_HEALTH_INTERVAL:-10s}
       timeout: ${REDIS_HEALTH_TIMEOUT:-5s}
-      retries: ${REDIS_HEALTH_RETRIES:-10}
+      retries: ${REDIS_HEALTH_RETRIES:-12}
       start_period: ${REDIS_HEALTH_START_PERIOD:-20s}
+    stop_grace_period: 30s
+    logging: *default-logging
     deploy:
-      replicas: 1
-      update_config:
-        order: stop-first
-        failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 10
-        window: 120s
+      resources:
+        limits:
+          cpus: ${REDIS_CPU_LIMIT:-1.00}
+          memory: ${REDIS_MEMORY_LIMIT:-768M}
+          pids: ${REDIS_PIDS_LIMIT:-128}
+        reservations:
+          cpus: ${REDIS_CPU_RESERVATION:-0.10}
+          memory: ${REDIS_MEMORY_RESERVATION:-128M}
 
-  redisinsight:
-    image: ${REDISINSIGHT_IMAGE}:${REDISINSIGHT_TAG}
-    volumes:
-      - redisinsight_data:/data
-    environment:
-      RI_REDIS_USERNAME: ${RI_REDIS_USERNAME:-}
-      RI_REDIS_PASSWORD: ${RI_REDIS_PASSWORD:-}
+  dgii-ecf-engine:
+    <<: *engine-service
+    command: ["node", "dist/server.js"]
     deploy:
-      replicas: 1
+      replicas: ${DGII_ECF_ENGINE_REPLICAS:-2}
+      resources: *api-resources
       update_config:
         order: start-first
         failure_action: rollback
       rollback_config:
         order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=${NETWORK:-proxy}
-        - traefik.http.routers.redisinsight.rule=Host(`${REDISINSIGHT_DOMAIN}`)
-        - traefik.http.routers.redisinsight.entrypoints=websecure
-        - traefik.http.routers.redisinsight.tls=true
-        - traefik.http.routers.redisinsight.tls.certresolver=letsencrypt
-        - traefik.http.services.redisinsight.loadbalancer.server.port=5540
-
-  dgii-ecf-engine:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      PORT: "4000"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-      CORS_ALLOWED_ORIGINS: https://${PORTAL_DOMAIN}
-
-      PLATFORM_ADMIN_BOOTSTRAP_ENABLED: ${PLATFORM_ADMIN_BOOTSTRAP_ENABLED:-false}
-      PLATFORM_ADMIN_EMAIL: ${PLATFORM_ADMIN_EMAIL:-}
-      PLATFORM_ADMIN_FULL_NAME: ${PLATFORM_ADMIN_FULL_NAME:-Administrador de Plataforma}
-      PLATFORM_ADMIN_PASSWORD: ${PLATFORM_ADMIN_PASSWORD:-}
-      PLATFORM_ADMIN_RESET_PASSWORD_ON_BOOT: ${PLATFORM_ADMIN_RESET_PASSWORD_ON_BOOT:-false}
+      <<: *engine-env
+      DATABASE_URL: ${API_DATABASE_URL:-postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgbouncer:5432/${POSTGRES_DB}?schema=public}
+      DATABASE_CONNECTION_LIMIT: ${API_DATABASE_CONNECTION_LIMIT:-5}
+      PORT: ${DGII_ECF_ENGINE_PORT:-4000}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:?CORS_ALLOWED_ORIGINS requerido}
 
       API_REQUEST_BODY_LIMIT: ${API_REQUEST_BODY_LIMIT:-2mb}
       HTTP_REQUEST_TIMEOUT_MS: ${HTTP_REQUEST_TIMEOUT_MS:-30000}
       HTTP_HEADERS_TIMEOUT_EXTRA_MS: ${HTTP_HEADERS_TIMEOUT_EXTRA_MS:-5000}
       HTTP_KEEP_ALIVE_TIMEOUT_MS: ${HTTP_KEEP_ALIVE_TIMEOUT_MS:-5000}
 
+      EMAIL_VERIFICATION_REQUIRED: ${EMAIL_VERIFICATION_REQUIRED:-true}
+      EMAIL_VERIFICATION_TOKEN_TTL_MINUTES: ${EMAIL_VERIFICATION_TOKEN_TTL_MINUTES:-60}
+      PORTAL_PUBLIC_URL: ${PORTAL_PUBLIC_URL:?PORTAL_PUBLIC_URL requerido}
+
+      SMTP_ENABLED: ${SMTP_ENABLED:-false}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-}
+      SMTP_FROM_NAME: ${SMTP_FROM_NAME:-DGII e-CF Portal}
+
       DGII_HTTP_TIMEOUT_MS: ${DGII_HTTP_TIMEOUT_MS:-45000}
       BUYER_DELIVERY_TIMEOUT_MS: ${BUYER_DELIVERY_TIMEOUT_MS:-15000}
       XML_VALIDATION_TIMEOUT_MS: ${XML_VALIDATION_TIMEOUT_MS:-10000}
       WORKER_JOB_TIMEOUT_MS: ${WORKER_JOB_TIMEOUT_MS:-120000}
 
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
-      RUN_PRISMA_MIGRATE_ON_BOOT: "false"
+      RUN_PRISMA_MIGRATE_ON_BOOT: ${RUN_PRISMA_MIGRATE_ON_BOOT:-false}
+      NPM_CONFIG_UPDATE_NOTIFIER: ${NPM_CONFIG_UPDATE_NOTIFIER:-false}
 
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
-      RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-app_session}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-true}
+      SESSION_COOKIE_SAME_SITE: ${SESSION_COOKIE_SAME_SITE:-lax}
+      SESSION_COOKIE_DOMAIN: ${SESSION_COOKIE_DOMAIN:-}
+      SESSION_COOKIE_PATH: ${SESSION_COOKIE_PATH:-/}
 
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
       APP_JWT_EXPIRES_IN: ${APP_JWT_EXPIRES_IN:-7d}
       DGII_STATUS_API_KEY: ${DGII_STATUS_API_KEY:-}
+      DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION: ${DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION:-true}
 
       XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED:-true}
       XML_VALIDATOR_PYTHON: ${XML_VALIDATOR_PYTHON:-python3}
@@ -203,24 +500,19 @@ services:
 
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-60000}
-      RATE_LIMIT_DEFAULT_MAX: ${RATE_LIMIT_DEFAULT_MAX:-60}
+      RATE_LIMIT_DEFAULT_MAX: ${RATE_LIMIT_DEFAULT_MAX:-120}
       RATE_LIMIT_BYPASS_INTERNAL: ${RATE_LIMIT_BYPASS_INTERNAL:-true}
+      RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
       RATE_LIMIT_RULES: ${RATE_LIMIT_RULES:-}
 
       FE_RECEPTION_DEFAULT_ENV: ${FE_RECEPTION_DEFAULT_ENV:-TesteCF}
 
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-
-      QUEUE_SCHEDULER_ENABLED: "false"
+      QUEUE_SCHEDULER_ENABLED: ${QUEUE_SCHEDULER_ENABLED:-false}
       QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS: ${QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS:-60000}
-      QUEUE_SCHEDULER_CLEANUP_INTERVAL_MS: ${QUEUE_SCHEDULER_CLEANUP_INTERVAL_MS:-300000}
       QUEUE_SCHEDULER_MAX_RUNNING_MINUTES: ${QUEUE_SCHEDULER_MAX_RUNNING_MINUTES:-10}
-      QUEUE_SCHEDULER_MAX_AGE_DAYS_DONE: ${QUEUE_SCHEDULER_MAX_AGE_DAYS_DONE:-7}
-      QUEUE_SCHEDULER_MAX_AGE_DAYS_FAILED: ${QUEUE_SCHEDULER_MAX_AGE_DAYS_FAILED:-30}
       WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-1}
 
-      HOUSEKEEPING_ENABLED: "false"
+      HOUSEKEEPING_ENABLED: ${HOUSEKEEPING_ENABLED:-true}
       HOUSEKEEPING_INTERVAL_MS: ${HOUSEKEEPING_INTERVAL_MS:-300000}
       HOUSEKEEPING_QUEUE_DONE_RETENTION_DAYS: ${HOUSEKEEPING_QUEUE_DONE_RETENTION_DAYS:-7}
       HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS: ${HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS:-30}
@@ -240,372 +532,223 @@ services:
       WEBHOOK_MAX_ATTEMPTS: ${WEBHOOK_MAX_ATTEMPTS:-8}
       WEBHOOK_DEFAULT_TIMEOUT_MS: ${WEBHOOK_DEFAULT_TIMEOUT_MS:-10000}
       WEBHOOK_MAX_RESPONSE_BODY_CHARS: ${WEBHOOK_MAX_RESPONSE_BODY_CHARS:-4000}
-      WEBHOOK_ALLOW_PRIVATE_URLS: ${WEBHOOK_ALLOW_PRIVATE_URLS:-true}
-      WEBHOOK_REQUIRE_HTTPS: ${WEBHOOK_REQUIRE_HTTPS:-false}
+      WEBHOOK_ALLOW_PRIVATE_URLS: ${WEBHOOK_ALLOW_PRIVATE_URLS:-false}
+      WEBHOOK_REQUIRE_HTTPS: ${WEBHOOK_REQUIRE_HTTPS:-true}
       WEBHOOK_ALLOWED_HOSTS: ${WEBHOOK_ALLOWED_HOSTS:-}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "node -e \"fetch('http://127.0.0.1:4000/api/v1/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))\""
+          "node -e \"const port=process.env.PORT||4000; fetch('http://127.0.0.1:'+port+'/api/v1/health/live',{headers:{'x-forwarded-proto':'https'}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))\""
         ]
-      interval: 20s
-      timeout: 10s
-      retries: 30
-      start_period: 300s
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-        failure_action: rollback
-        monitor: 60s
-      rollback_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=${NETWORK:-proxy}
-        - traefik.http.routers.dgii-ecf-engine.rule=Host(`${ENGINE_DOMAIN}`)
-        - traefik.http.routers.dgii-ecf-engine.entrypoints=websecure
-        - traefik.http.routers.dgii-ecf-engine.tls=true
-        - traefik.http.routers.dgii-ecf-engine.tls.certresolver=letsencrypt
-        - traefik.http.services.dgii-ecf-engine.loadbalancer.server.port=4000
-        - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customrequestheaders.X-Forwarded-Proto=https
-        - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
-        - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Frame-Options=DENY
-        - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.Referrer-Policy=no-referrer
-        - traefik.http.routers.dgii-ecf-engine.middlewares=dgii-ecf-engine-headers
+      interval: ${ENGINE_HEALTH_INTERVAL:-20s}
+      timeout: ${ENGINE_HEALTH_TIMEOUT:-10s}
+      retries: ${ENGINE_HEALTH_RETRIES:-30}
+      start_period: ${ENGINE_HEALTH_START_PERIOD:-300s}
+    networks:
+      - default
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${NETWORK:-proxy}
+      - traefik.http.routers.dgii-ecf-engine.rule=Host(`${ENGINE_DOMAIN}`)
+      - traefik.http.routers.dgii-ecf-engine.entrypoints=websecure
+      - traefik.http.routers.dgii-ecf-engine.tls=true
+      - traefik.http.routers.dgii-ecf-engine.tls.certresolver=${TRAEFIK_CERT_RESOLVER:-letsencrypt}
+      - traefik.http.services.dgii-ecf-engine.loadbalancer.server.port=${DGII_ECF_ENGINE_PORT:-4000}
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.X-Frame-Options=DENY
+      - traefik.http.middlewares.dgii-ecf-engine-headers.headers.customresponseheaders.Referrer-Policy=no-referrer
+      - traefik.http.routers.dgii-ecf-engine.middlewares=dgii-ecf-engine-headers
 
   dgii-ecf-scheduler:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
-    command:
-      [
-        "node",
-        "dist/workers/runQueueScheduler.js"
-      ]
+    <<: *engine-service
+    deploy:
+      replicas: ${DGII_ECF_SCHEDULER_REPLICAS:-1}
+      resources: *utility-resources
+      update_config:
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
+    command: ["node", "dist/workers/runQueueScheduler.js"]
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
-      RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
+      <<: *engine-env
+      SERVICE_HEARTBEAT_NAME: queue-scheduler
       QUEUE_SCHEDULER_ENABLED: "true"
       QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS: ${QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS:-60000}
-      QUEUE_SCHEDULER_CLEANUP_INTERVAL_MS: ${QUEUE_SCHEDULER_CLEANUP_INTERVAL_MS:-300000}
       QUEUE_SCHEDULER_MAX_RUNNING_MINUTES: ${QUEUE_SCHEDULER_MAX_RUNNING_MINUTES:-10}
-      QUEUE_SCHEDULER_MAX_AGE_DAYS_DONE: ${QUEUE_SCHEDULER_MAX_AGE_DAYS_DONE:-7}
-      QUEUE_SCHEDULER_MAX_AGE_DAYS_FAILED: ${QUEUE_SCHEDULER_MAX_AGE_DAYS_FAILED:-30}
-
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
-    deploy:
-      replicas: 1
-      update_config:
-        order: stop-first
-        failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+    healthcheck: &worker-heartbeat-healthcheck
+      test: ["CMD", "node", "scripts/service-heartbeat-healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    networks:
+      - default
+      - egress
 
   dgii-ecf-worker-send:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+    <<: *engine-service
+    deploy:
+      replicas: ${DGII_ECF_WORKER_SEND_REPLICAS:-2}
+      resources: *worker-resources
+      update_config:
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
     command:
-      [
-        "node",
-        "dist/workers/runQueueWorker.js",
-        "--queue=send-normal",
-        "--mode=loop",
-        "--max=${WORKER_SEND_MAX:-5}",
-        "--sleepMs=${WORKER_SEND_SLEEP_MS:-3000}"
-      ]
+      - node
+      - dist/workers/runQueueWorker.js
+      - --queue=send-normal
+      - --mode=loop
+      - --max=${WORKER_SEND_MAX:-5}
+      - --sleepMs=${WORKER_SEND_SLEEP_MS:-3000}
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
+      <<: *engine-env
       PORT: "4001"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
       RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
       RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
       XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED:-true}
       XML_VALIDATOR_PYTHON: ${XML_VALIDATOR_PYTHON:-python3}
-
       QUEUE_SCHEDULER_ENABLED: "false"
       WORKER_QUEUE: SEND_NORMAL
-      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-1}
-
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-        failure_action: rollback
-        monitor: 60s
-      rollback_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+      WORKER_CONCURRENCY: ${WORKER_NORMAL_CONCURRENCY:-2}
+      SERVICE_HEARTBEAT_NAME: worker-send-normal
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - egress
 
   dgii-ecf-worker-send-high:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+    <<: *engine-service
+    deploy:
+      replicas: ${DGII_ECF_WORKER_SEND_HIGH_REPLICAS:-2}
+      resources:
+        limits:
+          cpus: ${WORKER_HIGH_CPU_LIMIT:-1.50}
+          memory: ${WORKER_HIGH_MEMORY_LIMIT:-1536M}
+          pids: ${WORKER_HIGH_PIDS_LIMIT:-256}
+        reservations:
+          cpus: ${WORKER_HIGH_CPU_RESERVATION:-0.15}
+          memory: ${WORKER_HIGH_MEMORY_RESERVATION:-192M}
+      update_config:
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
     command:
-      [
-        "node",
-        "dist/workers/runQueueWorker.js",
-        "--queue=send-high",
-        "--mode=loop",
-        "--max=${WORKER_SEND_HIGH_MAX:-10}",
-        "--sleepMs=${WORKER_SEND_HIGH_SLEEP_MS:-1000}"
-      ]
+      - node
+      - dist/workers/runQueueWorker.js
+      - --queue=send-high
+      - --mode=loop
+      - --max=${WORKER_SEND_HIGH_MAX:-10}
+      - --sleepMs=${WORKER_SEND_HIGH_SLEEP_MS:-1000}
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
+      <<: *engine-env
       PORT: "4002"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
       RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
       RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
       XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED:-true}
       XML_VALIDATOR_PYTHON: ${XML_VALIDATOR_PYTHON:-python3}
-
       QUEUE_SCHEDULER_ENABLED: "false"
       WORKER_QUEUE: SEND_HIGH_PRIORITY
-      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-1}
-
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-        failure_action: rollback
-        monitor: 60s
-      rollback_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+      WORKER_CONCURRENCY: ${WORKER_HIGH_CONCURRENCY:-4}
+      SERVICE_HEARTBEAT_NAME: worker-send-high
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - egress
 
   dgii-ecf-worker-send-bulk:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
-    command:
-      [
-        "node",
-        "dist/workers/runQueueWorker.js",
-        "--queue=send-bulk",
-        "--mode=loop",
-        "--max=${WORKER_SEND_BULK_MAX:-2}",
-        "--sleepMs=${WORKER_SEND_BULK_SLEEP_MS:-5000}"
-      ]
-    environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
-      PORT: "4003"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
-      RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
-      RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
-      XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED:-true}
-      XML_VALIDATOR_PYTHON: ${XML_VALIDATOR_PYTHON:-python3}
-
-      QUEUE_SCHEDULER_ENABLED: "false"
-      WORKER_QUEUE: SEND_BULK
-      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-1}
-
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
+    <<: *engine-service
     deploy:
-      replicas: 1
+      replicas: ${DGII_ECF_WORKER_SEND_BULK_REPLICAS:-1}
+      resources: *worker-resources
       update_config:
-        parallelism: 1
-        delay: 10s
         order: start-first
         failure_action: rollback
-        monitor: 60s
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
+    command:
+      - node
+      - dist/workers/runQueueWorker.js
+      - --queue=send-bulk
+      - --mode=loop
+      - --max=${WORKER_SEND_BULK_MAX:-2}
+      - --sleepMs=${WORKER_SEND_BULK_SLEEP_MS:-5000}
+    environment:
+      <<: *engine-env
+      PORT: "4003"
+      RUN_PRISMA_MIGRATE_ON_BOOT: "false"
+      RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-true}
+      XML_XSD_VALIDATION_ENABLED: ${XML_XSD_VALIDATION_ENABLED:-true}
+      XML_VALIDATOR_PYTHON: ${XML_VALIDATOR_PYTHON:-python3}
+      QUEUE_SCHEDULER_ENABLED: "false"
+      WORKER_QUEUE: SEND_BULK
+      WORKER_CONCURRENCY: ${WORKER_BULK_CONCURRENCY:-1}
+      SERVICE_HEARTBEAT_NAME: worker-send-bulk
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - egress
 
   dgii-ecf-housekeeping:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+    <<: *engine-service
+    deploy:
+      replicas: ${DGII_ECF_HOUSEKEEPING_REPLICAS:-1}
+      resources: *utility-resources
+      update_config:
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
     command:
-      [
-        "node",
-        "dist/workers/runHousekeepingWorker.js",
-        "--mode=loop",
-        "--sleepMs=${HOUSEKEEPING_WORKER_SLEEP_MS:-300000}"
-      ]
+      - node
+      - dist/workers/runHousekeepingWorker.js
+      - --mode=loop
+      - --sleepMs=${HOUSEKEEPING_WORKER_SLEEP_MS:-300000}
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
+      <<: *engine-env
       PORT: "4004"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
       RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
       QUEUE_SCHEDULER_ENABLED: "false"
       HOUSEKEEPING_ENABLED: ${HOUSEKEEPING_ENABLED:-true}
       HOUSEKEEPING_INTERVAL_MS: ${HOUSEKEEPING_INTERVAL_MS:-300000}
@@ -613,174 +756,269 @@ services:
       HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS: ${HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS:-30}
       HOUSEKEEPING_QUEUE_ARCHIVE_RETENTION_DAYS: ${HOUSEKEEPING_QUEUE_ARCHIVE_RETENTION_DAYS:-90}
       HOUSEKEEPING_IDEMPOTENCY_PENDING_RETENTION_HOURS: ${HOUSEKEEPING_IDEMPOTENCY_PENDING_RETENTION_HOURS:-24}
+      SERVICE_HEARTBEAT_NAME: housekeeping-worker
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - egress
 
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
+  dgii-ecf-backup-automation:
+    <<: *engine-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      docker-socket-proxy:
+        condition: service_healthy
     deploy:
       replicas: 1
+      resources: *worker-resources
       update_config:
         order: stop-first
         failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+    command: ["node", "dist/workers/runBackupAutomationWorker.js"]
+    environment:
+      <<: *engine-env
+      PORT: "4006"
+      QUEUE_SCHEDULER_ENABLED: "false"
+      BACKUP_AUTOMATION_SCHEDULER_ENABLED: "true"
+      INSTANCE_BACKUP_AGENT_URL: ""
+      INSTANCE_BACKUP_AGENT_PORT: "4006"
+      DOCKER_HOST: tcp://docker-socket-proxy:2375
+      SERVICE_HEARTBEAT_NAME: backup-automation-worker
+    volumes:
+      - dgii_ecf_engine_data:/data
+      - dgii_ecf_engine_logs:/logs
+      - ${BACKUP_LOCAL_DIR:-./backups/automated}:/backups
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - backup_admin
+      - egress
+
+  docker-socket-proxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:v0.5.0
+    restart: unless-stopped
+    environment:
+      CONTAINERS: "1"
+      EXEC: "1"
+      ALLOW_START: "1"
+      ALLOW_STOP: "1"
+      ALLOW_RESTARTS: "1"
+      IMAGES: "1"
+      INFO: "1"
+      NETWORKS: "1"
+      PING: "1"
+      POST: "1"
+      VERSION: "1"
+      VOLUMES: "1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backup_admin
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/lib/haproxy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:2375/_ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging: *default-logging
+    deploy:
+      resources: *utility-resources
 
   dgii-ecf-webhook-worker:
-    image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
+    <<: *engine-service
+    deploy:
+      replicas: ${DGII_ECF_WEBHOOK_WORKER_REPLICAS:-1}
+      resources: *utility-resources
+      update_config:
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dgii-ecf-engine:
+        condition: service_healthy
     command:
-      [
-        "node",
-        "dist/workers/runWebhookWorker.js",
-        "--mode=loop",
-        "--max=${WEBHOOK_WORKER_MAX:-20}",
-        "--sleepMs=${WEBHOOK_WORKER_SLEEP_MS:-3000}"
-      ]
+      - node
+      - dist/workers/runWebhookWorker.js
+      - --mode=loop
+      - --max=${WEBHOOK_WORKER_MAX:-20}
+      - --sleepMs=${WEBHOOK_WORKER_SLEEP_MS:-3000}
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      APP_VERSION: ${APP_VERSION:-1.0.28}
+      <<: *engine-env
       PORT: "4005"
-      TRUST_PROXY: ${TRUST_PROXY:-1}
-
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
-      DATABASE_LOG_QUERIES: ${DATABASE_LOG_QUERIES:-false}
       RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      REDIS_ENABLED: ${REDIS_ENABLED:-true}
-      REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:?REDIS_PASSWORD requerido}@redis:6379}
-      REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-dgii-ecf-engine-prod}
-      REDIS_CONNECT_TIMEOUT_MS: ${REDIS_CONNECT_TIMEOUT_MS:-5000}
-      REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
-
-      APP_DATA_DIR: ${APP_DATA_DIR:-/data}
-      APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
-      TRANSACTIONS_DIR: ${TRANSACTIONS_DIR:-/data/transactions}
-      CERT_STORE_DIR: ${CERT_STORE_DIR:-/data/certificates}
-      REGISTRY_FILE: ${REGISTRY_FILE:-/data/registry.json}
-      API_KEYS_FILE: ${API_KEYS_FILE:-/data/api_keys.json}
-      USERS_FILE: ${USERS_FILE:-/data/users.json}
-      AUDIT_LOG_FILE: ${AUDIT_LOG_FILE:-/logs/audit.log}
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
-
       WEBHOOKS_ENABLED: ${WEBHOOKS_ENABLED:-true}
       WEBHOOK_WORKER_INTERVAL_MS: ${WEBHOOK_WORKER_INTERVAL_MS:-3000}
       WEBHOOK_MAX_ATTEMPTS: ${WEBHOOK_MAX_ATTEMPTS:-8}
       WEBHOOK_DEFAULT_TIMEOUT_MS: ${WEBHOOK_DEFAULT_TIMEOUT_MS:-10000}
       WEBHOOK_MAX_RESPONSE_BODY_CHARS: ${WEBHOOK_MAX_RESPONSE_BODY_CHARS:-4000}
-      WEBHOOK_ALLOW_PRIVATE_URLS: ${WEBHOOK_ALLOW_PRIVATE_URLS:-true}
-      WEBHOOK_REQUIRE_HTTPS: ${WEBHOOK_REQUIRE_HTTPS:-false}
+      WEBHOOK_ALLOW_PRIVATE_URLS: ${WEBHOOK_ALLOW_PRIVATE_URLS:-false}
+      WEBHOOK_REQUIRE_HTTPS: ${WEBHOOK_REQUIRE_HTTPS:-true}
       WEBHOOK_ALLOWED_HOSTS: ${WEBHOOK_ALLOWED_HOSTS:-}
-
       QUEUE_SCHEDULER_ENABLED: "false"
-
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      LOG_PRETTY: ${LOG_PRETTY:-false}
-    volumes:
-      - dgii_ecf_engine_data:/data
-      - dgii_ecf_engine_logs:/logs
-    deploy:
-      replicas: 1
-      update_config:
-        order: start-first
-        failure_action: rollback
-      rollback_config:
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
+      SERVICE_HEARTBEAT_NAME: webhook-worker
+    healthcheck: *worker-heartbeat-healthcheck
+    networks:
+      - default
+      - egress
 
   dgii-ecf-migrate:
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-migrate
     image: ${DGII_ECF_ENGINE_IMAGE}:${DGII_ECF_ENGINE_TAG}
-    command:
-      [
-        "npx",
-        "prisma",
-        "migrate",
-        "deploy"
-      ]
+    profiles:
+      - migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["npx", "prisma", "migrate", "deploy"]
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
-      DATABASE_ENABLED: ${DATABASE_ENABLED:-true}
-      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER requerido}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requerido}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB requerido}?schema=public
+      <<: *engine-env
+      DATABASE_URL: ${DIRECT_DATABASE_URL:-postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public}
       RUN_PRISMA_MIGRATE_ON_BOOT: "false"
-
-      CERT_MASTER_KEY_BASE64: ${CERT_MASTER_KEY_BASE64:?CERT_MASTER_KEY_BASE64 requerido}
-      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?INTERNAL_API_TOKEN requerido}
-      API_KEY_PEPPER: ${API_KEY_PEPPER:?API_KEY_PEPPER requerido}
-      APP_JWT_SECRET: ${APP_JWT_SECRET:?APP_JWT_SECRET requerido}
+    deploy:
+      resources: *worker-resources
     volumes:
       - dgii_ecf_engine_data:/data
       - dgii_ecf_engine_logs:/logs
-    deploy:
-      replicas: 0
-      restart_policy:
-        condition: none
+    security_opt:
+      - no-new-privileges:true
 
   dgii-ecf-portal:
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-portal
     image: ${DGII_ECF_PORTAL_IMAGE}:${DGII_ECF_PORTAL_TAG}
+    restart: unless-stopped
+    depends_on:
+      dgii-ecf-engine:
+        condition: service_healthy
+        restart: true
     environment:
       NODE_ENV: ${NODE_ENV:-production}
-      PORT: "3000"
+      APP_TIME_ZONE: ${APP_TIME_ZONE:-America/Santo_Domingo}
+      PORT: ${DGII_ECF_PORTAL_PORT:-3000}
       HOSTNAME: 0.0.0.0
       CHROMIUM_PATH: /usr/bin/chromium
-
-      NEXT_PUBLIC_API_BASE_URL: https://${ENGINE_DOMAIN}
-      API_BASE_URL: https://${ENGINE_DOMAIN}
+      NPM_CONFIG_UPDATE_NOTIFIER: ${NPM_CONFIG_UPDATE_NOTIFIER:-false}
+      NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: ${NEXT_SERVER_ACTIONS_ENCRYPTION_KEY:?NEXT_SERVER_ACTIONS_ENCRYPTION_KEY requerido}
+      NEXT_PUBLIC_API_BASE_URL: https://${PUBLIC_ENGINE_URL}
+      API_BASE_URL: https://${PUBLIC_ENGINE_URL}
     tmpfs:
       - /tmp:size=512m,nosuid
     security_opt:
       - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: ${PORTAL_CPU_LIMIT:-1.00}
+          memory: ${PORTAL_MEMORY_LIMIT:-1024M}
+          pids: ${PORTAL_PIDS_LIMIT:-256}
+        reservations:
+          cpus: ${PORTAL_CPU_RESERVATION:-0.10}
+          memory: ${PORTAL_MEMORY_RESERVATION:-128M}
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl -fsS http://127.0.0.1:3000/api/health || exit 1"
+          "curl -fsS \"http://127.0.0.1:${DGII_ECF_PORTAL_PORT:-3000}/api/health\" || exit 1"
         ]
-      interval: 30s
-      timeout: 5s
-      start_period: 60s
-      retries: 3
+      interval: ${PORTAL_HEALTH_INTERVAL:-30s}
+      timeout: ${PORTAL_HEALTH_TIMEOUT:-5s}
+      start_period: ${PORTAL_HEALTH_START_PERIOD:-90s}
+      retries: ${PORTAL_HEALTH_RETRIES:-5}
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=${NETWORK:-proxy}
+      - traefik.http.routers.dgii-ecf-portal.rule=Host(`${PORTAL_DOMAIN}`)
+      - traefik.http.routers.dgii-ecf-portal.entrypoints=websecure
+      - traefik.http.routers.dgii-ecf-portal.tls=true
+      - traefik.http.routers.dgii-ecf-portal.tls.certresolver=${TRAEFIK_CERT_RESOLVER:-letsencrypt}
+      - traefik.http.services.dgii-ecf-portal.loadbalancer.server.port=${DGII_ECF_PORTAL_PORT:-3000}
+      - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
+      - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.Referrer-Policy=strict-origin-when-cross-origin
+      - traefik.http.routers.dgii-ecf-portal.middlewares=dgii-ecf-portal-headers
+    logging: *default-logging
+    networks:
+      - default
+      - proxy
+
+  pgadmin:
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-pgadmin
+    image: ${PGADMIN_IMAGE:-dpage/pgadmin4}:${PGADMIN_TAG:-9.14.0}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?PGADMIN_DEFAULT_EMAIL requerido}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?PGADMIN_DEFAULT_PASSWORD requerido}
+    security_opt:
+      - no-new-privileges:true
     deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-        failure_action: rollback
-        monitor: 60s
-      rollback_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=${NETWORK:-proxy}
-        - traefik.http.routers.dgii-ecf-portal.rule=Host(`${PORTAL_DOMAIN}`)
-        - traefik.http.routers.dgii-ecf-portal.entrypoints=websecure
-        - traefik.http.routers.dgii-ecf-portal.tls=true
-        - traefik.http.routers.dgii-ecf-portal.tls.certresolver=letsencrypt
-        - traefik.http.services.dgii-ecf-portal.loadbalancer.server.port=3000
-        - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.X-Content-Type-Options=nosniff
-        - traefik.http.middlewares.dgii-ecf-portal-headers.headers.customresponseheaders.Referrer-Policy=strict-origin-when-cross-origin
-        - traefik.http.routers.dgii-ecf-portal.middlewares=dgii-ecf-portal-headers
+      resources: *utility-resources
+    logging: *default-logging
+    labels:
+      - traefik.enable=${INFRA_ADMIN_PUBLIC_ENABLED:-false}
+      - traefik.docker.network=${NETWORK:-proxy}
+      - traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_DOMAIN}`)
+      - traefik.http.routers.pgadmin.entrypoints=websecure
+      - traefik.http.routers.pgadmin.tls=true
+      - traefik.http.routers.pgadmin.tls.certresolver=${TRAEFIK_CERT_RESOLVER:-letsencrypt}
+      - traefik.http.services.pgadmin.loadbalancer.server.port=80
+      - traefik.http.middlewares.infra-admin-ipallowlist.ipallowlist.sourcerange=${INFRA_ADMIN_ALLOWED_IPS:-127.0.0.1/32}
+      - "traefik.http.middlewares.infra-admin-basicauth.basicauth.users=${INFRA_ADMIN_BASIC_AUTH_USERS:-disabled:{SHA}YHjTQ0VXlTKxiKyyCo5hU6n/Xgo=}"
+      - traefik.http.middlewares.infra-admin-basicauth.basicauth.removeheader=true
+      - traefik.http.middlewares.infra-admin-ratelimit.ratelimit.average=${INFRA_ADMIN_RATE_LIMIT_AVERAGE:-10}
+      - traefik.http.middlewares.infra-admin-ratelimit.ratelimit.burst=${INFRA_ADMIN_RATE_LIMIT_BURST:-20}
+      - traefik.http.middlewares.infra-admin-headers.headers.framedeny=true
+      - traefik.http.middlewares.infra-admin-headers.headers.contenttypenosniff=true
+      - traefik.http.middlewares.infra-admin-headers.headers.referrerpolicy=no-referrer
+      - traefik.http.middlewares.infra-admin-chain.chain.middlewares=infra-admin-ipallowlist,infra-admin-basicauth,infra-admin-ratelimit,infra-admin-headers
+      - traefik.http.routers.pgadmin.middlewares=infra-admin-chain
+    networks:
+      - default
+
+  redisinsight:
+    container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-redisinsight
+    image: ${REDISINSIGHT_IMAGE:-redis/redisinsight}:${REDISINSIGHT_TAG:-3.4.2}
+    restart: unless-stopped
+    volumes:
+      - redisinsight_data:/data
+    environment:
+      RI_REDIS_USERNAME: ${RI_REDIS_USERNAME:-default}
+      RI_REDIS_PASSWORD: ${RI_REDIS_PASSWORD:-${REDIS_PASSWORD}}
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources: *utility-resources
+    logging: *default-logging
+    labels:
+      - traefik.enable=${INFRA_ADMIN_PUBLIC_ENABLED:-false}
+      - traefik.docker.network=${NETWORK:-proxy}
+      - traefik.http.routers.redisinsight.rule=Host(`${REDISINSIGHT_DOMAIN}`)
+      - traefik.http.routers.redisinsight.entrypoints=websecure
+      - traefik.http.routers.redisinsight.tls=true
+      - traefik.http.routers.redisinsight.tls.certresolver=${TRAEFIK_CERT_RESOLVER:-letsencrypt}
+      - traefik.http.services.redisinsight.loadbalancer.server.port=5540
+      - traefik.http.routers.redisinsight.middlewares=infra-admin-chain
+    networks:
+      - default
 
 volumes:
   pgadmin_data:
@@ -791,6 +1029,11 @@ volumes:
   dgii_ecf_engine_logs:
 
 networks:
-  default:
+  backup_admin:
+    internal: true
+  egress:
+  proxy:
     name: ${NETWORK:-proxy}
     external: true
+  default:
+    internal: true
