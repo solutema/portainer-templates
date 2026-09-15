@@ -16,6 +16,24 @@ Portainer debe solicitar y conservar fuera de Git:
 
 No incluya secretos en el repositorio ni en la definición versionada del stack.
 
+## Contrato de dominios
+
+Los cinco valores siguientes deben mantenerse coherentes. En Solutema son:
+
+| Variable | Valor de producción |
+| --- | --- |
+| `ENGINE_DOMAIN` | `ecf.solutema.com` |
+| `PUBLIC_ENGINE_URL` | `ecf.solutema.com` |
+| `PORTAL_DOMAIN` | `app.solutema.com` |
+| `PORTAL_PUBLIC_URL` | `https://app.solutema.com` |
+| `CORS_ALLOWED_ORIGINS` | `https://app.solutema.com` |
+
+No despliegue el stack con dominios de ejemplo ni variables de validación. Un
+`ENGINE_DOMAIN` distinto de `PUBLIC_ENGINE_URL` deja al portal apuntando a un
+router inexistente y el navegador lo muestra como **Network Error** durante el
+inicio de sesión. Antes de redeploy, confirme esos valores en el formulario de
+variables de Portainer.
+
 ## Valores operativos de producción
 
 - Engine y portal: `1.1.173`.
