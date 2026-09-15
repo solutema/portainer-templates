@@ -827,8 +827,8 @@
       "id": 10,
       "type": 3,
       "title": "DGII e-CF Stack",
-      "description": "DGII e-CF stack is an application that works electronic invoicing for Dominican Republic.",
-      "note": "Deploys a DGII e-CF stack instance to electronic invoicing.",
+      "description": "Producción reproducible de DGII e-CF: API, portal, workers, PostgreSQL, Redis, PgBouncer, respaldos y renderizado de comprobantes.",
+      "note": "Requiere secretos de producción. Las migraciones se ejecutan mediante el perfil dgii-ecf-migrate; el tráfico de aplicación se conecta por PgBouncer y los artefactos quedan en filesystem compartido salvo que se configure S3.",
       "categories": [
         "API"
       ],
@@ -1869,7 +1869,7 @@
           "name": "DGII_ECF_ENGINE_IMAGE"
         },
         {
-          "default": "1.1.170",
+          "default": "1.1.173",
           "label": "DGII e-CF Engine Tag",
           "name": "DGII_ECF_ENGINE_TAG"
         },
@@ -2069,7 +2069,7 @@
           "name": "DGII_ECF_PORTAL_IMAGE"
         },
         {
-          "default": "1.1.170",
+          "default": "1.1.173",
           "label": "DGII e-CF Portal Tag",
           "name": "DGII_ECF_PORTAL_TAG"
         },
@@ -2326,6 +2326,14 @@
           "default": "proxy",
           "label": "Network name",
           "name": "NETWORK"
+        },
+        {
+          "label": "Print Renderer Internal Token",
+          "name": "PRINT_RENDERER_INTERNAL_TOKEN"
+        },
+        {
+          "label": "Instance Backup Agent Token",
+          "name": "INSTANCE_BACKUP_AGENT_TOKEN"
         }
       ]
     },
