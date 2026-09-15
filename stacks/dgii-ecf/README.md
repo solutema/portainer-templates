@@ -39,6 +39,8 @@ variables de Portainer.
 - Engine y portal: `1.1.173`.
 - PgBouncer: `edoburu/pgbouncer:1.22.1-p0`, modo `transaction`, autenticación
   `scram-sha-256`, máximo de 250 clientes y 45 conexiones PostgreSQL.
+- `INSTANCE_BACKUP_WORK_DIR=/tmp/dgii-ecf-instance-backups`. No lo ubique bajo
+  `/data`, porque el backup de datos empaqueta ese árbol completo.
 - Las réplicas de engine, scheduler y workers usan `pgbouncer:5432`; las
   migraciones deben conectarse directamente a PostgreSQL.
 - Los artefactos usan `ARTIFACT_STORAGE_BACKEND=filesystem` y el volumen

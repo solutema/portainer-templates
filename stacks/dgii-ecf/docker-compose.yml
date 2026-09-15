@@ -61,7 +61,9 @@ x-engine-env: &engine-env
   APP_DATA_DIR: ${APP_DATA_DIR:-/data}
   APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
   INSTANCE_BACKUP_ENABLED: ${INSTANCE_BACKUP_ENABLED:-true}
-  INSTANCE_BACKUP_WORK_DIR: ${INSTANCE_BACKUP_WORK_DIR:-/data/_instance-backup-work}
+  # Must remain outside /data: backup-data.sh archives all of /data and would
+  # otherwise recursively include previous backup packages.
+  INSTANCE_BACKUP_WORK_DIR: ${INSTANCE_BACKUP_WORK_DIR:-/tmp/dgii-ecf-instance-backups}
   INSTANCE_BACKUP_MAX_UPLOAD_BYTES: ${INSTANCE_BACKUP_MAX_UPLOAD_BYTES:-10737418240}
   INSTANCE_BACKUP_HTTP_TIMEOUT_MS: ${INSTANCE_BACKUP_HTTP_TIMEOUT_MS:-900000}
   INSTANCE_BACKUP_DECRYPTION_KEY_FILE: ${INSTANCE_BACKUP_DECRYPTION_KEY_FILE:-}
