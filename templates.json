@@ -1771,8 +1771,8 @@
       "id": 39,
       "type": 3,
       "title": "DGII e-CF Stack",
-      "description": "DGII e-CF stack is an application that works electronic invoicing for Dominican Republic.",
-      "note": "Deploys a DGII e-CF stack instance to electronic invoicing.",
+      "description": "Producción reproducible de DGII e-CF: API, portal, workers, PostgreSQL, Redis, PgBouncer, respaldos y renderizado de comprobantes.",
+      "note": "Template alineado con producción: expone las variables del compose, usa PgBouncer, renderer, backup automation, workers por cola y defaults seguros. Complete los secretos antes de desplegar.",
       "categories": [
         "API"
       ],
@@ -1794,7 +1794,7 @@
           "name": "POSTGRES_IMAGE"
         },
         {
-          "default": "16-alpine",
+          "default": "16.15-alpine",
           "label": "Postgres Tag",
           "name": "POSTGRES_TAG"
         },
@@ -1819,27 +1819,27 @@
           "name": "POSTGRES_PORT"
         },
         {
-          "default": "100",
+          "default": "120",
           "label": "Postgres Max Connections",
           "name": "POSTGRES_MAX_CONNECTIONS"
         },
         {
-          "default": "256MB",
+          "default": "4GB",
           "label": "Postgres Shared Buffers",
           "name": "POSTGRES_SHARED_BUFFERS"
         },
         {
-          "default": "1GB",
+          "default": "20GB",
           "label": "Postgres Effective Cache Size",
           "name": "POSTGRES_EFFECTIVE_CACHE_SIZE"
         },
         {
-          "default": "128MB",
+          "default": "512MB",
           "label": "Postgres Maintenance Work Mem",
           "name": "POSTGRES_MAINTENANCE_WORK_MEM"
         },
         {
-          "default": "4MB",
+          "default": "16MB",
           "label": "Postgres Work Mem",
           "name": "POSTGRES_WORK_MEM"
         },
@@ -1869,7 +1869,7 @@
           "name": "DGII_ECF_ENGINE_IMAGE"
         },
         {
-          "default": "1.1.173",
+          "default": "1.1.208",
           "label": "DGII e-CF Engine Tag",
           "name": "DGII_ECF_ENGINE_TAG"
         },
@@ -2069,7 +2069,7 @@
           "name": "DGII_ECF_PORTAL_IMAGE"
         },
         {
-          "default": "1.1.173",
+          "default": "1.1.208",
           "label": "DGII e-CF Portal Tag",
           "name": "DGII_ECF_PORTAL_TAG"
         },
@@ -2128,7 +2128,7 @@
           "name": "REDIS_IMAGE"
         },
         {
-          "default": "8-alpine",
+          "default": "8.6.3-alpine",
           "label": "Redis Tag",
           "name": "REDIS_TAG"
         },
@@ -2334,6 +2334,1211 @@
         {
           "label": "Instance Backup Agent Token",
           "name": "INSTANCE_BACKUP_AGENT_TOKEN"
+        },
+        {
+          "name": "API_DATABASE_URL",
+          "label": "API Database URL",
+          "default": ""
+        },
+        {
+          "name": "API_KEYS_FILE",
+          "label": "API Keys File",
+          "default": "/data/api_keys.json"
+        },
+        {
+          "name": "API_REQUEST_BODY_LIMIT",
+          "label": "API Request Body Limit",
+          "default": "2mb"
+        },
+        {
+          "name": "API_SEND_ECF_ALLOW_SYNC_IN_PRODUCTION",
+          "label": "API Send ECF Allow Sync In Production",
+          "default": "false"
+        },
+        {
+          "name": "API_SEND_ECF_DEFAULT_PROCESSING_MODE",
+          "label": "API Send ECF Default Processing Mode",
+          "default": "async"
+        },
+        {
+          "name": "APP_DATA_DIR",
+          "label": "App Data Dir",
+          "default": "/data"
+        },
+        {
+          "name": "APP_JWT_EXPIRES_IN",
+          "label": "App JWT Expires In",
+          "default": "7d"
+        },
+        {
+          "name": "APP_LOG_DIR",
+          "label": "App Log Dir",
+          "default": "/logs"
+        },
+        {
+          "name": "APP_SERVICE_NAME",
+          "label": "App Service Name",
+          "default": "dgii-ecf-engine"
+        },
+        {
+          "name": "APP_TIME_ZONE",
+          "label": "App Time Zone",
+          "default": "America/Santo_Domingo"
+        },
+        {
+          "name": "ARTIFACT_S3_ACCESS_KEY_ID",
+          "label": "Artifact S3 Access Key Id",
+          "default": ""
+        },
+        {
+          "name": "ARTIFACT_S3_BUCKET",
+          "label": "Artifact S3 Bucket",
+          "default": ""
+        },
+        {
+          "name": "ARTIFACT_S3_ENDPOINT",
+          "label": "Artifact S3 Endpoint",
+          "default": ""
+        },
+        {
+          "name": "ARTIFACT_S3_FORCE_PATH_STYLE",
+          "label": "Artifact S3 Force Path Style",
+          "default": "false"
+        },
+        {
+          "name": "ARTIFACT_S3_PREFIX",
+          "label": "Artifact S3 Prefix",
+          "default": "dgii-ecf"
+        },
+        {
+          "name": "ARTIFACT_S3_REGION",
+          "label": "Artifact S3 Region",
+          "default": "us-east-1"
+        },
+        {
+          "name": "ARTIFACT_S3_SECRET_ACCESS_KEY",
+          "label": "Artifact S3 Secret Access Key",
+          "default": ""
+        },
+        {
+          "name": "ARTIFACT_S3_SERVER_SIDE_ENCRYPTION",
+          "label": "Artifact S3 Server Side Encryption",
+          "default": ""
+        },
+        {
+          "name": "ARTIFACT_STORAGE_BACKEND",
+          "label": "Artifact Storage Backend",
+          "default": "filesystem"
+        },
+        {
+          "name": "AUDIT_HASH_CHAIN_ENABLED",
+          "label": "Audit Hash Chain Enabled",
+          "default": "true"
+        },
+        {
+          "name": "AUDIT_LOG_FILE",
+          "label": "Audit Log File",
+          "default": "/logs/audit.log"
+        },
+        {
+          "name": "BACKPRESSURE_ENABLED",
+          "label": "Backpressure Enabled",
+          "default": "true"
+        },
+        {
+          "name": "BACKPRESSURE_MAX_COMPANY_ACTIVE_JOBS",
+          "label": "Backpressure Max Company Active Jobs",
+          "default": "3000"
+        },
+        {
+          "name": "BACKPRESSURE_MAX_COMPANY_READY_JOBS",
+          "label": "Backpressure Max Company Ready Jobs",
+          "default": "1000"
+        },
+        {
+          "name": "BACKPRESSURE_MAX_GLOBAL_ACTIVE_JOBS",
+          "label": "Backpressure Max Global Active Jobs",
+          "default": "15000"
+        },
+        {
+          "name": "BACKPRESSURE_MAX_GLOBAL_READY_JOBS",
+          "label": "Backpressure Max Global Ready Jobs",
+          "default": "5000"
+        },
+        {
+          "name": "BACKPRESSURE_MAX_OLDEST_READY_SECONDS",
+          "label": "Backpressure Max Oldest Ready Seconds",
+          "default": "600"
+        },
+        {
+          "name": "BACKPRESSURE_RETRY_AFTER_SECONDS",
+          "label": "Backpressure Retry After Seconds",
+          "default": "30"
+        },
+        {
+          "name": "BACKUP_LOCAL_DIR",
+          "label": "Backup Local Dir",
+          "default": "./backups/automated"
+        },
+        {
+          "name": "BACKUP_REMOTE_DRIVER",
+          "label": "Backup Remote Driver",
+          "default": "rclone"
+        },
+        {
+          "name": "BACKUP_REMOTE_ENABLED",
+          "label": "Backup Remote Enabled",
+          "default": "false"
+        },
+        {
+          "name": "BACKUP_REMOTE_FTP_DIR",
+          "label": "Backup Remote FTP Dir",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_FTP_PASSWORD",
+          "label": "Backup Remote FTP Password",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_FTP_URL",
+          "label": "Backup Remote FTP URL",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_FTP_USER",
+          "label": "Backup Remote FTP User",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_LFTP_FLAGS",
+          "label": "Backup Remote LFTP Flags",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_RCLONE_FLAGS",
+          "label": "Backup Remote RCLONE Flags",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_RSYNC_FLAGS",
+          "label": "Backup Remote RSYNC Flags",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_SCP_FLAGS",
+          "label": "Backup Remote SCP Flags",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_TARGET",
+          "label": "Backup Remote Target",
+          "default": ""
+        },
+        {
+          "name": "BACKUP_REMOTE_VERIFY",
+          "label": "Backup Remote Verify",
+          "default": "true"
+        },
+        {
+          "name": "BACKUP_RESTORE_VERIFY_ON_CREATE",
+          "label": "Backup Restore Verify On Create",
+          "default": "true"
+        },
+        {
+          "name": "BILLING_ENFORCE_SUBSCRIPTION",
+          "label": "Billing Enforce Subscription",
+          "default": "false"
+        },
+        {
+          "name": "BUYER_DELIVERY_TIMEOUT_MS",
+          "label": "Buyer Delivery Timeout Ms",
+          "default": "15000"
+        },
+        {
+          "name": "CERT_MASTER_KEY_VERSION",
+          "label": "Cert Master Key Version",
+          "default": "prod-primary"
+        },
+        {
+          "name": "CERT_STORE_DIR",
+          "label": "Cert Store Dir",
+          "default": "/data/certificates"
+        },
+        {
+          "name": "DATABASE_CONNECTION_LIMIT",
+          "label": "Database Connection Limit",
+          "default": "3"
+        },
+        {
+          "name": "DGII_AUTO_RECONCILIATION_ENABLED",
+          "label": "DGII Auto Reconciliation Enabled",
+          "default": "true"
+        },
+        {
+          "name": "DGII_AUTO_RECONCILIATION_MAX_COMPANIES_PER_CYCLE",
+          "label": "DGII Auto Reconciliation Max Companies Per Cycle",
+          "default": "25"
+        },
+        {
+          "name": "DGII_AUTO_RECONCILIATION_MAX_DOCUMENTS_PER_COMPANY",
+          "label": "DGII Auto Reconciliation Max Documents Per Company",
+          "default": "20"
+        },
+        {
+          "name": "DGII_ECF_BACKUP_AUTOMATION_REPLICAS",
+          "label": "DGII ECF Backup Automation Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_HOUSEKEEPING_REPLICAS",
+          "label": "DGII ECF Housekeeping Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_SCHEDULER_REPLICAS",
+          "label": "DGII ECF Scheduler Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WEBHOOK_WORKER_REPLICAS",
+          "label": "DGII ECF Webhook Worker Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WORKER_CONTINGENCY_REPLICAS",
+          "label": "DGII ECF Worker Contingency Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WORKER_RETRY_REPLICAS",
+          "label": "DGII ECF Worker Retry Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WORKER_SEND_BULK_REPLICAS",
+          "label": "DGII ECF Worker Send Bulk Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WORKER_SEND_HIGH_REPLICAS",
+          "label": "DGII ECF Worker Send High Replicas",
+          "default": "2"
+        },
+        {
+          "name": "DGII_ECF_WORKER_SEND_LEGACY_REPLICAS",
+          "label": "DGII ECF Worker Send Legacy Replicas",
+          "default": "1"
+        },
+        {
+          "name": "DGII_ECF_WORKER_SEND_REPLICAS",
+          "label": "DGII ECF Worker Send Replicas",
+          "default": "2"
+        },
+        {
+          "name": "DGII_HTTP_TIMEOUT_MS",
+          "label": "DGII HTTP Timeout Ms",
+          "default": "45000"
+        },
+        {
+          "name": "DOCUMENT_EXPORT_BATCH_SIZE",
+          "label": "Document Export Batch Size",
+          "default": "500"
+        },
+        {
+          "name": "DOCUMENT_EXPORT_MAX_ROWS",
+          "label": "Document Export Max Rows",
+          "default": "100000"
+        },
+        {
+          "name": "ENGINE_CPU_LIMIT",
+          "label": "Engine CPU Limit",
+          "default": "1.50"
+        },
+        {
+          "name": "ENGINE_CPU_RESERVATION",
+          "label": "Engine CPU Reservation",
+          "default": "0.25"
+        },
+        {
+          "name": "ENGINE_MEMORY_LIMIT",
+          "label": "Engine Memory Limit",
+          "default": "1536M"
+        },
+        {
+          "name": "ENGINE_MEMORY_RESERVATION",
+          "label": "Engine Memory Reservation",
+          "default": "256M"
+        },
+        {
+          "name": "ENGINE_PIDS_LIMIT",
+          "label": "Engine Pids Limit",
+          "default": "256"
+        },
+        {
+          "name": "FAIR_USAGE_BULK_MAX_RUNNING_JOBS_PER_COMPANY",
+          "label": "Fair Usage Bulk Max Running Jobs Per Company",
+          "default": "5"
+        },
+        {
+          "name": "FAIR_USAGE_ENABLED",
+          "label": "Fair Usage Enabled",
+          "default": "true"
+        },
+        {
+          "name": "FAIR_USAGE_HIGH_PRIORITY_MAX_RUNNING_JOBS_PER_COMPANY",
+          "label": "Fair Usage High Priority Max Running Jobs Per Company",
+          "default": "20"
+        },
+        {
+          "name": "FAIR_USAGE_MAX_RUNNING_JOBS_PER_COMPANY",
+          "label": "Fair Usage Max Running Jobs Per Company",
+          "default": "10"
+        },
+        {
+          "name": "FE_RECEPTION_DEFAULT_ENV",
+          "label": "Fe Reception Default Env",
+          "default": "TesteCF"
+        },
+        {
+          "name": "FISCAL_COLD_ARCHIVE_AFTER_DAYS",
+          "label": "Fiscal Cold Archive After Days",
+          "default": "365"
+        },
+        {
+          "name": "FISCAL_COLD_ARCHIVE_DIR",
+          "label": "Fiscal Cold Archive Dir",
+          "default": "/data/fiscal-archive"
+        },
+        {
+          "name": "FISCAL_COLD_ARCHIVE_ENABLED",
+          "label": "Fiscal Cold Archive Enabled",
+          "default": "false"
+        },
+        {
+          "name": "FISCAL_COLD_ARCHIVE_LAYOUT",
+          "label": "Fiscal Cold Archive Layout",
+          "default": "tenant-year"
+        },
+        {
+          "name": "FISCAL_RETENTION_IMMUTABLE_YEARS",
+          "label": "Fiscal Retention Immutable Years",
+          "default": "10"
+        },
+        {
+          "name": "FISCAL_RETENTION_POLICY_ENABLED",
+          "label": "Fiscal Retention Policy Enabled",
+          "default": "true"
+        },
+        {
+          "name": "HEALTH_DEEP_TOKEN",
+          "label": "Health Deep Token",
+          "default": ""
+        },
+        {
+          "name": "HOUSEKEEPING_ENABLED",
+          "label": "Housekeeping Enabled",
+          "default": "true"
+        },
+        {
+          "name": "HOUSEKEEPING_IDEMPOTENCY_PENDING_RETENTION_HOURS",
+          "label": "Housekeeping Idempotency Pending Retention Hours",
+          "default": "24"
+        },
+        {
+          "name": "HOUSEKEEPING_INTERVAL_MS",
+          "label": "Housekeeping Interval Ms",
+          "default": "300000"
+        },
+        {
+          "name": "HOUSEKEEPING_QUEUE_ARCHIVE_RETENTION_DAYS",
+          "label": "Housekeeping Queue Archive Retention Days",
+          "default": "90"
+        },
+        {
+          "name": "HOUSEKEEPING_QUEUE_DONE_RETENTION_DAYS",
+          "label": "Housekeeping Queue Done Retention Days",
+          "default": "7"
+        },
+        {
+          "name": "HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS",
+          "label": "Housekeeping Queue Failed Retention Days",
+          "default": "30"
+        },
+        {
+          "name": "HOUSEKEEPING_WORKER_SLEEP_MS",
+          "label": "Housekeeping Worker Sleep Ms",
+          "default": "300000"
+        },
+        {
+          "name": "HTTP_HEADERS_TIMEOUT_EXTRA_MS",
+          "label": "HTTP Headers Timeout Extra Ms",
+          "default": "5000"
+        },
+        {
+          "name": "HTTP_KEEP_ALIVE_TIMEOUT_MS",
+          "label": "HTTP Keep Alive Timeout Ms",
+          "default": "5000"
+        },
+        {
+          "name": "HTTP_REQUEST_TIMEOUT_MS",
+          "label": "HTTP Request Timeout Ms",
+          "default": "30000"
+        },
+        {
+          "name": "INFRA_ADMIN_ALLOWED_IPS",
+          "label": "Infra Admin Allowed Ips",
+          "default": "127.0.0.1/32"
+        },
+        {
+          "name": "INFRA_ADMIN_BASIC_AUTH_USERS",
+          "label": "Infra Admin Basic Auth Users",
+          "default": "disabled:{SHA"
+        },
+        {
+          "name": "INFRA_ADMIN_PUBLIC_ENABLED",
+          "label": "Infra Admin Public Enabled",
+          "default": "false"
+        },
+        {
+          "name": "INFRA_ADMIN_RATE_LIMIT_AVERAGE",
+          "label": "Infra Admin Rate Limit Average",
+          "default": "10"
+        },
+        {
+          "name": "INFRA_ADMIN_RATE_LIMIT_BURST",
+          "label": "Infra Admin Rate Limit Burst",
+          "default": "20"
+        },
+        {
+          "name": "INSTANCE_BACKUP_AGENT_URL",
+          "label": "Instance Backup Agent URL",
+          "default": "http://dgii-ecf-backup-automation:4006"
+        },
+        {
+          "name": "INSTANCE_BACKUP_DECRYPTION_KEY_FILE",
+          "label": "Instance Backup Decryption Key File",
+          "default": ""
+        },
+        {
+          "name": "INSTANCE_BACKUP_ENABLED",
+          "label": "Instance Backup Enabled",
+          "default": "true"
+        },
+        {
+          "name": "INSTANCE_BACKUP_HTTP_TIMEOUT_MS",
+          "label": "Instance Backup HTTP Timeout Ms",
+          "default": "900000"
+        },
+        {
+          "name": "INSTANCE_BACKUP_MAX_UPLOAD_BYTES",
+          "label": "Instance Backup Max Upload Bytes",
+          "default": "10737418240"
+        },
+        {
+          "name": "INSTANCE_BACKUP_WORK_DIR",
+          "label": "Instance Backup Work Dir",
+          "default": "/data/_instance-backup-work"
+        },
+        {
+          "name": "METRICS_AUTH_TOKEN",
+          "label": "Metrics Auth Token",
+          "default": ""
+        },
+        {
+          "name": "METRICS_ENABLED",
+          "label": "Metrics Enabled",
+          "default": "true"
+        },
+        {
+          "name": "OPERATIONAL_DEGRADED_REJECT_WRITES",
+          "label": "Operational Degraded Reject Writes",
+          "default": "false"
+        },
+        {
+          "name": "OPERATIONAL_MODE",
+          "label": "Operational Mode",
+          "default": "normal"
+        },
+        {
+          "name": "OPERATIONAL_MODE_REASON",
+          "label": "Operational Mode Reason",
+          "default": ""
+        },
+        {
+          "name": "OPERATIONAL_RETRY_AFTER_SECONDS",
+          "label": "Operational Retry After Seconds",
+          "default": "60"
+        },
+        {
+          "name": "PGBOUNCER_AUTH_TYPE",
+          "label": "Pgbouncer Auth Type",
+          "default": "scram-sha-256"
+        },
+        {
+          "name": "PGBOUNCER_CPU_LIMIT",
+          "label": "Pgbouncer CPU Limit",
+          "default": "0.50"
+        },
+        {
+          "name": "PGBOUNCER_CPU_RESERVATION",
+          "label": "Pgbouncer CPU Reservation",
+          "default": "0.05"
+        },
+        {
+          "name": "PGBOUNCER_DEFAULT_POOL_SIZE",
+          "label": "Pgbouncer Default Pool Size",
+          "default": "45"
+        },
+        {
+          "name": "PGBOUNCER_IGNORE_STARTUP_PARAMETERS",
+          "label": "Pgbouncer Ignore Startup Parameters",
+          "default": "extra_float_digits,search_path"
+        },
+        {
+          "name": "PGBOUNCER_IMAGE",
+          "label": "Pgbouncer Image",
+          "default": "edoburu/pgbouncer"
+        },
+        {
+          "name": "PGBOUNCER_IMAGE_TAG",
+          "label": "Pgbouncer Image Tag",
+          "default": "1.22.1-p0"
+        },
+        {
+          "name": "PGBOUNCER_MAX_CLIENT_CONNECTIONS",
+          "label": "Pgbouncer Max Client Connections",
+          "default": "500"
+        },
+        {
+          "name": "PGBOUNCER_MAX_DB_CONNECTIONS",
+          "label": "Pgbouncer Max DB Connections",
+          "default": "80"
+        },
+        {
+          "name": "PGBOUNCER_MAX_PREPARED_STATEMENTS",
+          "label": "Pgbouncer Max Prepared Statements",
+          "default": "100"
+        },
+        {
+          "name": "PGBOUNCER_MEMORY_LIMIT",
+          "label": "Pgbouncer Memory Limit",
+          "default": "256M"
+        },
+        {
+          "name": "PGBOUNCER_MEMORY_RESERVATION",
+          "label": "Pgbouncer Memory Reservation",
+          "default": "32M"
+        },
+        {
+          "name": "PGBOUNCER_PIDS_LIMIT",
+          "label": "Pgbouncer Pids Limit",
+          "default": "128"
+        },
+        {
+          "name": "PGBOUNCER_POOL_MODE",
+          "label": "Pgbouncer Pool Mode",
+          "default": "transaction"
+        },
+        {
+          "name": "PGBOUNCER_RESERVE_POOL_SIZE",
+          "label": "Pgbouncer Reserve Pool Size",
+          "default": "10"
+        },
+        {
+          "name": "PGBOUNCER_RESERVE_POOL_TIMEOUT",
+          "label": "Pgbouncer Reserve Pool Timeout",
+          "default": "3"
+        },
+        {
+          "name": "PGBOUNCER_SERVER_IDLE_TIMEOUT",
+          "label": "Pgbouncer Server Idle Timeout",
+          "default": "300"
+        },
+        {
+          "name": "PORTAL_CPU_LIMIT",
+          "label": "Portal CPU Limit",
+          "default": "1.00"
+        },
+        {
+          "name": "PORTAL_CPU_RESERVATION",
+          "label": "Portal CPU Reservation",
+          "default": "0.10"
+        },
+        {
+          "name": "PORTAL_MEMORY_LIMIT",
+          "label": "Portal Memory Limit",
+          "default": "1024M"
+        },
+        {
+          "name": "PORTAL_MEMORY_RESERVATION",
+          "label": "Portal Memory Reservation",
+          "default": "128M"
+        },
+        {
+          "name": "PORTAL_PIDS_LIMIT",
+          "label": "Portal Pids Limit",
+          "default": "256"
+        },
+        {
+          "name": "POSTGRES_AUTOVACUUM_ANALYZE_SCALE_FACTOR",
+          "label": "POSTGRES Autovacuum Analyze Scale Factor",
+          "default": "0.02"
+        },
+        {
+          "name": "POSTGRES_AUTOVACUUM_MAX_WORKERS",
+          "label": "POSTGRES Autovacuum Max Workers",
+          "default": "4"
+        },
+        {
+          "name": "POSTGRES_AUTOVACUUM_NAPTIME",
+          "label": "POSTGRES Autovacuum Naptime",
+          "default": "15s"
+        },
+        {
+          "name": "POSTGRES_AUTOVACUUM_VACUUM_SCALE_FACTOR",
+          "label": "POSTGRES Autovacuum Vacuum Scale Factor",
+          "default": "0.05"
+        },
+        {
+          "name": "POSTGRES_CHECKPOINT_COMPLETION_TARGET",
+          "label": "POSTGRES Checkpoint Completion Target",
+          "default": "0.9"
+        },
+        {
+          "name": "POSTGRES_CHECKPOINT_TIMEOUT",
+          "label": "POSTGRES Checkpoint Timeout",
+          "default": "15min"
+        },
+        {
+          "name": "POSTGRES_CPU_LIMIT",
+          "label": "POSTGRES CPU Limit",
+          "default": "3.00"
+        },
+        {
+          "name": "POSTGRES_CPU_RESERVATION",
+          "label": "POSTGRES CPU Reservation",
+          "default": "0.25"
+        },
+        {
+          "name": "POSTGRES_DEFAULT_STATISTICS_TARGET",
+          "label": "POSTGRES Default Statistics Target",
+          "default": "200"
+        },
+        {
+          "name": "POSTGRES_EFFECTIVE_IO_CONCURRENCY",
+          "label": "POSTGRES Effective Io Concurrency",
+          "default": "200"
+        },
+        {
+          "name": "POSTGRES_JIT",
+          "label": "POSTGRES Jit",
+          "default": "off"
+        },
+        {
+          "name": "POSTGRES_MAX_WAL_SIZE",
+          "label": "POSTGRES Max WAL Size",
+          "default": "4GB"
+        },
+        {
+          "name": "POSTGRES_MEMORY_LIMIT",
+          "label": "POSTGRES Memory Limit",
+          "default": "10G"
+        },
+        {
+          "name": "POSTGRES_MEMORY_RESERVATION",
+          "label": "POSTGRES Memory Reservation",
+          "default": "512M"
+        },
+        {
+          "name": "POSTGRES_MIN_WAL_SIZE",
+          "label": "POSTGRES Min WAL Size",
+          "default": "1GB"
+        },
+        {
+          "name": "POSTGRES_PIDS_LIMIT",
+          "label": "POSTGRES Pids Limit",
+          "default": "256"
+        },
+        {
+          "name": "POSTGRES_RANDOM_PAGE_COST",
+          "label": "POSTGRES Random Page Cost",
+          "default": "1.1"
+        },
+        {
+          "name": "POSTGRES_WAL_COMPRESSION",
+          "label": "POSTGRES WAL Compression",
+          "default": "on"
+        },
+        {
+          "name": "PRINT_RENDERER_ALLOW_LOCAL_FALLBACK",
+          "label": "Print Renderer Allow Local Fallback",
+          "default": "false"
+        },
+        {
+          "name": "PRINT_RENDERER_CONTAINER_NAME",
+          "label": "Print Renderer Container Name",
+          "default": "dgii-ecf-print-renderer"
+        },
+        {
+          "name": "PRINT_RENDERER_CPU_LIMIT",
+          "label": "Print Renderer CPU Limit",
+          "default": "1.50"
+        },
+        {
+          "name": "PRINT_RENDERER_CPU_RESERVATION",
+          "label": "Print Renderer CPU Reservation",
+          "default": "0.10"
+        },
+        {
+          "name": "PRINT_RENDERER_HTTP_MAX_SOCKETS",
+          "label": "Print Renderer HTTP Max Sockets",
+          "default": "50"
+        },
+        {
+          "name": "PRINT_RENDERER_HTTP_TIMEOUT_MS",
+          "label": "Print Renderer HTTP Timeout Ms",
+          "default": "50000"
+        },
+        {
+          "name": "PRINT_RENDERER_IMAGE_NAME",
+          "label": "Print Renderer Image Name",
+          "default": "gitea.joseagrc.com/joseagrc/dgii-ecf-print-renderer"
+        },
+        {
+          "name": "PRINT_RENDERER_IMAGE_TAG",
+          "label": "Print Renderer Image Tag",
+          "default": "1.1.208"
+        },
+        {
+          "name": "PRINT_RENDERER_MAX_BODY_BYTES",
+          "label": "Print Renderer Max Body Bytes",
+          "default": "20971520"
+        },
+        {
+          "name": "PRINT_RENDERER_MAX_CONCURRENCY",
+          "label": "Print Renderer Max Concurrency",
+          "default": "2"
+        },
+        {
+          "name": "PRINT_RENDERER_MAX_PDF_BYTES",
+          "label": "Print Renderer Max PDF Bytes",
+          "default": "26214400"
+        },
+        {
+          "name": "PRINT_RENDERER_MAX_QUEUE",
+          "label": "Print Renderer Max Queue",
+          "default": "50"
+        },
+        {
+          "name": "PRINT_RENDERER_MEMORY_LIMIT",
+          "label": "Print Renderer Memory Limit",
+          "default": "1024M"
+        },
+        {
+          "name": "PRINT_RENDERER_MEMORY_RESERVATION",
+          "label": "Print Renderer Memory Reservation",
+          "default": "256M"
+        },
+        {
+          "name": "PRINT_RENDERER_PIDS_LIMIT",
+          "label": "Print Renderer Pids Limit",
+          "default": "256"
+        },
+        {
+          "name": "PRINT_RENDERER_PORT",
+          "label": "Print Renderer Port",
+          "default": "4010"
+        },
+        {
+          "name": "PRINT_RENDERER_REQUIRED",
+          "label": "Print Renderer Required",
+          "default": "true"
+        },
+        {
+          "name": "PRINT_RENDERER_TIMEOUT_MS",
+          "label": "Print Renderer Timeout Ms",
+          "default": "45000"
+        },
+        {
+          "name": "PRINT_RENDERER_URL",
+          "label": "Print Renderer URL",
+          "default": "http://dgii-ecf-print-renderer:4010"
+        },
+        {
+          "name": "QUEUE_SCHEDULER_ENABLED",
+          "label": "Queue Scheduler Enabled",
+          "default": "false"
+        },
+        {
+          "name": "QUEUE_SCHEDULER_MAX_RUNNING_MINUTES",
+          "label": "Queue Scheduler Max Running Minutes",
+          "default": "10"
+        },
+        {
+          "name": "QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS",
+          "label": "Queue Scheduler Recovery Interval Ms",
+          "default": "60000"
+        },
+        {
+          "name": "RATE_LIMIT_HIGH_RISK_DEFAULT_RULES_ENABLED",
+          "label": "Rate Limit High Risk Default Rules Enabled",
+          "default": "true"
+        },
+        {
+          "name": "RATE_LIMIT_REDIS_FAIL_OPEN",
+          "label": "Rate Limit REDIS Fail Open",
+          "default": "false"
+        },
+        {
+          "name": "REDIS_COMMAND_TIMEOUT_MS",
+          "label": "REDIS Command Timeout Ms",
+          "default": "3000"
+        },
+        {
+          "name": "REDIS_CONNECT_TIMEOUT_MS",
+          "label": "REDIS Connect Timeout Ms",
+          "default": "5000"
+        },
+        {
+          "name": "REDIS_CPU_LIMIT",
+          "label": "REDIS CPU Limit",
+          "default": "1.00"
+        },
+        {
+          "name": "REDIS_CPU_RESERVATION",
+          "label": "REDIS CPU Reservation",
+          "default": "0.10"
+        },
+        {
+          "name": "REDIS_ENABLED",
+          "label": "REDIS Enabled",
+          "default": "true"
+        },
+        {
+          "name": "REDIS_KEY_PREFIX",
+          "label": "REDIS Key Prefix",
+          "default": "dgii-ecf-engine"
+        },
+        {
+          "name": "REDIS_MEMORY_LIMIT",
+          "label": "REDIS Memory Limit",
+          "default": "768M"
+        },
+        {
+          "name": "REDIS_MEMORY_RESERVATION",
+          "label": "REDIS Memory Reservation",
+          "default": "128M"
+        },
+        {
+          "name": "REDIS_PIDS_LIMIT",
+          "label": "REDIS Pids Limit",
+          "default": "128"
+        },
+        {
+          "name": "REDIS_URL",
+          "label": "REDIS URL",
+          "default": ""
+        },
+        {
+          "name": "REGISTRY_FILE",
+          "label": "Registry File",
+          "default": "/data/registry.json"
+        },
+        {
+          "name": "SAVE_TRANSACTIONS",
+          "label": "Save Transactions",
+          "default": "true"
+        },
+        {
+          "name": "SAVE_TRANSACTIONS_INCLUDE_JSON",
+          "label": "Save Transactions Include JSON",
+          "default": "true"
+        },
+        {
+          "name": "SAVE_TRANSACTIONS_INCLUDE_RESPONSE",
+          "label": "Save Transactions Include Response",
+          "default": "true"
+        },
+        {
+          "name": "SERVICE_HEARTBEAT_INTERVAL_MS",
+          "label": "Service Heartbeat Interval Ms",
+          "default": "15000"
+        },
+        {
+          "name": "SERVICE_HEARTBEAT_MAX_AGE_MS",
+          "label": "Service Heartbeat Max Age Ms",
+          "default": "120000"
+        },
+        {
+          "name": "SERVICE_HEARTBEAT_RETENTION_MS",
+          "label": "Service Heartbeat Retention Ms",
+          "default": "86400000"
+        },
+        {
+          "name": "SESSION_COOKIE_NAME",
+          "label": "Session Cookie Name",
+          "default": "app_session"
+        },
+        {
+          "name": "SINGLETON_CYCLE_DISTRIBUTED_LOCK_ENABLED",
+          "label": "Singleton Cycle Distributed Lock Enabled",
+          "default": "true"
+        },
+        {
+          "name": "SINGLETON_CYCLE_LOCK_TTL_MS",
+          "label": "Singleton Cycle Lock Ttl Ms",
+          "default": "300000"
+        },
+        {
+          "name": "TRANSACTIONS_DIR",
+          "label": "Transactions Dir",
+          "default": "/data/transactions"
+        },
+        {
+          "name": "USERS_FILE",
+          "label": "Users File",
+          "default": "/data/users.json"
+        },
+        {
+          "name": "UTILITY_CPU_LIMIT",
+          "label": "Utility CPU Limit",
+          "default": "0.50"
+        },
+        {
+          "name": "UTILITY_CPU_RESERVATION",
+          "label": "Utility CPU Reservation",
+          "default": "0.05"
+        },
+        {
+          "name": "UTILITY_MEMORY_LIMIT",
+          "label": "Utility Memory Limit",
+          "default": "512M"
+        },
+        {
+          "name": "UTILITY_MEMORY_RESERVATION",
+          "label": "Utility Memory Reservation",
+          "default": "64M"
+        },
+        {
+          "name": "UTILITY_PIDS_LIMIT",
+          "label": "Utility Pids Limit",
+          "default": "128"
+        },
+        {
+          "name": "WEBHOOKS_ENABLED",
+          "label": "Webhooks Enabled",
+          "default": "true"
+        },
+        {
+          "name": "WEBHOOK_ALLOWED_HOSTS",
+          "label": "Webhook Allowed Hosts",
+          "default": ""
+        },
+        {
+          "name": "WEBHOOK_ALLOW_PRIVATE_URLS",
+          "label": "Webhook Allow Private Urls",
+          "default": "false"
+        },
+        {
+          "name": "WEBHOOK_DEFAULT_TIMEOUT_MS",
+          "label": "Webhook Default Timeout Ms",
+          "default": "10000"
+        },
+        {
+          "name": "WEBHOOK_MAX_ATTEMPTS",
+          "label": "Webhook Max Attempts",
+          "default": "8"
+        },
+        {
+          "name": "WEBHOOK_MAX_RESPONSE_BODY_CHARS",
+          "label": "Webhook Max Response Body Chars",
+          "default": "4000"
+        },
+        {
+          "name": "WEBHOOK_REQUIRE_HTTPS",
+          "label": "Webhook Require HTTPS",
+          "default": "true"
+        },
+        {
+          "name": "WEBHOOK_WORKER_INTERVAL_MS",
+          "label": "Webhook Worker Interval Ms",
+          "default": "3000"
+        },
+        {
+          "name": "WEBHOOK_WORKER_MAX",
+          "label": "Webhook Worker Max",
+          "default": "20"
+        },
+        {
+          "name": "WEBHOOK_WORKER_SLEEP_MS",
+          "label": "Webhook Worker Sleep Ms",
+          "default": "3000"
+        },
+        {
+          "name": "WORKER_CONCURRENCY",
+          "label": "Worker Concurrency",
+          "default": "1"
+        },
+        {
+          "name": "WORKER_CONTINGENCY_CONCURRENCY",
+          "label": "Worker Contingency Concurrency",
+          "default": "1"
+        },
+        {
+          "name": "WORKER_CONTINGENCY_MAX",
+          "label": "Worker Contingency Max",
+          "default": "2"
+        },
+        {
+          "name": "WORKER_CONTINGENCY_SLEEP_MS",
+          "label": "Worker Contingency Sleep Ms",
+          "default": "5000"
+        },
+        {
+          "name": "WORKER_CPU_LIMIT",
+          "label": "Worker CPU Limit",
+          "default": "1.00"
+        },
+        {
+          "name": "WORKER_CPU_RESERVATION",
+          "label": "Worker CPU Reservation",
+          "default": "0.10"
+        },
+        {
+          "name": "WORKER_DATABASE_URL",
+          "label": "Worker Database URL",
+          "default": ""
+        },
+        {
+          "name": "WORKER_HIGH_CPU_LIMIT",
+          "label": "Worker High CPU Limit",
+          "default": "1.50"
+        },
+        {
+          "name": "WORKER_HIGH_CPU_RESERVATION",
+          "label": "Worker High CPU Reservation",
+          "default": "0.15"
+        },
+        {
+          "name": "WORKER_HIGH_MEMORY_LIMIT",
+          "label": "Worker High Memory Limit",
+          "default": "1536M"
+        },
+        {
+          "name": "WORKER_HIGH_MEMORY_RESERVATION",
+          "label": "Worker High Memory Reservation",
+          "default": "192M"
+        },
+        {
+          "name": "WORKER_HIGH_PIDS_LIMIT",
+          "label": "Worker High Pids Limit",
+          "default": "256"
+        },
+        {
+          "name": "WORKER_JOB_TIMEOUT_MS",
+          "label": "Worker Job Timeout Ms",
+          "default": "120000"
+        },
+        {
+          "name": "WORKER_LOCK_CONTENTION_BASE_DELAY_SECONDS",
+          "label": "Worker Lock Contention Base Delay Seconds",
+          "default": "5"
+        },
+        {
+          "name": "WORKER_LOCK_CONTENTION_JITTER_RATIO",
+          "label": "Worker Lock Contention Jitter Ratio",
+          "default": "0.3"
+        },
+        {
+          "name": "WORKER_LOCK_CONTENTION_MAX_DELAY_SECONDS",
+          "label": "Worker Lock Contention Max Delay Seconds",
+          "default": "30"
+        },
+        {
+          "name": "WORKER_MEMORY_LIMIT",
+          "label": "Worker Memory Limit",
+          "default": "1024M"
+        },
+        {
+          "name": "WORKER_MEMORY_RESERVATION",
+          "label": "Worker Memory Reservation",
+          "default": "128M"
+        },
+        {
+          "name": "WORKER_PIDS_LIMIT",
+          "label": "Worker Pids Limit",
+          "default": "192"
+        },
+        {
+          "name": "WORKER_RETRY_CONCURRENCY",
+          "label": "Worker Retry Concurrency",
+          "default": "2"
+        },
+        {
+          "name": "WORKER_RETRY_MAX",
+          "label": "Worker Retry Max",
+          "default": "5"
+        },
+        {
+          "name": "WORKER_RETRY_SLEEP_MS",
+          "label": "Worker Retry Sleep Ms",
+          "default": "3000"
+        },
+        {
+          "name": "WORKER_SEND_BULK_MAX",
+          "label": "Worker Send Bulk Max",
+          "default": "2"
+        },
+        {
+          "name": "WORKER_SEND_BULK_SLEEP_MS",
+          "label": "Worker Send Bulk Sleep Ms",
+          "default": "5000"
+        },
+        {
+          "name": "WORKER_SEND_HIGH_MAX",
+          "label": "Worker Send High Max",
+          "default": "10"
+        },
+        {
+          "name": "WORKER_SEND_HIGH_SLEEP_MS",
+          "label": "Worker Send High Sleep Ms",
+          "default": "1000"
+        },
+        {
+          "name": "WORKER_SEND_LEGACY_CONCURRENCY",
+          "label": "Worker Send Legacy Concurrency",
+          "default": "1"
+        },
+        {
+          "name": "WORKER_SEND_LEGACY_MAX",
+          "label": "Worker Send Legacy Max",
+          "default": "2"
+        },
+        {
+          "name": "WORKER_SEND_LEGACY_SLEEP_MS",
+          "label": "Worker Send Legacy Sleep Ms",
+          "default": "5000"
+        },
+        {
+          "name": "WORKER_SEND_MAX",
+          "label": "Worker Send Max",
+          "default": "5"
+        },
+        {
+          "name": "WORKER_SEND_SLEEP_MS",
+          "label": "Worker Send Sleep Ms",
+          "default": "3000"
+        },
+        {
+          "name": "XML_VALIDATION_TIMEOUT_MS",
+          "label": "XML Validation Timeout Ms",
+          "default": "10000"
+        },
+        {
+          "name": "XML_VALIDATOR_PYTHON",
+          "label": "XML Validator Python",
+          "default": "python3"
         }
       ]
     },

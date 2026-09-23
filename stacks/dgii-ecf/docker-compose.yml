@@ -29,6 +29,9 @@ x-engine-env: &engine-env
   REDIS_COMMAND_TIMEOUT_MS: ${REDIS_COMMAND_TIMEOUT_MS:-3000}
   DISTRIBUTED_LOCK_WAIT_MS: ${DISTRIBUTED_LOCK_WAIT_MS:-120000}
   DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION: ${DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION:-true}
+  WORKER_LOCK_CONTENTION_BASE_DELAY_SECONDS: ${WORKER_LOCK_CONTENTION_BASE_DELAY_SECONDS:-5}
+  WORKER_LOCK_CONTENTION_MAX_DELAY_SECONDS: ${WORKER_LOCK_CONTENTION_MAX_DELAY_SECONDS:-30}
+  WORKER_LOCK_CONTENTION_JITTER_RATIO: ${WORKER_LOCK_CONTENTION_JITTER_RATIO:-0.3}
   RATE_LIMIT_REDIS_FAIL_OPEN: ${RATE_LIMIT_REDIS_FAIL_OPEN:-false}
 
   API_SEND_ECF_DEFAULT_PROCESSING_MODE: ${API_SEND_ECF_DEFAULT_PROCESSING_MODE:-async}
@@ -57,13 +60,14 @@ x-engine-env: &engine-env
   PRINT_RENDERER_REQUIRED: ${PRINT_RENDERER_REQUIRED:-true}
   PRINT_RENDERER_ALLOW_LOCAL_FALLBACK: ${PRINT_RENDERER_ALLOW_LOCAL_FALLBACK:-false}
   PRINT_RENDERER_HTTP_TIMEOUT_MS: ${PRINT_RENDERER_HTTP_TIMEOUT_MS:-50000}
+  PRINT_RENDERER_HTTP_MAX_SOCKETS: ${PRINT_RENDERER_HTTP_MAX_SOCKETS:-50}
 
   APP_DATA_DIR: ${APP_DATA_DIR:-/data}
   APP_LOG_DIR: ${APP_LOG_DIR:-/logs}
   INSTANCE_BACKUP_ENABLED: ${INSTANCE_BACKUP_ENABLED:-true}
-  # Must remain outside /data: backup-data.sh archives all of /data and would
-  # otherwise recursively include previous backup packages.
-  INSTANCE_BACKUP_WORK_DIR: ${INSTANCE_BACKUP_WORK_DIR:-/tmp/dgii-ecf-instance-backups}
+  # Must be visible to API and backup automation containers. The backup process
+  # excludes this work directory to avoid recursively packing temporary files.
+  INSTANCE_BACKUP_WORK_DIR: ${INSTANCE_BACKUP_WORK_DIR:-/data/_instance-backup-work}
   INSTANCE_BACKUP_MAX_UPLOAD_BYTES: ${INSTANCE_BACKUP_MAX_UPLOAD_BYTES:-10737418240}
   INSTANCE_BACKUP_HTTP_TIMEOUT_MS: ${INSTANCE_BACKUP_HTTP_TIMEOUT_MS:-900000}
   INSTANCE_BACKUP_DECRYPTION_KEY_FILE: ${INSTANCE_BACKUP_DECRYPTION_KEY_FILE:-}
@@ -270,12 +274,13 @@ x-engine-service: &engine-service
 
 services:
   dgii-ecf-print-renderer:
-    image: ${PRINT_RENDERER_IMAGE_NAME:-gitea.joseagrc.com/joseagrc/dgii-ecf-print-renderer}:${PRINT_RENDERER_IMAGE_TAG:-1.1.173}
+    image: ${PRINT_RENDERER_IMAGE_NAME:-gitea.joseagrc.com/joseagrc/dgii-ecf-print-renderer}:${PRINT_RENDERER_IMAGE_TAG:-1.1.208}
     container_name: ${PRINT_RENDERER_CONTAINER_NAME:-dgii-ecf-print-renderer}
     restart: unless-stopped
     environment:
-      NODE_ENV: production
-      PORT: "4010"
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PRINT_RENDERER_PORT:-4010}
+      APP_VERSION: ${PRINT_RENDERER_IMAGE_TAG:-1.1.208}
       PRINT_RENDERER_INTERNAL_TOKEN: ${PRINT_RENDERER_INTERNAL_TOKEN:?PRINT_RENDERER_INTERNAL_TOKEN requerido}
       PRINT_RENDERER_MAX_BODY_BYTES: ${PRINT_RENDERER_MAX_BODY_BYTES:-20971520}
       PRINT_RENDERER_MAX_PDF_BYTES: ${PRINT_RENDERER_MAX_PDF_BYTES:-26214400}
@@ -283,7 +288,7 @@ services:
       PRINT_RENDERER_MAX_QUEUE: ${PRINT_RENDERER_MAX_QUEUE:-50}
       PRINT_RENDERER_TIMEOUT_MS: ${PRINT_RENDERER_TIMEOUT_MS:-45000}
     expose:
-      - "4010"
+      - "${PRINT_RENDERER_PORT:-4010}"
     security_opt:
       - no-new-privileges:true
     read_only: true
@@ -311,20 +316,20 @@ services:
 
   postgres:
     container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-postgres
-    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_TAG:-16-alpine}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_TAG:-16.15-alpine}
     restart: unless-stopped
     command:
       - postgres
       - -c
       - max_connections=${POSTGRES_MAX_CONNECTIONS:-100}
       - -c
-      - shared_buffers=${POSTGRES_SHARED_BUFFERS:-256MB}
+      - shared_buffers=${POSTGRES_SHARED_BUFFERS:-4GB}
       - -c
-      - effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-1GB}
+      - effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-20GB}
       - -c
-      - maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-128MB}
+      - maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-512MB}
       - -c
-      - work_mem=${POSTGRES_WORK_MEM:-4MB}
+      - work_mem=${POSTGRES_WORK_MEM:-16MB}
       - -c
       - checkpoint_completion_target=${POSTGRES_CHECKPOINT_COMPLETION_TARGET:-0.9}
       - -c
@@ -335,6 +340,22 @@ services:
       - effective_io_concurrency=${POSTGRES_EFFECTIVE_IO_CONCURRENCY:-200}
       - -c
       - jit=${POSTGRES_JIT:-off}
+      - -c
+      - max_wal_size=${POSTGRES_MAX_WAL_SIZE:-4GB}
+      - -c
+      - min_wal_size=${POSTGRES_MIN_WAL_SIZE:-1GB}
+      - -c
+      - checkpoint_timeout=${POSTGRES_CHECKPOINT_TIMEOUT:-15min}
+      - -c
+      - default_statistics_target=${POSTGRES_DEFAULT_STATISTICS_TARGET:-200}
+      - -c
+      - autovacuum_max_workers=${POSTGRES_AUTOVACUUM_MAX_WORKERS:-4}
+      - -c
+      - autovacuum_naptime=${POSTGRES_AUTOVACUUM_NAPTIME:-15s}
+      - -c
+      - autovacuum_vacuum_scale_factor=${POSTGRES_AUTOVACUUM_VACUUM_SCALE_FACTOR:-0.05}
+      - -c
+      - autovacuum_analyze_scale_factor=${POSTGRES_AUTOVACUUM_ANALYZE_SCALE_FACTOR:-0.02}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB requerido}
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER requerido}
@@ -352,28 +373,28 @@ services:
     deploy:
       resources:
         limits:
-          cpus: ${POSTGRES_CPU_LIMIT:-2.00}
-          memory: ${POSTGRES_MEMORY_LIMIT:-2048M}
+          cpus: ${POSTGRES_CPU_LIMIT:-3.00}
+          memory: ${POSTGRES_MEMORY_LIMIT:-10G}
           pids: ${POSTGRES_PIDS_LIMIT:-256}
         reservations:
           cpus: ${POSTGRES_CPU_RESERVATION:-0.25}
           memory: ${POSTGRES_MEMORY_RESERVATION:-512M}
 
   pgbouncer:
-    image: edoburu/pgbouncer:${PGBOUNCER_IMAGE_TAG:-1.22.1-p0}
+    image: ${PGBOUNCER_IMAGE:-edoburu/pgbouncer}:${PGBOUNCER_IMAGE_TAG:-1.22.1-p0}
     restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      POOL_MODE: transaction
-      AUTH_TYPE: scram-sha-256
-      MAX_CLIENT_CONN: ${PGBOUNCER_MAX_CLIENT_CONNECTIONS:-250}
-      DEFAULT_POOL_SIZE: ${PGBOUNCER_DEFAULT_POOL_SIZE:-35}
-      RESERVE_POOL_SIZE: ${PGBOUNCER_RESERVE_POOL_SIZE:-5}
+      POOL_MODE: ${PGBOUNCER_POOL_MODE:-transaction}
+      AUTH_TYPE: ${PGBOUNCER_AUTH_TYPE:-scram-sha-256}
+      MAX_CLIENT_CONN: ${PGBOUNCER_MAX_CLIENT_CONNECTIONS:-500}
+      DEFAULT_POOL_SIZE: ${PGBOUNCER_DEFAULT_POOL_SIZE:-45}
+      RESERVE_POOL_SIZE: ${PGBOUNCER_RESERVE_POOL_SIZE:-10}
       RESERVE_POOL_TIMEOUT: ${PGBOUNCER_RESERVE_POOL_TIMEOUT:-3}
-      MAX_DB_CONNECTIONS: ${PGBOUNCER_MAX_DB_CONNECTIONS:-45}
+      MAX_DB_CONNECTIONS: ${PGBOUNCER_MAX_DB_CONNECTIONS:-80}
       MAX_PREPARED_STATEMENTS: ${PGBOUNCER_MAX_PREPARED_STATEMENTS:-100}
       IGNORE_STARTUP_PARAMETERS: ${PGBOUNCER_IGNORE_STARTUP_PARAMETERS:-extra_float_digits,search_path}
       SERVER_IDLE_TIMEOUT: ${PGBOUNCER_SERVER_IDLE_TIMEOUT:-300}
@@ -398,7 +419,7 @@ services:
 
   redis:
     container_name: ${COMPOSE_PROJECT_NAME:-dgii-ecf}-redis
-    image: ${REDIS_IMAGE:-redis}:${REDIS_TAG:-8-alpine}
+    image: ${REDIS_IMAGE:-redis}:${REDIS_TAG:-8.6.3-alpine}
     restart: unless-stopped
     command:
       - redis-server
@@ -860,7 +881,7 @@ services:
       docker-socket-proxy:
         condition: service_healthy
     deploy:
-      replicas: 1
+      replicas: ${DGII_ECF_BACKUP_AUTOMATION_REPLICAS:-1}
       resources: *worker-resources
       update_config:
         order: stop-first
