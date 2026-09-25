@@ -3560,9 +3560,14 @@
       },
       "env": [
         {
-          "name": "SITE_URL",
-          "label": "Site domain (without https:// or www)",
+          "name": "DOMAIN",
+          "label": "Base domain for Traefik (without https:// or www)",
           "default": "wordpress.example.com"
+        },
+        {
+          "name": "SITE_URL",
+          "label": "Canonical WordPress domain (without https://)",
+          "default": "www.wordpress.example.com"
         },
         {
           "name": "SITE_TITLE",

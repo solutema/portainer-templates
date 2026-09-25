@@ -5,13 +5,15 @@ Plantilla de WordPress basada en la imagen mantenida por
 
 ## Valores requeridos
 
-- `SITE_URL`: dominio sin protocolo ni prefijo `www`, por ejemplo `blog.example.com`.
+- `DOMAIN`: dominio base sin protocolo ni prefijo `www`, por ejemplo `example.com`.
+- `SITE_URL`: dominio canonico de WordPress sin protocolo, por ejemplo
+  `www.example.com`.
 - `ROOT_PASS`, `DB_PASS` y `ADMIN_PASS`: contraseñas largas y únicas.
 - `ADMIN_EMAIL`: correo del administrador inicial.
 
-La plantilla publica WordPress en `SITE_URL` y `www.SITE_URL`; phpMyAdmin queda
-en `pma.SITE_URL`. MariaDB permanece exclusivamente en la red interna. Requiere
-una red externa de Traefik, cuyo nombre predeterminado es `proxy`.
+La plantilla publica WordPress en `DOMAIN` y `www.DOMAIN`; phpMyAdmin queda en
+`pma.DOMAIN`. MariaDB permanece exclusivamente en la red interna. Requiere una
+red externa de Traefik, cuyo nombre predeterminado es `proxy`.
 
 La imagen predeterminada es `gitea.joseagrc.com/joseagrc/wordpress` y el tag es
 `php8.4-6.9.4-alpine-3.23`. Configure el registro de Gitea en Portainer si el

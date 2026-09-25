@@ -60,7 +60,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${NETWORK:-proxy}"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`${SITE_URL}`) || Host(`www.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.entrypoints=websecure"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.tls=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.tls.certresolver=letsencrypt"
@@ -83,7 +83,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${NETWORK:-proxy}"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.${SITE_URL}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.${DOMAIN}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.entrypoints=websecure"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.tls=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.tls.certresolver=letsencrypt"
