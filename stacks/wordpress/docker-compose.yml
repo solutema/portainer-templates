@@ -19,11 +19,35 @@ services:
       retries: 12
       start_period: 30s
 
+  redis:
+    image: ${REDIS_IMAGE:-redis}:${REDIS_TAG:-7-alpine}
+    restart: unless-stopped
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - ${REDIS_MAXMEMORY:-128mb}
+      - --maxmemory-policy
+      - ${REDIS_MAXMEMORY_POLICY:-allkeys-lru}
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
   wordpress:
     image: ${WORDPRESS_IMAGE:-gitea.joseagrc.com/joseagrc/wordpress}:${WORDPRESS_TAG:-php8.4-6.9.4-alpine-3.23}
     restart: unless-stopped
     depends_on:
       mariadb:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     environment:
       ENABLE_HTTPS_REVERSE_PROXY: ${ENABLE_HTTPS_REVERSE_PROXY:-TRUE}
@@ -51,6 +75,9 @@ services:
       PHP_POST_MAX_SIZE: ${NGINX_UPLOAD_MAX_SIZE:-64M}
       PHP_UPLOAD_MAX_SIZE: ${NGINX_UPLOAD_MAX_SIZE:-64M}
       PHP_TIMEOUT: ${PHP_TIMEOUT:-120}
+    configs:
+      - source: php-redis-ini
+        target: /etc/php84/conf.d/20-redis.ini
     volumes:
       - wordpress-data:/www/wordpress
       - wordpress-logs:/www/logs
@@ -100,3 +127,10 @@ networks:
   proxy:
     name: ${NETWORK:-proxy}
     external: true
+
+configs:
+  php-redis-ini:
+    content: |
+      extension=igbinary
+      extension=msgpack
+      extension=redis

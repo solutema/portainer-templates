@@ -3615,6 +3615,26 @@
           "default": "latest"
         },
         {
+          "name": "REDIS_IMAGE",
+          "label": "Redis image",
+          "default": "redis"
+        },
+        {
+          "name": "REDIS_TAG",
+          "label": "Redis image tag",
+          "default": "7-alpine"
+        },
+        {
+          "name": "REDIS_MAXMEMORY",
+          "label": "Redis max memory",
+          "default": "128mb"
+        },
+        {
+          "name": "REDIS_MAXMEMORY_POLICY",
+          "label": "Redis max memory policy",
+          "default": "allkeys-lru"
+        },
+        {
           "name": "ROOT_PASS",
           "label": "MariaDB root password"
         },
