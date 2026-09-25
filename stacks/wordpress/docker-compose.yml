@@ -13,7 +13,7 @@ services:
     networks:
       - backend
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$ROOT_PASS --silent"]
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -uroot -p$$ROOT_PASS --silent"]
       interval: 10s
       timeout: 5s
       retries: 12
