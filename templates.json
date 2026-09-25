@@ -3545,6 +3545,168 @@
           "default": "30000"
         }
       ]
+    },
+    {
+      "id": 40,
+      "type": 3,
+      "title": "WordPress",
+      "description": "WordPress production stack with MariaDB, phpMyAdmin, Traefik HTTPS and persistent volumes.",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/wordpress/logo/logo.png",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/wordpress/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "SITE_URL",
+          "label": "Site domain (without https:// or www)",
+          "default": "wordpress.example.com"
+        },
+        {
+          "name": "SITE_TITLE",
+          "label": "Site title",
+          "default": "WordPress"
+        },
+        {
+          "name": "TIMEZONE",
+          "label": "Timezone",
+          "default": "America/Santo_Domingo"
+        },
+        {
+          "name": "NETWORK",
+          "label": "External Traefik network",
+          "default": "proxy"
+        },
+        {
+          "name": "WORDPRESS_IMAGE",
+          "label": "WordPress image",
+          "default": "gitea.joseagrc.com/joseagrc/wordpress"
+        },
+        {
+          "name": "WORDPRESS_TAG",
+          "label": "WordPress image tag",
+          "default": "php8.4-6.9.4-alpine-3.23"
+        },
+        {
+          "name": "MARIADB_IMAGE",
+          "label": "MariaDB image",
+          "default": "tiredofit/mariadb"
+        },
+        {
+          "name": "MARIADB_TAG",
+          "label": "MariaDB image tag",
+          "default": "latest"
+        },
+        {
+          "name": "PHPMYADMIN_IMAGE",
+          "label": "phpMyAdmin image",
+          "default": "phpmyadmin"
+        },
+        {
+          "name": "PHPMYADMIN_TAG",
+          "label": "phpMyAdmin image tag",
+          "default": "latest"
+        },
+        {
+          "name": "ROOT_PASS",
+          "label": "MariaDB root password"
+        },
+        {
+          "name": "DB_NAME",
+          "label": "WordPress database name",
+          "default": "wordpress"
+        },
+        {
+          "name": "DB_USER",
+          "label": "WordPress database user",
+          "default": "wordpress"
+        },
+        {
+          "name": "DB_PASS",
+          "label": "WordPress database password"
+        },
+        {
+          "name": "DB_PREFIX",
+          "label": "WordPress database table prefix",
+          "default": "wp_"
+        },
+        {
+          "name": "ADMIN_EMAIL",
+          "label": "WordPress administrator email"
+        },
+        {
+          "name": "ADMIN_USER",
+          "label": "WordPress administrator user",
+          "default": "admin"
+        },
+        {
+          "name": "ADMIN_PASS",
+          "label": "WordPress administrator password"
+        },
+        {
+          "name": "SITE_LOCALE",
+          "label": "WordPress locale",
+          "default": "es_ES"
+        },
+        {
+          "name": "PHP_MEMORY_LIMIT",
+          "label": "PHP memory limit",
+          "default": "256M"
+        },
+        {
+          "name": "NGINX_UPLOAD_MAX_SIZE",
+          "label": "Maximum upload size",
+          "default": "64M"
+        },
+        {
+          "name": "PHP_TIMEOUT",
+          "label": "PHP timeout in seconds",
+          "default": "120"
+        },
+        {
+          "name": "PMA_UPLOAD_LIMIT",
+          "label": "phpMyAdmin upload limit",
+          "default": "64M"
+        },
+        {
+          "name": "ENABLE_HTTPS_REVERSE_PROXY",
+          "label": "Enable HTTPS reverse proxy mode",
+          "default": "TRUE"
+        },
+        {
+          "name": "DEBUG_MODE",
+          "label": "Enable WordPress debug mode",
+          "default": "FALSE"
+        },
+        {
+          "name": "WP_CACHE",
+          "label": "Enable WordPress cache",
+          "default": "FALSE"
+        },
+        {
+          "name": "ROTATE_KEYS",
+          "label": "Rotate WordPress security keys on deploy",
+          "default": "FALSE"
+        },
+        {
+          "name": "UPDATE_MODE",
+          "label": "WordPress update mode",
+          "default": "ALL"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/mysql"
+        },
+        {
+          "container": "/www/wordpress"
+        },
+        {
+          "container": "/www/logs"
+        }
+      ]
     }
   ]
 }
