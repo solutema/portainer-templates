@@ -3635,6 +3635,41 @@
           "default": "allkeys-lru"
         },
         {
+          "name": "ENABLE_REDIS",
+          "label": "Enable WordPress Redis Object Cache",
+          "default": "TRUE"
+        },
+        {
+          "name": "REDIS_DATABASE",
+          "label": "WordPress Redis database",
+          "default": "0"
+        },
+        {
+          "name": "REDIS_TIMEOUT",
+          "label": "WordPress Redis connection timeout",
+          "default": "1"
+        },
+        {
+          "name": "REDIS_READ_TIMEOUT",
+          "label": "WordPress Redis read timeout",
+          "default": "1"
+        },
+        {
+          "name": "REDIS_MAXTTL",
+          "label": "WordPress Redis max TTL",
+          "default": "21600"
+        },
+        {
+          "name": "REDIS_PREFIX",
+          "label": "WordPress Redis key prefix",
+          "default": "wordpress:"
+        },
+        {
+          "name": "REDIS_CLIENT",
+          "label": "WordPress Redis client",
+          "default": "phpredis"
+        },
+        {
           "name": "ROOT_PASS",
           "label": "MariaDB root password"
         },
