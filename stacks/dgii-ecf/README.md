@@ -34,18 +34,26 @@ router inexistente y el navegador lo muestra como **Network Error** durante el
 inicio de sesión. Antes de redeploy, confirme esos valores en el formulario de
 variables de Portainer.
 
-## Valores operativos de producción
+## Valores operativos de producción para `1.2.0`
 
-- Engine y portal: `1.1.173`.
+- Engine, portal y print-renderer: `1.2.0`.
 - PgBouncer: `edoburu/pgbouncer:1.22.1-p0`, modo `transaction`, autenticación
-  `scram-sha-256`, máximo de 250 clientes y 45 conexiones PostgreSQL.
-- `INSTANCE_BACKUP_WORK_DIR=/tmp/dgii-ecf-instance-backups`. No lo ubique bajo
-  `/data`, porque el backup de datos empaqueta ese árbol completo.
+  `scram-sha-256`, `MAX_CLIENT_CONN=250`, `DEFAULT_POOL_SIZE=35` y
+  `MAX_DB_CONNECTIONS=45`.
+- `INSTANCE_BACKUP_WORK_DIR=/data/_instance-backup-work`. Debe estar en un
+  volumen compartido por la API/engine y `dgii-ecf-backup-automation`; si se usa
+  `/tmp`, ambos contenedores deben montar exactamente el mismo bind mount o la
+  API no podrá entregar el archivo generado.
 - Las réplicas de engine, scheduler y workers usan `pgbouncer:5432`; las
   migraciones deben conectarse directamente a PostgreSQL.
 - Los artefactos usan `ARTIFACT_STORAGE_BACKEND=filesystem` y el volumen
   `dgii_ecf_engine_data` compartido por los procesos de engine. Para más de un
   host, configure `s3` o `dual` y las variables `ARTIFACT_S3_*`.
+- Mantenga `HA_MODE_ENABLED=false` mientras `ARTIFACT_STORAGE_BACKEND` sea
+  `filesystem`. Active HA solo después de configurar almacenamiento compartido
+  real, preferiblemente S3.
+- Chromium/PDF pertenece únicamente a `dgii-ecf-print-renderer`. El portal y el
+  engine no deben declarar `CHROMIUM_PATH` ni fallback local de PDF.
 
 ## Despliegue
 

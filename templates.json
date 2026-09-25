@@ -824,199 +824,6 @@
       ]
     },
     {
-      "id": 10,
-      "type": 3,
-      "title": "DGII e-CF Stack",
-      "description": "Producción reproducible de DGII e-CF: API, portal, workers, PostgreSQL, Redis, PgBouncer, respaldos y renderizado de comprobantes.",
-      "note": "Requiere secretos de producción. Las migraciones se ejecutan mediante el perfil dgii-ecf-migrate; el tráfico de aplicación se conecta por PgBouncer y los artefactos quedan en filesystem compartido salvo que se configure S3.",
-      "categories": [
-        "API"
-      ],
-      "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/business-web-services/portainer-templates/refs/heads/main/stacks/dgii-ecf-stack/logo/logo.png",
-      "repository": {
-        "url": "https://github.com/business-web-services/portainer-templates",
-        "stackfile": "stacks/dgii-ecf-stack/docker-compose.yml"
-      },
-      "env": [
-        {
-          "default": "postgres",
-          "label": "Postgres Image",
-          "name": "POSTGRES_IMAGE"
-        },
-        {
-          "default": "16-alpine",
-          "label": "Postgres Tag",
-          "name": "POSTGRES_TAG"
-        },
-        {
-          "default": "dgii_ecf_user",
-          "label": "Database Username",
-          "name": "POSTGRES_USER"
-        },
-        {
-          "default": "dgii_ecf_pass",
-          "label": "Database Password for user",
-          "name": "POSTGRES_PASSWORD"
-        },
-        {
-          "default": "dgii_ecf_db",
-          "label": "Database Name",
-          "name": "POSTGRES_DB"
-        },
-        {
-          "default": "5432",
-          "label": "Postgres Port",
-          "name": "POSTGRES_PORT"
-        },
-        {
-          "default": "registry.joseagrc.com/e-cf/dgii-ecf-engine",
-          "label": "DGII e-CF Engine Image",
-          "name": "DGII_ECF_ENGINE_IMAGE"
-        },
-        {
-          "default": "1-0-0",
-          "label": "DGII e-CF Engine Tag",
-          "name": "DGII_ECF_ENGINE_TAG"
-        },
-        {
-          "default": "ecf.example.com",
-          "label": "Engine Domain",
-          "name": "ENGINE_DOMAIN"
-        },
-        {
-          "default": "change-me-with-a-long-random-token",
-          "label": "Internal API Token",
-          "name": "INTERNAL_API_TOKEN"
-        },
-        {
-          "default": "replace-with-at-least-32-characters",
-          "label": "API Key Pepper",
-          "name": "API_KEY_PEPPER"
-        },
-        {
-          "default": "replace-with-a-long-random-secret",
-          "label": "APP JWT Secret",
-          "name": "APP_JWT_SECRET"
-        },
-        {
-          "default": "replace-with-base64-32-byte-key",
-          "label": "Cert Master Key BASE64",
-          "name": "CERT_MASTER_KEY_BASE64"
-        },
-        {
-          "default": "true",
-          "label": "Database Enabled",
-          "name": "DATABASE_ENABLED"
-        },
-        {
-          "default": "false",
-          "label": "Database Log Queries",
-          "name": "DATABASE_LOG_QUERIES"
-        },
-        {
-          "default": "true",
-          "label": "Run Prisma Migration on Boot",
-          "name": "RUN_PRISMA_MIGRATE_ON_BOOT"
-        },
-        {
-          "default": "true",
-          "label": "Audit to File",
-          "name": "AUDIT_TO_FILE"
-        },
-        {
-          "default": "info",
-          "label": "Log Level",
-          "name": "LOG_LEVEL"
-        },
-        {
-          "default": "false",
-          "label": "Log Pretty",
-          "name": "LOG_PRETTY"
-        },
-        {
-          "default": "https://app.example.com",
-          "label": "Cors Allowed Origins",
-          "name": "CORS_ALLOWED_ORIGINS"
-        },
-        {
-          "default": "true",
-          "label": "XML XSD Validation Enabled",
-          "name": "XML_XSD_VALIDATION_ENABLED"
-        },
-        {
-          "default": "30",
-          "label": "DGII Retry after seconds",
-          "name": "DGII_RETRY_AFTER_SECONDS"
-        },
-        {
-          "default": "true",
-          "label": "DGII Auto Route B2C",
-          "name": "DGII_AUTO_ROUTE_B2C"
-        },
-        {
-          "default": "250000",
-          "label": "DGII B2C Summary Max Total",
-          "name": "DGII_B2C_SUMMARY_MAX_TOTAL"
-        },
-        {
-          "default": "replace-with-api-key",
-          "label": "DGII Status API Key",
-          "name": "DGII_STATUS_API_KEY"
-        },
-        {
-          "default": "true",
-          "label": "Rate Limit Enabled",
-          "name": "RATE_LIMIT_ENABLED"
-        },
-        {
-          "default": "60000",
-          "label": "Rate Limit Window MS",
-          "name": "RATE_LIMIT_WINDOW_MS"
-        },
-        {
-          "default": "120",
-          "label": "Rate Limit Default Max",
-          "name": "RATE_LIMIT_DEFAULT_MAX"
-        },
-        {
-          "default": "true",
-          "label": "Rate Limit Bypass Internal",
-          "name": "RATE_LIMIT_BYPASS_INTERNAL"
-        },
-        {
-          "default": "/dgii/send-ecf=30;/dgii/track=180;/dgii/directory=120",
-          "label": "Rate Limit Rules",
-          "name": "RATE_LIMIT_RULES"
-        },
-        {
-          "default": "registry.joseagrc.com/e-cf/dgii-ecf-portal",
-          "label": "DGII e-CF Engine Image",
-          "name": "DGII_ECF_PORTAL_IMAGE"
-        },
-        {
-          "default": "1-0-0",
-          "label": "DGII e-CF Engine Tag",
-          "name": "DGII_ECF_PORTAL_TAG"
-        },
-        {
-          "default": "ecf.example.com",
-          "label": "Public Engine URL",
-          "name": "PUBLIC_ENGINE_URL"
-        },
-        {
-          "default": "app.example.com",
-          "label": "Portal Domain",
-          "name": "PORTAL_DOMAIN"
-        },
-        {
-          "default": "proxy",
-          "label": "Network name",
-          "name": "NETWORK"
-        }
-      ]
-    },
-    {
       "id": 11,
       "type": 3,
       "title": "Freescout",
@@ -1772,7 +1579,7 @@
       "type": 3,
       "title": "DGII e-CF Stack",
       "description": "Producción reproducible de DGII e-CF: API, portal, workers, PostgreSQL, Redis, PgBouncer, respaldos y renderizado de comprobantes.",
-      "note": "Template alineado con producción: expone las variables del compose, usa PgBouncer, renderer, backup automation, workers por cola y defaults seguros. Complete los secretos antes de desplegar.",
+      "note": "Template oficial DGII e-CF 1.2.0 alineado con producción server1: Compose/Portainer, PgBouncer, Redis, renderer dedicado para PDF/Chromium, workers por cola, backup automation y variables completas. Complete secretos y mantenga HA_MODE_ENABLED=false hasta configurar S3 compartido.",
       "categories": [
         "API"
       ],
@@ -1814,32 +1621,27 @@
           "name": "POSTGRES_DB"
         },
         {
-          "default": "5432",
-          "label": "Postgres Internal Port",
-          "name": "POSTGRES_PORT"
-        },
-        {
-          "default": "120",
+          "default": "100",
           "label": "Postgres Max Connections",
           "name": "POSTGRES_MAX_CONNECTIONS"
         },
         {
-          "default": "4GB",
+          "default": "256MB",
           "label": "Postgres Shared Buffers",
           "name": "POSTGRES_SHARED_BUFFERS"
         },
         {
-          "default": "20GB",
+          "default": "1GB",
           "label": "Postgres Effective Cache Size",
           "name": "POSTGRES_EFFECTIVE_CACHE_SIZE"
         },
         {
-          "default": "512MB",
+          "default": "128MB",
           "label": "Postgres Maintenance Work Mem",
           "name": "POSTGRES_MAINTENANCE_WORK_MEM"
         },
         {
-          "default": "16MB",
+          "default": "4MB",
           "label": "Postgres Work Mem",
           "name": "POSTGRES_WORK_MEM"
         },
@@ -1869,7 +1671,7 @@
           "name": "DGII_ECF_ENGINE_IMAGE"
         },
         {
-          "default": "1.1.208",
+          "default": "1.2.0",
           "label": "DGII e-CF Engine Tag",
           "name": "DGII_ECF_ENGINE_TAG"
         },
@@ -1979,24 +1781,9 @@
           "name": "DISTRIBUTED_LOCK_WAIT_MS"
         },
         {
-          "default": "120000",
-          "label": "Distributed Lock TTL MS",
-          "name": "DISTRIBUTED_LOCK_TTL_MS"
-        },
-        {
-          "default": "150",
-          "label": "Distributed Lock Retry Delay MS",
-          "name": "DISTRIBUTED_LOCK_RETRY_DELAY_MS"
-        },
-        {
           "default": "false",
           "label": "Disable NPM Update Notifier",
           "name": "NPM_CONFIG_UPDATE_NOTIFIER"
-        },
-        {
-          "default": "true",
-          "label": "Audit to File",
-          "name": "AUDIT_TO_FILE"
         },
         {
           "default": "info",
@@ -2017,21 +1804,6 @@
           "default": "true",
           "label": "XML XSD Validation Enabled",
           "name": "XML_XSD_VALIDATION_ENABLED"
-        },
-        {
-          "default": "30",
-          "label": "DGII Retry after seconds",
-          "name": "DGII_RETRY_AFTER_SECONDS"
-        },
-        {
-          "default": "true",
-          "label": "DGII Auto Route B2C",
-          "name": "DGII_AUTO_ROUTE_B2C"
-        },
-        {
-          "default": "250000",
-          "label": "DGII B2C Summary Max Total",
-          "name": "DGII_B2C_SUMMARY_MAX_TOTAL"
         },
         {
           "default": "",
@@ -2069,7 +1841,7 @@
           "name": "DGII_ECF_PORTAL_IMAGE"
         },
         {
-          "default": "1.1.208",
+          "default": "1.2.0",
           "label": "DGII e-CF Portal Tag",
           "name": "DGII_ECF_PORTAL_TAG"
         },
@@ -2082,11 +1854,6 @@
           "default": "3000",
           "label": "DGII ECF Portal Port",
           "name": "DGII_ECF_PORTAL_PORT"
-        },
-        {
-          "default": "45s",
-          "label": "Portal Stop Grace Period",
-          "name": "PORTAL_STOP_GRACE_PERIOD"
         },
         {
           "default": "app.example.com",
@@ -2241,11 +2008,6 @@
           "default": "https://app.example.com",
           "label": "Portal Public URL",
           "name": "PORTAL_PUBLIC_URL"
-        },
-        {
-          "default": "noreply@example.com",
-          "label": "Admin Notification Emails",
-          "name": "ADMIN_NOTIFICATION_EMAILS"
         },
         {
           "default": ".example.com",
@@ -2888,7 +2650,7 @@
         {
           "name": "PGBOUNCER_DEFAULT_POOL_SIZE",
           "label": "Pgbouncer Default Pool Size",
-          "default": "45"
+          "default": "35"
         },
         {
           "name": "PGBOUNCER_IGNORE_STARTUP_PARAMETERS",
@@ -2908,12 +2670,12 @@
         {
           "name": "PGBOUNCER_MAX_CLIENT_CONNECTIONS",
           "label": "Pgbouncer Max Client Connections",
-          "default": "500"
+          "default": "250"
         },
         {
           "name": "PGBOUNCER_MAX_DB_CONNECTIONS",
           "label": "Pgbouncer Max DB Connections",
-          "default": "80"
+          "default": "45"
         },
         {
           "name": "PGBOUNCER_MAX_PREPARED_STATEMENTS",
@@ -2943,7 +2705,7 @@
         {
           "name": "PGBOUNCER_RESERVE_POOL_SIZE",
           "label": "Pgbouncer Reserve Pool Size",
-          "default": "10"
+          "default": "5"
         },
         {
           "name": "PGBOUNCER_RESERVE_POOL_TIMEOUT",
@@ -2983,22 +2745,22 @@
         {
           "name": "POSTGRES_AUTOVACUUM_ANALYZE_SCALE_FACTOR",
           "label": "POSTGRES Autovacuum Analyze Scale Factor",
-          "default": "0.02"
+          "default": "0.1"
         },
         {
           "name": "POSTGRES_AUTOVACUUM_MAX_WORKERS",
           "label": "POSTGRES Autovacuum Max Workers",
-          "default": "4"
+          "default": "3"
         },
         {
           "name": "POSTGRES_AUTOVACUUM_NAPTIME",
           "label": "POSTGRES Autovacuum Naptime",
-          "default": "15s"
+          "default": "60s"
         },
         {
           "name": "POSTGRES_AUTOVACUUM_VACUUM_SCALE_FACTOR",
           "label": "POSTGRES Autovacuum Vacuum Scale Factor",
-          "default": "0.05"
+          "default": "0.2"
         },
         {
           "name": "POSTGRES_CHECKPOINT_COMPLETION_TARGET",
@@ -3008,7 +2770,7 @@
         {
           "name": "POSTGRES_CHECKPOINT_TIMEOUT",
           "label": "POSTGRES Checkpoint Timeout",
-          "default": "15min"
+          "default": "5min"
         },
         {
           "name": "POSTGRES_CPU_LIMIT",
@@ -3023,7 +2785,7 @@
         {
           "name": "POSTGRES_DEFAULT_STATISTICS_TARGET",
           "label": "POSTGRES Default Statistics Target",
-          "default": "200"
+          "default": "100"
         },
         {
           "name": "POSTGRES_EFFECTIVE_IO_CONCURRENCY",
@@ -3038,7 +2800,7 @@
         {
           "name": "POSTGRES_MAX_WAL_SIZE",
           "label": "POSTGRES Max WAL Size",
-          "default": "4GB"
+          "default": "1GB"
         },
         {
           "name": "POSTGRES_MEMORY_LIMIT",
@@ -3053,7 +2815,7 @@
         {
           "name": "POSTGRES_MIN_WAL_SIZE",
           "label": "POSTGRES Min WAL Size",
-          "default": "1GB"
+          "default": "80MB"
         },
         {
           "name": "POSTGRES_PIDS_LIMIT",
@@ -3069,11 +2831,6 @@
           "name": "POSTGRES_WAL_COMPRESSION",
           "label": "POSTGRES WAL Compression",
           "default": "on"
-        },
-        {
-          "name": "PRINT_RENDERER_ALLOW_LOCAL_FALLBACK",
-          "label": "Print Renderer Allow Local Fallback",
-          "default": "false"
         },
         {
           "name": "PRINT_RENDERER_CONTAINER_NAME",
@@ -3108,7 +2865,7 @@
         {
           "name": "PRINT_RENDERER_IMAGE_TAG",
           "label": "Print Renderer Image Tag",
-          "default": "1.1.208"
+          "default": "1.2.0"
         },
         {
           "name": "PRINT_RENDERER_MAX_BODY_BYTES",
@@ -3539,764 +3296,253 @@
           "name": "XML_VALIDATOR_PYTHON",
           "label": "XML Validator Python",
           "default": "python3"
-        }
-      ]
-    },
-    {
-      "id": 40,
-      "type": 3,
-      "title": "DGII e-CF Swarm",
-      "description": "DGII e-CF Swarm is an application that works electronic invoicing for Dominican Republic.",
-      "note": "Requiere el 'POSTGRES_PASSWORD'. Las migraciones Prisma se ejecutan mediante el job dgii-ecf-engine-migrate; el engine arranca con migraciones desactivadas y usa PORTAL_PUBLIC_URL como origen CORS.",
-      "categories": [
-        "API"
-      ],
-      "platform": "linux",
-      "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/swarm/dgii-ecf/logo/logo.png",
-      "repository": {
-        "url": "https://github.com/solutema/portainer-templates",
-        "stackfile": "swarm/dgii-ecf/docker-compose.yml"
-      },
-      "env": [
-        {
-          "name": "COMPOSE_PROJECT_NAME",
-          "label": "Compose Project Name",
-          "default": "dgii-ecf"
         },
         {
-          "name": "POSTGRES_IMAGE",
-          "label": "Postgres Image",
-          "default": "postgres"
+          "name": "HA_MODE_ENABLED",
+          "label": "HA Mode Enabled",
+          "default": "false",
+          "description": "Enable only when Redis locks, database and shared/S3 artifact storage are configured."
         },
         {
-          "name": "POSTGRES_TAG",
-          "label": "Postgres Tag",
-          "default": "18-alpine"
+          "name": "OTEL_ENABLED",
+          "label": "OpenTelemetry Enabled",
+          "default": "false"
         },
         {
-          "name": "POSTGRES_DB",
-          "label": "Database Name",
-          "default": "dgii_ecf_db"
+          "name": "OTEL_SERVICE_NAME",
+          "label": "OpenTelemetry Service Name",
+          "default": "dgii-ecf-engine"
         },
         {
-          "name": "POSTGRES_USER",
-          "label": "Postgres User",
-          "default": "dgii_ecf_user"
-        },
-        {
-          "name": "POSTGRES_HOST",
-          "label": "Postgres Host",
-          "default": "postgres"
-        },
-        {
-          "name": "POSTGRES_PASSWORD",
-          "label": "Postgres Password",
+          "name": "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT",
+          "label": "OTLP Traces Endpoint",
           "default": ""
         },
         {
-          "name": "POSTGRES_MAX_CONNECTIONS",
-          "label": "Postgres Max Connections",
+          "name": "OTEL_TRACES_SAMPLER_RATIO",
+          "label": "OTEL Traces Sampler Ratio",
+          "default": "0.1"
+        },
+        {
+          "name": "EXTERNAL_HTTP_MAX_SOCKETS",
+          "label": "External HTTP Max Sockets",
           "default": "100"
         },
         {
-          "name": "POSTGRES_SHARED_BUFFERS",
-          "label": "Postgres Shared Buffers",
-          "default": "256MB"
+          "name": "EXTERNAL_HTTP_MAX_FREE_SOCKETS",
+          "label": "External HTTP Max Free Sockets",
+          "default": "25"
         },
         {
-          "name": "POSTGRES_EFFECTIVE_CACHE_SIZE",
-          "label": "Postgres Effective Cache Size",
-          "default": "1GB"
-        },
-        {
-          "name": "POSTGRES_MAINTENANCE_WORK_MEM",
-          "label": "Postgres Maintenance Work Mem",
-          "default": "128MB"
-        },
-        {
-          "name": "POSTGRES_WORK_MEM",
-          "label": "Postgres Work Mem",
-          "default": "4MB"
-        },
-        {
-          "name": "POSTGRES_WAL_COMPRESSION",
-          "label": "Postgres WAL Compression",
-          "default": "lz4"
-        },
-        {
-          "name": "POSTGRES_CHECKPOINT_COMPLETION_TARGET",
-          "label": "Postgres Checkpoint Completion Target",
-          "default": "0.9"
-        },
-        {
-          "name": "POSTGRES_CHECKPOINT_TIMEOUT",
-          "label": "Postgres Checkpoint Timeout",
-          "default": "15min"
-        },
-        {
-          "name": "POSTGRES_MIN_WAL_SIZE",
-          "label": "Postgres Min WAL Size",
-          "default": "512MB"
-        },
-        {
-          "name": "POSTGRES_MAX_WAL_SIZE",
-          "label": "Postgres Min WAL Size",
-          "default": "2GB"
-        },
-        {
-          "name": "POSTGRES_RANDOM_PAGE_COST",
-          "label": "Postgres Random Page Cost",
-          "default": "1.1"
-        },
-        {
-          "name": "POSTGRES_EFFECTIVE_IO_CONCURRENCY",
-          "label": "Postgres Effective IO Concurrency",
-          "default": "200"
-        },
-        {
-          "name": "POSTGRES_TRACK_IO_TIMING",
-          "label": "Postgres Track IO Timing",
-          "default": "on"
-        },
-        {
-          "name": "POSTGRES_LOG_CHECKPOINTS",
-          "label": "Postgres Log Checkpoints",
-          "default": "on"
-        },
-        {
-          "name": "POSTGRES_LOG_LOCK_WAITS",
-          "label": "Postgres Log Lock Wits",
-          "default": "on"
-        },
-        {
-          "name": "POSTGRES_LOG_MIN_DURATION_STATEMENT",
-          "label": "Postgres Log Min Duration Statement",
-          "default": "1000"
-        },
-        {
-          "name": "POSTGRES_DEADLOCK_TIMEOUT",
-          "label": "Postgres Deadlock Timeout",
-          "default": "1s"
-        },
-        {
-          "name": "POSTGRES_IDLE_TRANSACTION_TIMEOUT",
-          "label": "Postgres IDLE Transaction Timeout",
-          "default": "5min"
-        },
-        {
-          "name": "POSTGRES_STATEMENT_TIMEOUT",
-          "label": "Postgres Statement Timeout",
-          "default": "0"
-        },
-        {
-          "name": "POSTGRES_SHM_SIZE",
-          "label": "Postgres SHM Size",
-          "default": "512m"
-        },
-        {
-          "name": "POSTGRES_HEALTH_INTERVAL",
-          "label": "Postgres Health Interval",
-          "default": "10s"
-        },
-        {
-          "name": "POSTGRES_HEALTH_TIMEOUT",
-          "label": "Postgres Health Timeout",
-          "default": "5s"
-        },
-        {
-          "name": "POSTGRES_HEALTH_RETRIES",
-          "label": "Postgres Health Retries",
-          "default": "30"
-        },
-        {
-          "name": "POSTGRES_HEALTH_START_PERIOD",
-          "label": "Postgres Health Start Period",
-          "default": "120s"
-        },
-        {
-          "name": "LOG_MAX_SIZE",
-          "label": "Container Log Max Size",
-          "default": "10m"
-        },
-        {
-          "name": "LOG_MAX_FILES",
-          "label": "Container Log Max Files",
-          "default": "5"
-        },
-        {
-          "name": "PGADMIN_IMAGE",
-          "label": "pgAdmin Image",
-          "default": "dpage/pgadmin4"
-        },
-        {
-          "name": "PGADMIN_TAG",
-          "label": "pgAdmin Tag",
-          "default": "9.14.0"
-        },
-        {
-          "name": "PGADMIN_DEFAULT_EMAIL",
-          "label": "pgAdmin Default Email",
-          "default": ""
-        },
-        {
-          "name": "PGADMIN_DEFAULT_PASSWORD",
-          "label": "pgAdmin Default Password",
-          "default": ""
-        },
-        {
-          "name": "REDIS_IMAGE",
-          "label": "Redis Image",
-          "default": "redis"
-        },
-        {
-          "name": "REDIS_TAG",
-          "label": "Redis Tag",
-          "default": "8.8.1-alpine"
-        },
-        {
-          "name": "REDIS_APPENDONLY",
-          "label": "Redis Append Only",
-          "default": "yes"
-        },
-        {
-          "name": "REDIS_PASSWORD",
-          "label": "Redis Password",
-          "default": ""
-        },
-        {
-          "name": "RATE_LIMIT_REDIS_FAIL_OPEN",
-          "label": "Rate Limit Redis Fail Open",
-          "default": "false"
-        },
-        {
-          "name": "REDISINSIGHT_IMAGE",
-          "label": "RedisInsight Image",
-          "default": "redis/redisinsight"
-        },
-        {
-          "name": "REDISINSIGHT_TAG",
-          "label": "RedisInsight Tag",
-          "default": "3.4.2"
-        },
-        {
-          "name": "DGII_ECF_ENGINE_IMAGE",
-          "label": "DGII ECF Engine Image",
-          "default": "gitea.joseagrc.com/joseagrc/dgii-ecf-engine"
-        },
-        {
-          "name": "DGII_ECF_ENGINE_TAG",
-          "label": "DGII ECF Engine Tag",
-          "default": "1.1.170"
-        },
-        {
-          "name": "DGII_COMPLIANCE_REPORT_DIR",
-          "label": "XML Compliance Report Directory",
-          "default": "/data/compliance-reports"
-        },
-        {
-          "name": "PLATFORM_ADMIN_BOOTSTRAP_ENABLED",
-          "label": "Platform Admin Enabled",
-          "default": "true"
-        },
-        {
-          "name": "PLATFORM_ADMIN_EMAIL",
-          "label": "Platform Admin Email",
-          "default": ""
-        },
-        {
-          "name": "PLATFORM_ADMIN_FULL_NAME",
-          "label": "Platform Admin Full Name",
-          "default": "Administrator"
-        },
-        {
-          "name": "PLATFORM_ADMIN_PASSWORD",
-          "label": "Platform Admin Password",
-          "default": ""
-        },
-        {
-          "name": "PLATFORM_ADMIN_RESET_PASSWORD_ON_BOOT",
-          "label": "Platform Admin Reset Password on Boot",
-          "default": "false"
-        },
-        {
-          "name": "CERT_MASTER_KEY_BASE64",
-          "label": "Cert Master Key Base64",
-          "default": ""
-        },
-        {
-          "name": "INTERNAL_API_TOKEN",
-          "label": "Internal API Token",
-          "default": ""
-        },
-        {
-          "name": "API_KEY_PEPPER",
-          "label": "API Key Pepper",
-          "default": ""
-        },
-        {
-          "name": "APP_JWT_SECRET",
-          "label": "APP JWT Secret",
-          "default": ""
-        },
-        {
-          "name": "INSTANCE_BACKUP_ENABLED",
-          "label": "Instance Backup Enabled",
-          "default": "true"
-        },
-        {
-          "name": "INSTANCE_BACKUP_WORK_DIR",
-          "label": "Instance Backup Work Dir",
-          "default": "/tmp/dgii-ecf-instance-backups"
-        },
-        {
-          "name": "INSTANCE_BACKUP_MAX_UPLOAD_BYTES",
-          "label": "Instance Backup Max Upload Bytes",
-          "default": "10737418240"
-        },
-        {
-          "name": "INSTANCE_BACKUP_HTTP_TIMEOUT_MS",
-          "label": "Instance Backup HTTP Timeout Ms",
-          "default": "900000"
-        },
-        {
-          "name": "BACKUP_AUTOMATION_SCHEDULER_ENABLED",
-          "label": "Backup Automation Scheduler Enabled",
-          "default": "false"
-        },
-        {
-          "name": "BACKUP_REMOTE_ENABLED",
-          "label": "Remote Backup Enabled",
-          "default": "false"
-        },
-        {
-          "name": "BACKUP_REMOTE_DRIVER",
-          "label": "Remote Backup Driver",
-          "default": "rclone"
-        },
-        {
-          "name": "BACKUP_REMOTE_TARGET",
-          "label": "Remote Backup Target",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_VERIFY",
-          "label": "Remote Backup Verify",
-          "default": "true"
-        },
-        {
-          "name": "BACKUP_REMOTE_RCLONE_FLAGS",
-          "label": "Remote Backup Rclone Flags",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_RSYNC_FLAGS",
-          "label": "Remote Backup Rsync Flags",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_SCP_FLAGS",
-          "label": "Remote Backup SCP Flags",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_LFTP_FLAGS",
-          "label": "Remote Backup LFTP Flags",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_FTP_URL",
-          "label": "Remote Backup FTP URL",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_FTP_USER",
-          "label": "Remote Backup FTP User",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_FTP_PASSWORD",
-          "label": "Remote Backup FTP Password",
-          "default": ""
-        },
-        {
-          "name": "BACKUP_REMOTE_FTP_DIR",
-          "label": "Remote Backup FTP Dir",
-          "default": ""
-        },
-        {
-          "name": "METRICS_ENABLED",
-          "label": "Metrics Enabled",
-          "default": "true"
-        },
-        {
-          "name": "HEALTH_DEEP_TOKEN",
-          "label": "Health Deep Token",
-          "default": ""
-        },
-        {
-          "name": "METRICS_AUTH_TOKEN",
-          "label": "Metrics Auth Token",
-          "default": ""
-        },
-        {
-          "name": "NODE_ENV",
-          "label": "Node Enviroment",
-          "default": "production"
-        },
-        {
-          "name": "DGII_ECF_ENGINE_PORT",
-          "label": "DGII ECF Engine Port",
-          "default": "4000"
-        },
-        {
-          "name": "WORKER_NORMAL_CONCURRENCY",
-          "label": "Normal Queue Worker Concurrency",
-          "default": "2"
-        },
-        {
-          "name": "WORKER_HIGH_CONCURRENCY",
-          "label": "High Priority Queue Worker Concurrency",
-          "default": "4"
-        },
-        {
-          "name": "WORKER_BULK_CONCURRENCY",
-          "label": "Bulk Queue Worker Concurrency",
-          "default": "1"
-        },
-        {
-          "name": "TRUST_PROXY",
-          "label": "Trust Proxy",
-          "default": "1"
-        },
-        {
-          "name": "DISTRIBUTED_LOCK_REQUIRE_REDIS_IN_PRODUCTION",
-          "label": "Require Redis for Distributed Locks in Production",
-          "default": "true"
-        },
-        {
-          "name": "DISTRIBUTED_LOCK_WAIT_MS",
-          "label": "Distributed Lock Wait MS",
-          "default": "120000"
-        },
-        {
-          "name": "DISTRIBUTED_LOCK_TTL_MS",
-          "label": "Distributed Lock TTL MS",
-          "default": "120000"
-        },
-        {
-          "name": "DISTRIBUTED_LOCK_RETRY_DELAY_MS",
-          "label": "Distributed Lock Retry Delay MS",
-          "default": "150"
-        },
-        {
-          "name": "NPM_CONFIG_UPDATE_NOTIFIER",
-          "label": "Disable NPM Update Notifier",
-          "default": "false"
-        },
-        {
-          "name": "PORTAL_PUBLIC_URL",
-          "label": "Portal Public URL and CORS Origin",
-          "default": "https://app.example.com"
-        },
-        {
-          "name": "SMTP_ENABLED",
-          "label": "SMTP Enabled",
-          "default": "false"
-        },
-        {
-          "name": "SMTP_HOST",
-          "label": "SMTP Host",
-          "default": "smtp.example.com"
-        },
-        {
-          "name": "SMTP_PORT",
-          "label": "SMTP Port",
-          "default": "465"
-        },
-        {
-          "name": "SMTP_SECURE",
-          "label": "SMTP Secure",
-          "default": "true"
-        },
-        {
-          "name": "SMTP_USER",
-          "label": "SMTP User",
-          "default": "email@example.com"
-        },
-        {
-          "name": "SMTP_PASSWORD",
-          "label": "SMTP Password",
-          "default": ""
-        },
-        {
-          "name": "SMTP_FROM_EMAIL",
-          "label": "SMTP From Email",
-          "default": "noreply@example.com"
-        },
-        {
-          "name": "SMTP_FROM_NAME",
-          "label": "SMTP From Name",
-          "default": "DGII e-CF Portal"
-        },
-        {
-          "name": "DGII_ECF_PORTAL_IMAGE",
-          "label": "DGII ECF Portal Image",
-          "default": "gitea.joseagrc.com/joseagrc/dgii-ecf-portal"
-        },
-        {
-          "name": "DGII_ECF_PORTAL_TAG",
-          "label": "DGII ECF Portal Tag",
-          "default": "1.1.170"
-        },
-        {
-          "name": "DGII_ECF_PORTAL_PORT",
-          "label": "DGII ECF Portal Port",
-          "default": "3000"
-        },
-        {
-          "name": "PORTAL_STOP_GRACE_PERIOD",
-          "label": "Portal Stop Grace Period",
-          "default": "45s"
-        },
-        {
-          "name": "PUBLIC_ENGINE_URL",
-          "label": "Public Engine URL",
-          "default": "ecf.example.com"
-        },
-        {
-          "name": "PORTAL_DOMAIN",
-          "label": "Portal Domain",
-          "default": "app.example.com"
-        },
-        {
-          "name": "PGADMIN_DOMAIN",
-          "label": "pgAdmin Domain",
-          "default": "pgadmin.example.com"
-        },
-        {
-          "name": "REDISINSIGHT_DOMAIN",
-          "label": "RedisInsight Domain",
-          "default": "redisinsight.example.com"
-        },
-        {
-          "name": "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY",
-          "label": "Next Server Actions Encryption Key",
-          "default": ""
-        },
-        {
-          "name": "DGII_ECF_SCHEDULER_REPLICAS",
-          "label": "Scheduler Replicas",
-          "default": "1"
-        },
-        {
-          "name": "QUEUE_SCHEDULER_RECOVERY_INTERVAL_MS",
-          "label": "Queue Scheduler Recovery Interval Ms",
+          "name": "EXTERNAL_HTTP_SOCKET_TIMEOUT_MS",
+          "label": "External HTTP Socket Timeout Ms",
           "default": "60000"
         },
         {
-          "name": "QUEUE_SCHEDULER_CLEANUP_INTERVAL_MS",
-          "label": "Queue Scheduler Cleanup Interval Ms",
-          "default": "300000"
+          "name": "EXTERNAL_HTTP_TIMEOUT_MS",
+          "label": "External HTTP Timeout Ms",
+          "default": "30000"
         },
         {
-          "name": "QUEUE_SCHEDULER_MAX_RUNNING_MINUTES",
-          "label": "Queue Scheduler Max Running Minutes",
-          "default": "10"
+          "name": "DGII_CIRCUIT_BREAKER_ENABLED",
+          "label": "DGII Circuit Breaker Enabled",
+          "default": "true"
         },
         {
-          "name": "QUEUE_SCHEDULER_MAX_AGE_DAYS_DONE",
-          "label": "Queue Scheduler Done Retention Days",
-          "default": "7"
-        },
-        {
-          "name": "QUEUE_SCHEDULER_MAX_AGE_DAYS_FAILED",
-          "label": "Queue Scheduler Failed Retention Days",
-          "default": "30"
-        },
-        {
-          "name": "DGII_ECF_WORKER_SEND_REPLICAS",
-          "label": "Send Worker Replicas",
-          "default": "2"
-        },
-        {
-          "name": "WORKER_SEND_MAX",
-          "label": "Send Worker Batch Max",
+          "name": "DGII_CIRCUIT_FAILURE_THRESHOLD",
+          "label": "DGII Circuit Failure Threshold",
           "default": "5"
         },
         {
-          "name": "WORKER_SEND_SLEEP_MS",
-          "label": "Send Worker Sleep Ms",
-          "default": "3000"
+          "name": "DGII_CIRCUIT_OPEN_MS",
+          "label": "DGII Circuit Open Ms",
+          "default": "60000"
         },
         {
-          "name": "DGII_ECF_WORKER_SEND_HIGH_REPLICAS",
-          "label": "High Priority Send Worker Replicas",
-          "default": "2"
-        },
-        {
-          "name": "WORKER_SEND_HIGH_MAX",
-          "label": "High Priority Send Worker Batch Max",
-          "default": "10"
-        },
-        {
-          "name": "WORKER_SEND_HIGH_SLEEP_MS",
-          "label": "High Priority Send Worker Sleep Ms",
-          "default": "1000"
-        },
-        {
-          "name": "DGII_ECF_WORKER_SEND_BULK_REPLICAS",
-          "label": "Bulk Send Worker Replicas",
-          "default": "1"
-        },
-        {
-          "name": "WORKER_SEND_BULK_MAX",
-          "label": "Bulk Send Worker Batch Max",
-          "default": "2"
-        },
-        {
-          "name": "WORKER_SEND_BULK_SLEEP_MS",
-          "label": "Bulk Send Worker Sleep Ms",
-          "default": "5000"
-        },
-        {
-          "name": "WORKER_CONCURRENCY",
-          "label": "Worker Concurrency",
-          "default": "1"
-        },
-        {
-          "name": "WORKER_JOB_TIMEOUT_MS",
-          "label": "Worker Job Timeout Ms",
-          "default": "120000"
-        },
-        {
-          "name": "DGII_ECF_HOUSEKEEPING_REPLICAS",
-          "label": "Housekeeping Replicas",
-          "default": "1"
-        },
-        {
-          "name": "HOUSEKEEPING_WORKER_SLEEP_MS",
-          "label": "Housekeeping Worker Sleep Ms",
+          "name": "DGII_CIRCUIT_STATE_TTL_MS",
+          "label": "DGII Circuit State TTL Ms",
           "default": "300000"
         },
         {
-          "name": "HOUSEKEEPING_ENABLED",
-          "label": "Housekeeping Enabled",
-          "default": "true"
-        },
-        {
-          "name": "HOUSEKEEPING_INTERVAL_MS",
-          "label": "Housekeeping Interval Ms",
-          "default": "300000"
-        },
-        {
-          "name": "HOUSEKEEPING_QUEUE_DONE_RETENTION_DAYS",
-          "label": "Housekeeping Done Retention Days",
-          "default": "7"
-        },
-        {
-          "name": "HOUSEKEEPING_QUEUE_FAILED_RETENTION_DAYS",
-          "label": "Housekeeping Failed Retention Days",
-          "default": "30"
-        },
-        {
-          "name": "HOUSEKEEPING_QUEUE_ARCHIVE_RETENTION_DAYS",
-          "label": "Housekeeping Archive Retention Days",
-          "default": "90"
-        },
-        {
-          "name": "HOUSEKEEPING_IDEMPOTENCY_PENDING_RETENTION_HOURS",
-          "label": "Housekeeping Idempotency Pending Retention Hours",
-          "default": "24"
-        },
-        {
-          "name": "DGII_ECF_WEBHOOK_WORKER_REPLICAS",
-          "label": "Webhook Worker Replicas",
-          "default": "1"
-        },
-        {
-          "name": "WEBHOOKS_ENABLED",
-          "label": "Webhooks Enabled",
-          "default": "true"
-        },
-        {
-          "name": "WEBHOOK_WORKER_MAX",
-          "label": "Webhook Worker Batch Max",
-          "default": "20"
-        },
-        {
-          "name": "WEBHOOK_WORKER_SLEEP_MS",
-          "label": "Webhook Worker Sleep Ms",
-          "default": "3000"
-        },
-        {
-          "name": "WEBHOOK_WORKER_INTERVAL_MS",
-          "label": "Webhook Worker Interval Ms",
-          "default": "3000"
-        },
-        {
-          "name": "WEBHOOK_MAX_ATTEMPTS",
-          "label": "Webhook Max Attempts",
-          "default": "8"
-        },
-        {
-          "name": "WEBHOOK_DEFAULT_TIMEOUT_MS",
-          "label": "Webhook Default Timeout Ms",
+          "name": "DGII_CIRCUIT_HALF_OPEN_PROBE_MS",
+          "label": "DGII Circuit Half Open Probe Ms",
           "default": "10000"
         },
         {
-          "name": "WEBHOOK_MAX_RESPONSE_BODY_CHARS",
-          "label": "Webhook Max Response Body Chars",
-          "default": "4000"
-        },
-        {
-          "name": "WEBHOOK_ALLOW_PRIVATE_URLS",
-          "label": "Webhook Allow Private URLs",
-          "default": "false"
-        },
-        {
-          "name": "WEBHOOK_REQUIRE_HTTPS",
-          "label": "Webhook Require HTTPS",
+          "name": "DGII_CONCURRENCY_LIMIT_ENABLED",
+          "label": "DGII Concurrency Limit Enabled",
           "default": "true"
         },
         {
-          "name": "WEBHOOK_ALLOWED_HOSTS",
-          "label": "Webhook Allowed Hosts",
+          "name": "DGII_CONCURRENCY_MAX_IN_FLIGHT",
+          "label": "DGII Max In Flight Requests",
+          "default": "50"
+        },
+        {
+          "name": "DGII_CONCURRENCY_WAIT_MS",
+          "label": "DGII Concurrency Wait Ms",
+          "default": "5000"
+        },
+        {
+          "name": "DGII_CONCURRENCY_RETRY_DELAY_MS",
+          "label": "DGII Concurrency Retry Delay Ms",
+          "default": "100"
+        },
+        {
+          "name": "DGII_CONCURRENCY_LEASE_MS",
+          "label": "DGII Concurrency Lease Ms",
+          "default": "120000"
+        },
+        {
+          "name": "DGII_CONCURRENCY_REDIS_REQUIRED_IN_PRODUCTION",
+          "label": "DGII Concurrency Requires Redis In Production",
+          "default": "true"
+        },
+        {
+          "name": "DATABASE_CONNECTION_WARNING_PERCENT",
+          "label": "Database Connection Warning Percent",
+          "default": "70"
+        },
+        {
+          "name": "DATABASE_CONNECTION_CRITICAL_PERCENT",
+          "label": "Database Connection Critical Percent",
+          "default": "85"
+        },
+        {
+          "name": "DATABASE_POOL_TIMEOUT_SECONDS",
+          "label": "Database Pool Timeout Seconds",
+          "default": "15"
+        },
+        {
+          "name": "DATABASE_CONNECT_TIMEOUT_SECONDS",
+          "label": "Database Connect Timeout Seconds",
+          "default": "5"
+        },
+        {
+          "name": "WORKER_LOCK_CONTENTION_MAX_DEFERRALS",
+          "label": "Worker Lock Contention Max Deferrals",
+          "default": "60"
+        },
+        {
+          "name": "WORKER_LEASE_HEARTBEAT_MS",
+          "label": "Worker Lease Heartbeat Ms",
+          "default": "30000"
+        },
+        {
+          "name": "WORKER_JOB_MAX_ATTEMPTS",
+          "label": "Worker Job Max Attempts",
+          "default": "0",
+          "description": "0 preserves current unlimited retry behavior; set a positive value only with a DLQ policy."
+        },
+        {
+          "name": "QUEUE_SCHEDULER_HEARTBEAT_INTERVAL_MS",
+          "label": "Queue Scheduler Heartbeat Interval Ms",
+          "default": "15000"
+        },
+        {
+          "name": "QUEUE_SCHEDULER_HEARTBEAT_MAX_AGE_MS",
+          "label": "Queue Scheduler Heartbeat Max Age Ms",
+          "default": "120000"
+        },
+        {
+          "name": "XML_SIGNATURE_REQUIRE_CERT_RNC_MATCH",
+          "label": "XML Signature Require Cert RNC Match",
+          "default": "false"
+        },
+        {
+          "name": "XML_SIGNATURE_REVOKED_SERIALS",
+          "label": "XML Signature Revoked Serials",
           "default": ""
         },
         {
-          "name": "WORKER_RESTART_DELAY",
-          "label": "Worker Restart Delay",
-          "default": "10s"
+          "name": "XML_SIGNATURE_TRUSTED_CERTS_FILE",
+          "label": "XML Signature Trusted Certs File",
+          "default": ""
         },
         {
-          "name": "WORKER_RESTART_WINDOW",
-          "label": "Worker Restart Window",
-          "default": "180s"
+          "name": "XML_SIGNATURE_INTERMEDIATE_CERTS_FILE",
+          "label": "XML Signature Intermediate Certs File",
+          "default": ""
         },
         {
-          "name": "WORKER_UPDATE_DELAY",
-          "label": "Worker Update Delay",
-          "default": "10s"
+          "name": "XML_SIGNATURE_REQUIRE_TRUSTED_CHAIN",
+          "label": "XML Signature Require Trusted Chain",
+          "default": "false"
         },
         {
-          "name": "WORKER_UPDATE_MONITOR",
-          "label": "Worker Update Monitor",
-          "default": "60s"
+          "name": "XML_SIGNATURE_REVOCATION_MODE",
+          "label": "XML Signature Revocation Mode",
+          "default": "off"
         },
         {
-          "name": "WORKER_ROLLBACK_MONITOR",
-          "label": "Worker Rollback Monitor",
-          "default": "60s"
+          "name": "XML_SIGNATURE_REVOCATION_EVIDENCE_FILE",
+          "label": "XML Signature Revocation Evidence File",
+          "default": ""
         },
         {
-          "name": "NETWORK",
-          "label": "Network Name",
-          "default": "proxy"
+          "name": "PRINT_RENDERER_REQUEST_TIMEOUT_MS",
+          "label": "Print Renderer Request Timeout Ms",
+          "default": "15000"
         },
         {
-          "name": "TRAEFIK_CERT_RESOLVER",
-          "label": "Traefik Certificate Resolver",
-          "default": "letsencrypt"
+          "name": "PRINT_RENDERER_HEADERS_TIMEOUT_MS",
+          "label": "Print Renderer Headers Timeout Ms",
+          "default": "10000"
+        },
+        {
+          "name": "PRINT_RENDERER_KEEP_ALIVE_TIMEOUT_MS",
+          "label": "Print Renderer Keep Alive Timeout Ms",
+          "default": "5000"
+        },
+        {
+          "name": "PRINT_RENDERER_QUEUE_TIMEOUT_MS",
+          "label": "Print Renderer Queue Timeout Ms",
+          "default": "15000"
+        },
+        {
+          "name": "PRINT_RENDERER_SHUTDOWN_GRACE_MS",
+          "label": "Print Renderer Shutdown Grace Ms",
+          "default": "30000"
+        },
+        {
+          "name": "PRINT_RENDERER_BROWSER_RECYCLE_AFTER_RENDERS",
+          "label": "Print Renderer Browser Recycle After Renders",
+          "default": "1000"
+        },
+        {
+          "name": "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH",
+          "label": "Playwright Chromium Executable Path",
+          "default": "/usr/bin/chromium-browser"
+        },
+        {
+          "name": "ENGINE_INTERNAL_URL",
+          "label": "Portal Engine Internal URL",
+          "default": "http://dgii-ecf-engine:4000"
+        },
+        {
+          "name": "NEXT_PUBLIC_APP_TIME_ZONE",
+          "label": "Portal Public Time Zone",
+          "default": "America/Santo_Domingo"
+        },
+        {
+          "name": "NEXT_PUBLIC_API_BASE_URL",
+          "label": "Portal Public API Base URL",
+          "default": "https://ecf.solutema.com"
+        },
+        {
+          "name": "API_BASE_URL",
+          "label": "Portal Server API Base URL",
+          "default": "https://ecf.solutema.com"
+        },
+        {
+          "name": "PRINT_MAX_XML_BYTES",
+          "label": "Portal Print Max XML Bytes",
+          "default": "2097152"
+        },
+        {
+          "name": "PRINT_PDF_TIMEOUT_MS",
+          "label": "Portal Print PDF Timeout Ms",
+          "default": "30000"
         }
       ]
     }
