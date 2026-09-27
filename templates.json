@@ -3551,7 +3551,9 @@
       "type": 3,
       "title": "WordPress",
       "description": "WordPress production stack with MariaDB, phpMyAdmin, Traefik HTTPS and persistent volumes.",
-      "categories": ["CMS"],
+      "categories": [
+        "CMS"
+      ],
       "platform": "linux",
       "logo": "https://raw.githubusercontent.com/solutema/portainer-templates/main/stacks/wordpress/logo/logo.png",
       "repository": {
@@ -3765,6 +3767,162 @@
         },
         {
           "container": "/www/logs"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "type": 3,
+      "title": "DGII RNC Directory",
+      "description": "API Node.js para consultar y mantener el directorio RNC de DGII con PostgreSQL restaurado desde un snapshot existente y sincronización programada de datos.",
+      "categories": [
+        "API"
+      ],
+      "platform": "linux",
+      "repository": {
+        "url": "https://github.com/solutema/portainer-templates",
+        "stackfile": "stacks/dgii-rnc-directory/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "COMPOSE_PROJECT_NAME",
+          "label": "Stack/project name",
+          "default": "dgii-rnc-directory"
+        },
+        {
+          "name": "POSTGRES_IMAGE",
+          "label": "PostgreSQL snapshot image",
+          "default": "gitea.joseagrc.com/joseagrc/dgii-rnc-directory-postgresql"
+        },
+        {
+          "name": "POSTGRES_TAG",
+          "label": "PostgreSQL snapshot tag",
+          "default": "latest"
+        },
+        {
+          "name": "POSTGRES_DB",
+          "label": "Database name",
+          "default": "dgii_directory"
+        },
+        {
+          "name": "POSTGRES_USER",
+          "label": "Database username",
+          "default": "dgii"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "label": "Database password"
+        },
+        {
+          "name": "DIRECTORY_IMAGE",
+          "label": "Directory API image",
+          "default": "gitea.joseagrc.com/joseagrc/dgii-rnc-directory-api"
+        },
+        {
+          "name": "DIRECTORY_TAG",
+          "label": "Directory API tag",
+          "default": "latest"
+        },
+        {
+          "name": "API_KEY",
+          "label": "API key"
+        },
+        {
+          "name": "DGII_CREDENTIALS_MASTER_KEY",
+          "label": "DGII credentials master key"
+        },
+        {
+          "name": "DGII_SOURCE",
+          "label": "DGII source format",
+          "default": "txt"
+        },
+        {
+          "name": "SYNC_CRON",
+          "label": "Registry sync cron",
+          "default": "0 */12 * * *"
+        },
+        {
+          "name": "SYNC_ON_STARTUP",
+          "label": "Sync on startup",
+          "default": "true"
+        },
+        {
+          "name": "DGII_ELECTRONIC_DIRECTORY_ENABLED",
+          "label": "Enable electronic directory sync",
+          "default": "true"
+        },
+        {
+          "name": "DIRECTORY_CACHE_TTL_SECONDS",
+          "label": "Directory cache TTL seconds",
+          "default": "43200"
+        },
+        {
+          "name": "DIRECTORY_TIMEOUT_MS",
+          "label": "Directory timeout milliseconds",
+          "default": "10000"
+        },
+        {
+          "name": "MAX_IMPORT_AGE_HOURS",
+          "label": "Max import age hours",
+          "default": "25"
+        },
+        {
+          "name": "MAX_DOWNLOAD_BYTES",
+          "label": "Max download bytes",
+          "default": "104857600"
+        },
+        {
+          "name": "MAX_UNCOMPRESSED_BYTES",
+          "label": "Max uncompressed bytes",
+          "default": "314572800"
+        },
+        {
+          "name": "DGII_CERTIFICATE_MAX_BYTES",
+          "label": "DGII certificate max bytes",
+          "default": "2097152"
+        },
+        {
+          "name": "TRUST_PROXY",
+          "label": "Trust proxy",
+          "default": "1"
+        },
+        {
+          "name": "CORS_ORIGINS",
+          "label": "CORS origins",
+          "default": ""
+        },
+        {
+          "name": "TZ",
+          "label": "Timezone",
+          "default": "America/Santo_Domingo"
+        },
+        {
+          "name": "URL",
+          "label": "Public URL",
+          "default": "rnc-directory.example.com"
+        },
+        {
+          "name": "NETWORK",
+          "label": "Network name",
+          "default": "proxy"
+        },
+        {
+          "name": "LOG_MAX_SIZE",
+          "label": "Docker log max size",
+          "default": "10m"
+        },
+        {
+          "name": "LOG_MAX_FILE",
+          "label": "Docker log max files",
+          "default": "3"
+        }
+      ],
+      "ports": [
+        "4080/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/postgresql/data"
         }
       ]
     }
