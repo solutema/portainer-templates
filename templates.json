@@ -3797,7 +3797,7 @@
         {
           "name": "POSTGRES_TAG",
           "label": "PostgreSQL snapshot tag",
-          "default": "latest"
+          "default": "1.0.0"
         },
         {
           "name": "POSTGRES_DB",
@@ -3811,7 +3811,8 @@
         },
         {
           "name": "POSTGRES_PASSWORD",
-          "label": "Database password"
+          "label": "Database password",
+          "default": "change-me-postgres-password"
         },
         {
           "name": "DIRECTORY_IMAGE",
@@ -3821,15 +3822,17 @@
         {
           "name": "DIRECTORY_TAG",
           "label": "Directory API tag",
-          "default": "latest"
+          "default": "1.0.0"
         },
         {
           "name": "API_KEY",
-          "label": "API key"
+          "label": "API key",
+          "default": "change-me-api-key-32-characters-min"
         },
         {
           "name": "DGII_CREDENTIALS_MASTER_KEY",
-          "label": "DGII credentials master key"
+          "label": "DGII credentials master key",
+          "default": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
         },
         {
           "name": "DGII_SOURCE",

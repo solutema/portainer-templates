@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: ${COMPOSE_PROJECT_NAME:-dgii-rnc-directory}-postgres
-    image: ${POSTGRES_IMAGE:-gitea.joseagrc.com/joseagrc/dgii-rnc-directory-postgresql}:${POSTGRES_TAG:-latest}
+    image: ${POSTGRES_IMAGE:-gitea.joseagrc.com/joseagrc/dgii-rnc-directory-postgresql}:${POSTGRES_TAG:-1.0.0}
     restart: unless-stopped
     stop_grace_period: 60s
     environment:
@@ -27,7 +27,7 @@ services:
 
   api:
     container_name: ${COMPOSE_PROJECT_NAME:-dgii-rnc-directory}-api
-    image: ${DIRECTORY_IMAGE:-gitea.joseagrc.com/joseagrc/dgii-rnc-directory-api}:${DIRECTORY_TAG:-latest}
+    image: ${DIRECTORY_IMAGE:-gitea.joseagrc.com/joseagrc/dgii-rnc-directory-api}:${DIRECTORY_TAG:-1.0.0}
     restart: unless-stopped
     init: true
     stop_grace_period: 30s
